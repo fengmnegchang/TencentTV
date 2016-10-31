@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- T9键盘 -->
+<Keyboard
+    bg_res="@drawable/main_bg"
+    key_left_padding="@dimen/w_10"
+    key_bg_res="@drawable/key_bg_rectangle"
+    key_select_res="@drawable/white_light_10"
+    key_text_color="#b8bbbf"
+    key_text_size="@dimen/w_30"
+    key_top_padding="@dimen/h_10"
+    key_height="@dimen/h_100"
+    key_width="@dimen/w_100"
+    start_pos_x="@dimen/w_240"
+    start_pos_y="@dimen/h_20"
+    left_right_move="false"
+    top_bottom_move="false" >
+
+    <!-- 第一行 -->
+    <row>
+        <key
+            key_code="1251"
+            key_icon="@drawable/t9_key1" />
+        <key
+            key_code="1252"
+            key_icon="@drawable/t9_key2" />
+        <key
+            key_code="1253"
+            key_icon="@drawable/t9_key3" />
+    </row>
+
+    <!-- 第二行 -->
+    <row>
+        <key
+            key_code="1254"
+            key_icon="@drawable/t9_key4" />
+        <key
+            key_code="1255"
+            key_icon="@drawable/t9_key5" />
+        <key
+            key_code="1256"
+            key_icon="@drawable/t9_key6" />
+    </row>
+
+    <!-- 第三行 -->
+    <row>
+        <key
+            key_code="1257"
+            key_icon="@drawable/t9_key7" />
+        <key
+            key_code="1258"
+            key_icon="@drawable/t9_key8" />
+        <key
+            key_code="1259"
+            key_icon="@drawable/t9_key9" />
+    </row>
+
+    <!-- 第四行 -->
+    <row>
+        <!-- 删除-->
+        <key
+            key_code="1260"
+            key_icon="@drawable/delete" />
+        <key
+            key_code="1250"
+            key_icon="@drawable/t9_key0" />
+        <!-- 清除-->
+        <key
+            key_code="1261"
+            key_icon="@drawable/delete" />
+    </row>
+
+</Keyboard>
