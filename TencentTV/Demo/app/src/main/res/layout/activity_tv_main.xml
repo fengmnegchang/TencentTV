@@ -5,32 +5,44 @@
     android:background="#000000"
     android:clipChildren="false"
     android:clipToPadding="false"
+    android:focusable="false"
     android:focusableInTouchMode="false"
-    android:paddingLeft="30dp"
-    android:focusable="false">
+    android:paddingLeft="30dp">
 
+
+    <com.open.androidtvwidget.leanback.recycle.RecyclerViewTV
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/main_bg"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginTop="20dp"
+        android:padding="2dp"
+        android:paddingBottom="10dp"
+        android:nextFocusUp="@+id/listview"
+        />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_gravity="center"
+        android:layout_marginTop="210dp"
         android:focusable="false"
         android:gravity="center"
-        android:layout_above="@+id/listview"
+        android:text="个人中心"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:text="个人中心"
-        android:textSize="28sp" />
+        android:textSize="25sp" />
 
     <com.open.androidtvwidget.view.ListViewTV
         android:id="@+id/listview"
         android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_height="280dp"
+        android:layout_marginTop="250dp"
+        android:focusable="false"
         android:listSelector="#00000000"
-        android:layout_marginTop="30dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
         android:minHeight="50dp"
         android:paddingBottom="20dp"
         android:paddingTop="20dp"

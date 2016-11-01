@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.open.androidtvwidget.bridge.EffectNoDrawBridge;
+import com.open.androidtvwidget.leanback.adapter.GeneralAdapter;
+import com.open.androidtvwidget.leanback.recycle.LinearLayoutManagerTV;
+import com.open.androidtvwidget.leanback.recycle.RecyclerViewTV;
 import com.open.androidtvwidget.view.ListViewTV;
 import com.open.androidtvwidget.view.MainUpView;
+import com.open.tencenttv.adapter.RecyclerViewPresenter;
 import com.open.tencenttv.bean.PersonalCenterBean;
 
 import java.util.ArrayList;
@@ -33,7 +38,7 @@ import java.util.List;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class TVMainActivity extends Activity {
+public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemListener{
 
     private static final String TAG = TVMainActivity.class.getSimpleName();
 
@@ -42,6 +47,10 @@ public class TVMainActivity extends Activity {
     private LayoutInflater mInflater;
     private View mOldView;
     private ListViewTV listView;
+
+    private RecyclerViewTV mRecyclerView;
+//    private RecyclerViewBridge mRecyclerViewBridge;
+    EffectNoDrawBridge mRecyclerViewBridge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +61,8 @@ public class TVMainActivity extends Activity {
         mainUpView1 = (MainUpView) findViewById(R.id.mainUpView1);
         // 默认是 OpenEff...，建议使用 NoDraw... ...
         mainUpView1.setEffectBridge(new EffectNoDrawBridge());
-        EffectNoDrawBridge bridget = (EffectNoDrawBridge) mainUpView1.getEffectBridge();
-        bridget.setTranDurAnimTime(200);
+        mRecyclerViewBridge = (EffectNoDrawBridge) mainUpView1.getEffectBridge();
+        mRecyclerViewBridge.setTranDurAnimTime(200);
         mainUpView1.setUpRectResource(R.drawable.white_light_10); // 设置移动边框的图片.
         mainUpView1.setDrawUpRectPadding(new Rect(25, 25, 23, 23)); // 边框图片设置间距.
         initData();
@@ -61,33 +70,150 @@ public class TVMainActivity extends Activity {
         listView.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("item" + (int) id + " ========onItemSelected ");
+                System.out.println("listView item" + view.getId()+";postion="+(int) id + " ========onItemSelected ");
                 if (view != null) {
                     view.bringToFront();
-                    mainUpView1.setFocusView(view, mOldView, 1.1f);
+                    mRecyclerViewBridge.setFocusView(view, mOldView, 1.1f);
                     mOldView = view;
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                System.out.println("listView item"+ " ========onNothingSelected ");
             }
         });
+
+        listView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                //失去焦点时，将子view还原
+                System.out.println("listView item"+view.getId() + " ========onFocusChange "+b);
+                if(!b){
+                    for(int i=0;i<listView.getChildCount();i++){
+                        View mvView = listView.getChildAt(i);
+                        mRecyclerViewBridge.setUnFocusView(mvView);
+                    }
+                }
+
+            }
+        });
+
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("item" + (int) id + " ========onItemClick ");
+                if (view != null) {
+                    view.bringToFront();
+                    mRecyclerViewBridge.setFocusView(view, mOldView, 1.1f);
+                    mOldView = view;
+                }
+                System.out.println("listView item" + (int) id + " ========onItemClick ");
                 Toast.makeText(getApplicationContext(), "position : " + position, Toast.LENGTH_LONG).show();
             }
         });
-        // 延时请求其它位置的item.
-        Handler handler = new Handler() {
+
+
+        mRecyclerView = (RecyclerViewTV) findViewById(R.id.recyclerView);
+//        mRecyclerViewBridge = (RecyclerViewBridge) mainUpView1.getEffectBridge();
+//        mRecyclerViewBridge.setUpRectResource(R.drawable.video_cover_cursor);
+//        float density = getResources().getDisplayMetrics().density;
+//        RectF receF = new RectF(getDimension(R.dimen.w_45) * density, getDimension(R.dimen.h_40) * density,
+//                getDimension(R.dimen.w_45) * density, getDimension(R.dimen.h_40) * density);
+//        mRecyclerViewBridge.setDrawUpRectPadding(receF);
+
+        testRecyclerViewLinerLayout(LinearLayoutManager.HORIZONTAL);
+        mRecyclerView.setOnItemListener(this);
+        // item 单击事件处理.
+        mRecyclerView.setOnItemClickListener(new RecyclerViewTV.OnItemClickListener() {
             @Override
-            public void handleMessage(Message msg) {
-                listView.setDefualtSelect(0);
+            public void onItemClick(RecyclerViewTV parent, View itemView, int position) {
+                System.out.println("mRecyclerView item" + position + " ========onItemClick ");
             }
-        };
-        handler.sendMessageDelayed(handler.obtainMessage(), 188);
+        });
+
+//        // 延时请求其它位置的item.
+//        Handler handler = new Handler() {
+//            @Override
+//            public void handleMessage(Message msg) {
+//                onItemSelected(mRecyclerView, null, 0);
+//            }
+//        };
+//        handler.sendMessageDelayed(handler.obtainMessage(), 188);
+    }
+
+    /**
+     * 测试LinerLayout.
+     */
+    private void testRecyclerViewLinerLayout(int orientation) {
+        LinearLayoutManagerTV layoutManager = new LinearLayoutManagerTV(this);
+        layoutManager.setOrientation(orientation);
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setFocusable(false);
+        mRecyclerViewPresenter = new RecyclerViewPresenter(20);
+        mGeneralAdapter = new GeneralAdapter(mRecyclerViewPresenter);
+        mRecyclerView.setAdapter(mGeneralAdapter);
+        mRecyclerView.setSelectedItemOffset(111, 111); // 测试移动间距.
+        mRecyclerView.setPagingableListener(new RecyclerViewTV.PagingableListener() {
+            @Override
+            public void onLoadMoreItems() {
+//                // 加载更多测试.
+////                moreHandler.removeCallbacksAndMessages(null);
+//                Message msg = moreHandler.obtainMessage();
+//                msg.arg1 = 10;
+//                moreHandler.sendMessageDelayed(msg, 3000);
+//                load_more_pb.setVisibility(View.VISIBLE);
+            }
+        });
+        mFocusHandler.sendEmptyMessageDelayed(10, 1000);
+    }
+
+//    private int mSavePos = 0;
+//
+    Handler mFocusHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            mRecyclerView.setDefaultSelect(0);
+        }
+    };
+
+    RecyclerViewPresenter mRecyclerViewPresenter;
+    GeneralAdapter mGeneralAdapter;
+//
+//    Handler moreHandler = new Handler() {
+//        @Override
+//        public void handleMessage(Message msg) {
+//            mRecyclerViewPresenter.addDatas(msg.arg1);
+//            mSavePos = mRecyclerView.getSelectPostion();
+//            mRecyclerView.setOnLoadMoreComplete(); // 加载更多完毕.
+//            mFocusHandler.sendEmptyMessageDelayed(10, 10); // 延时请求焦点.
+//            load_more_pb.setVisibility(View.GONE);
+//        }
+//    };
+
+
+    public float getDimension(int id) {
+        return getResources().getDimension(id);
+    }
+
+
+    @Override
+    public void onItemPreSelected(RecyclerViewTV parent, View itemView, int position) {
+        mRecyclerViewBridge.setUnFocusView(mOldView);
+        System.out.println("mRecyclerView item" + position + " ========onItemPreSelected ");
+    }
+
+    @Override
+    public void onItemSelected(RecyclerViewTV parent, View itemView, int position) {
+        mRecyclerViewBridge.setFocusView(itemView, 1.1f);
+        mOldView = itemView;
+        System.out.println("mRecyclerView item" + position + " ========onItemSelected ");
+    }
+
+    @Override
+    public void onReviseFocusFollow(RecyclerViewTV parent, View itemView, int position) {
+        mRecyclerViewBridge.setFocusView(itemView, 1.1f);
+        System.out.println("mRecyclerView item" + position + " ========onReviseFocusFollow ");
+        mOldView = itemView;
     }
 
     public void initData() {
