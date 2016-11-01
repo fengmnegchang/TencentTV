@@ -13,8 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 测试.
- * Created by hailongqiu on 2016/8/24.
+ * ****************************************************************************************************************************************************************************
+ *  Top视频类型列表 电视+电影+ adapter
+ * @author :fengguangjing
+ * @createTime: 16/11/1
+ * @version:
+ * @modifyTime:
+ * @modifyAuthor:
+ * @description: ****************************************************************************************************************************************************************************
  */
 public class RecyclerViewPresenter extends OpenPresenter {
 
