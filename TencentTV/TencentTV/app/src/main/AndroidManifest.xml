@@ -14,37 +14,47 @@
         <!-- 测试的主Activity-->
         <activity
             android:name="com.open.tencenttv.MainActivity"
-            android:launchMode="singleTask">
-        </activity>
+            android:launchMode="singleTask"></activity>
 
         <!-- 测试DEMO Activity -->
-        <activity android:name="com.open.tencenttv.DemoGridViewActivity" />
+        <activity android:name="com.open.tencenttv.DemoGridViewActivity">
+        </activity>
         <activity android:name="com.open.tencenttv.DemoListViewActivity" />
         <activity android:name="com.open.tencenttv.DemoKeyBoardActivity" />
         <activity android:name="com.open.tencenttv.DemoViewPagerActivity">
-
-
         </activity>
         <activity android:name="com.open.tencenttv.DemoMenuActivity" />
         <activity android:name="com.open.tencenttv.DemoRecyclerviewActivity" />
+        <!-- 横向布局-->
+        <activity
+            android:name="com.open.tencenttv.DemoRecyclerviewActivity2"
+            android:launchMode="singleTask">
+
+        </activity>
         <!--
         腾讯视频主页
         -->
         <activity
             android:name="com.open.tencenttv.TVMainActivity"
             android:launchMode="singleTask">
+
+
+        </activity>
+
+        <!--频道-->
+        <activity
+            android:name="com.open.tencenttv.PinDaoActivity"
+            android:launchMode="singleTask">
+
+        </activity>
+        <!--频道 使用ListFragment-->
+        <activity
+            android:name="com.open.tencenttv.ListFragmentPinDaoActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-        </activity>
-
-        <!-- 横向布局-->
-        <activity
-            android:name="com.open.tencenttv.DemoRecyclerviewActivity2"
-            android:launchMode="singleTask">
-
         </activity>
 
 

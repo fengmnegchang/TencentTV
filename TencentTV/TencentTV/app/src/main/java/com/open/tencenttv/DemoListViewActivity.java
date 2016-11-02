@@ -75,7 +75,7 @@ public class DemoListViewActivity extends Activity {
 		Handler handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
-				listView.setDefualtSelect(2);
+				listView.setDefaultSelect(2);
 			}
 		};
 		handler.sendMessageDelayed(handler.obtainMessage(), 188);
