@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle" >
+
+    <solid android:color="#ffffff" />
+    <!-- 描边 -->
+    <stroke android:color="#999" /> <!-- 定义描边的宽度和描边的颜色值 -->
+    <corners android:radius="8dp" />
+
+</shape>

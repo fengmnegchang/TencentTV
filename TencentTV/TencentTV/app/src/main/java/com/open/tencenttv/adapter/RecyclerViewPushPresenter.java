@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * ****************************************************************************************************************************************************************************
- *  Top视频类型列表 电视+电影+ adapter
+ *  推荐 排行 adapter
  * @author :fengguangjing
  * @createTime: 16/11/1
  * @version:
@@ -22,12 +22,12 @@ import java.util.List;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class RecyclerViewPresenter extends OpenPresenter {
+public class RecyclerViewPushPresenter extends OpenPresenter {
 
     private final List<String> labels;
     private GeneralAdapter mAdapter;
 
-    public RecyclerViewPresenter(int count) {
+    public RecyclerViewPushPresenter(int count) {
         this.labels = new ArrayList<String>(count);
         for (int i = 0; i < count; i++) {
             labels.add(String.valueOf(i));
@@ -62,7 +62,7 @@ public class RecyclerViewPresenter extends OpenPresenter {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_recyclerview_view, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_recyclerview_push, parent, false);
         return new GridViewHolder(view);
     }
 

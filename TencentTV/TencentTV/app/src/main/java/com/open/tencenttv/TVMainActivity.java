@@ -8,13 +8,9 @@ import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.open.androidtvwidget.bridge.EffectNoDrawBridge;
@@ -23,14 +19,18 @@ import com.open.androidtvwidget.leanback.recycle.LinearLayoutManagerTV;
 import com.open.androidtvwidget.leanback.recycle.RecyclerViewTV;
 import com.open.androidtvwidget.view.ListViewTV;
 import com.open.androidtvwidget.view.MainUpView;
+import com.open.tencenttv.adapter.PersonalCenterAdapter;
 import com.open.tencenttv.adapter.RecyclerViewPresenter;
+import com.open.tencenttv.adapter.RecyclerViewPushPresenter;
 import com.open.tencenttv.bean.PersonalCenterBean;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * ****************************************************************************************************************************************************************************
  * 视频主页
+ *
  * @author :fengguangjing
  * @createTime: 16/11/1
  * @version:
@@ -38,7 +38,7 @@ import java.util.List;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemListener{
+public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemListener {
 
     private static final String TAG = TVMainActivity.class.getSimpleName();
 
@@ -47,9 +47,21 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
     private LayoutInflater mInflater;
     private View mOldView;
     private ListViewTV listView;
-
+    /**
+     * Top视频类型列表 电视+电影+
+     **/
     private RecyclerViewTV mRecyclerView;
-//    private RecyclerViewBridge mRecyclerViewBridge;
+    private RecyclerViewPresenter mRecyclerViewPresenter;
+    private GeneralAdapter mGeneralAdapter;
+
+    /**
+     * 推荐排行
+     **/
+    private RecyclerViewTV recycler_push;
+    private RecyclerViewPushPresenter mRecyclerPushPresenter;
+    private GeneralAdapter mRecyclerPushGeneralAdapter;
+
+    //    private RecyclerViewBridge mRecyclerViewBridge;
     EffectNoDrawBridge mRecyclerViewBridge;
 
     @Override
@@ -66,11 +78,11 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
         mainUpView1.setUpRectResource(R.drawable.white_light_10); // 设置移动边框的图片.
         mainUpView1.setDrawUpRectPadding(new Rect(25, 25, 23, 23)); // 边框图片设置间距.
         initData();
-        listView.setAdapter(new PersonalCenterAdapter());
+        listView.setAdapter(new PersonalCenterAdapter(this,data));
         listView.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("listView item" + view.getId()+";postion="+(int) id + " ========onItemSelected ");
+                System.out.println("listView item" + view.getId() + ";postion=" + (int) id + " ========onItemSelected ");
                 if (view != null) {
                     view.bringToFront();
                     mRecyclerViewBridge.setFocusView(view, mOldView, 1.1f);
@@ -80,7 +92,7 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                System.out.println("listView item"+ " ========onNothingSelected ");
+                System.out.println("listView item" + " ========onNothingSelected ");
             }
         });
 
@@ -88,9 +100,9 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
             @Override
             public void onFocusChange(View view, boolean b) {
                 //失去焦点时，将子view还原
-                System.out.println("listView item"+view.getId() + " ========onFocusChange "+b);
-                if(!b){
-                    for(int i=0;i<listView.getChildCount();i++){
+                System.out.println("listView item" + view.getId() + " ========onFocusChange " + b);
+                if (!b) {
+                    for (int i = 0; i < listView.getChildCount(); i++) {
                         View mvView = listView.getChildAt(i);
                         mRecyclerViewBridge.setUnFocusView(mvView);
                     }
@@ -121,7 +133,7 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
 //                getDimension(R.dimen.w_45) * density, getDimension(R.dimen.h_40) * density);
 //        mRecyclerViewBridge.setDrawUpRectPadding(receF);
 
-        testRecyclerViewLinerLayout(LinearLayoutManager.HORIZONTAL);
+        recyclerViewLinerLayout(LinearLayoutManager.HORIZONTAL);
         mRecyclerView.setOnItemListener(this);
         // item 单击事件处理.
         mRecyclerView.setOnItemClickListener(new RecyclerViewTV.OnItemClickListener() {
@@ -139,12 +151,51 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
 //            }
 //        };
 //        handler.sendMessageDelayed(handler.obtainMessage(), 188);
+
+
+        //推荐排行
+        recycler_push = (RecyclerViewTV) findViewById(R.id.recycler_push);
+        recyclerPushLinerLayout(LinearLayoutManager.HORIZONTAL);
+        recycler_push.setOnItemListener(this);
+        // item 单击事件处理.
+        recycler_push.setOnItemClickListener(new RecyclerViewTV.OnItemClickListener() {
+            @Override
+            public void onItemClick(RecyclerViewTV parent, View itemView, int position) {
+                System.out.println("recycler_push item" + position + " ========onItemClick ");
+            }
+        });
     }
 
     /**
-     * 测试LinerLayout.
+     * 横向布局的recyclerView
      */
-    private void testRecyclerViewLinerLayout(int orientation) {
+    private void recyclerPushLinerLayout(int orientation) {
+        LinearLayoutManagerTV layoutManager = new LinearLayoutManagerTV(this);
+        layoutManager.setOrientation(orientation);
+        recycler_push.setLayoutManager(layoutManager);
+        recycler_push.setFocusable(false);
+        mRecyclerPushPresenter = new RecyclerViewPushPresenter(20);
+        mRecyclerPushGeneralAdapter = new GeneralAdapter(mRecyclerPushPresenter);
+        recycler_push.setAdapter(mRecyclerPushGeneralAdapter);
+        recycler_push.setSelectedItemOffset(111, 111); // 测试移动间距.
+        recycler_push.setPagingableListener(new RecyclerViewTV.PagingableListener() {
+            @Override
+            public void onLoadMoreItems() {
+//                // 加载更多测试.
+////                moreHandler.removeCallbacksAndMessages(null);
+//                Message msg = moreHandler.obtainMessage();
+//                msg.arg1 = 10;
+//                moreHandler.sendMessageDelayed(msg, 3000);
+//                load_more_pb.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+
+    /**
+     * 横向布局的recyclerView
+     */
+    private void recyclerViewLinerLayout(int orientation) {
         LinearLayoutManagerTV layoutManager = new LinearLayoutManagerTV(this);
         layoutManager.setOrientation(orientation);
         mRecyclerView.setLayoutManager(layoutManager);
@@ -167,7 +218,7 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
         mFocusHandler.sendEmptyMessageDelayed(10, 1000);
     }
 
-//    private int mSavePos = 0;
+    //    private int mSavePos = 0;
 //
     Handler mFocusHandler = new Handler() {
         @Override
@@ -176,8 +227,7 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
         }
     };
 
-    RecyclerViewPresenter mRecyclerViewPresenter;
-    GeneralAdapter mGeneralAdapter;
+
 //
 //    Handler moreHandler = new Handler() {
 //        @Override
@@ -198,21 +248,35 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
 
     @Override
     public void onItemPreSelected(RecyclerViewTV parent, View itemView, int position) {
+        if (parent.getId() == R.id.recycler_push) {
+            System.out.println("recycler_push item" + position + " ========onItemPreSelected ");
+        } else if (parent.getId() == R.id.recyclerView) {
+            System.out.println("mRecyclerView item" + position + " ========onItemPreSelected ");
+        }
         mRecyclerViewBridge.setUnFocusView(mOldView);
-        System.out.println("mRecyclerView item" + position + " ========onItemPreSelected ");
+
     }
 
     @Override
     public void onItemSelected(RecyclerViewTV parent, View itemView, int position) {
+        if (parent.getId() == R.id.recycler_push) {
+            System.out.println("recycler_push item" + position + " ========onItemSelected ");
+        } else if (parent.getId() == R.id.recyclerView) {
+            System.out.println("mRecyclerView item" + position + " ========onItemSelected ");
+        }
         mRecyclerViewBridge.setFocusView(itemView, 1.1f);
         mOldView = itemView;
-        System.out.println("mRecyclerView item" + position + " ========onItemSelected ");
+
     }
 
     @Override
     public void onReviseFocusFollow(RecyclerViewTV parent, View itemView, int position) {
+        if (parent.getId() == R.id.recycler_push) {
+            System.out.println("recycler_push item" + position + " ========onReviseFocusFollow ");
+        } else if (parent.getId() == R.id.recyclerView) {
+            System.out.println("mRecyclerView item" + position + " ========onReviseFocusFollow ");
+        }
         mRecyclerViewBridge.setFocusView(itemView, 1.1f);
-        System.out.println("mRecyclerView item" + position + " ========onReviseFocusFollow ");
         mOldView = itemView;
     }
 
@@ -238,49 +302,6 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
         data.add(mPersonalCenterBean);
     }
 
-    public class PersonalCenterAdapter extends BaseAdapter {
 
-        @Override
-        public int getCount() {
-            return data.size();
-        }
-
-        @Override
-        public PersonalCenterBean getItem(int position) {
-            return data.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            PersonalCenterBean bean = getItem(position);
-            if(bean!=null){
-                if(bean.getType()==0){
-                    View view = mInflater.inflate(R.layout.adapter_personal_center_type0, null);
-                    ImageView image_tpye_bg = (ImageView) view.findViewById(R.id.image_tpye_bg);
-                    TextView text_type_name = (TextView) view.findViewById(R.id.text_type_name);
-                    TextView text_type_content = (TextView) view.findViewById(R.id.text_type_content);
-
-                    text_type_name.setText(bean.getTypeName());
-                    text_type_content.setText(bean.getContent());
-                    return view;
-                }else{
-                    View view = mInflater.inflate(R.layout.adapter_personal_center_type12, null);
-                    ImageView image_tpye_bg = (ImageView) view.findViewById(R.id.image_tpye_bg);
-                    TextView text_type_name = (TextView) view.findViewById(R.id.text_type_name);
-                    text_type_name.setText(bean.getTypeName());
-                    return view;
-                }
-            }
-            return null;
-
-        }
-
-
-    }
 
 }
