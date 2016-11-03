@@ -11,13 +11,13 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <com.open.androidtvwidget.leanback.recycle.RecyclerViewTV
-            android:id="@+id/left_menu_rv"
-            android:layout_width="@dimen/w_200"
-            android:layout_height="match_parent"
-            android:focusable="false"
+        <TextView
+            android:layout_width="200px"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:text="LEANBACK"
             />
-
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -26,19 +26,19 @@
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/main_bg"
                 android:layout_weight="1"
+                android:background="@drawable/main_bg"
                 android:focusable="false"
                 android:padding="20dp"
-                android:paddingBottom="80dp"/>
+                android:paddingBottom="80dp" />
             <!-- 靠自己的想象力发挥吧!!! 这里只是DEMO -->
             <ProgressBar
                 android:id="@+id/load_more_pb"
-                android:layout_gravity="right"
-                android:visibility="gone"
-                android:layout_marginTop="50dp"
                 android:layout_width="40dp"
-                android:layout_height="50dp" />
+                android:layout_height="50dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="50dp"
+                android:visibility="gone" />
         </FrameLayout>
     </LinearLayout>
     <!-- 最顶层边框 -->

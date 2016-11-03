@@ -1,0 +1,45 @@
+"320,480;480,800;480,854;540,960;600,1024;720,1184;720,1196;720,1280;768,1024;800,1280;1080,1812;1080,1920;1440,2560;";
+
+基于 1920*1080 的分辨率.
+
+就像DEMO里面一样，我是以1920*1080位基准，然后转换出来的1280*720
+
+javac GenerateValueFiles.java # 生成一个GenerateValueFiles.class
+
+java GenerateValueFiles 1920 1080
+
+加入其它的分辨率
+
+java GenerateValueFiles 1920 1080 2550,1666;
+
+加入多个分辨率
+
+java GenerateValueFiles 1920 1080 2550,1666_w,h_w,h....;
+
+
+# 温馨提示，你可以使用 java GenerateValueFiles 1920 1080 指定你默认的初始化分辨率，然后根据这个分辨率再进行转换.
+
+
+我发现一个BUG，就是 像素转换工具，
+如果有标题栏的话，精度是不对的
+差一个标题栏的高度.所以请设置没有标题栏高度再说吧.
+
+[demo]
+https://pan.baidu.com/s/1jH9sfmm
+
+[使用说明]
+http://note.youdao.com/yws/public/redirect/share?id=ded7f3cb20b67faf9e8b173499101a9a&type=false
+
+【使用注意】
+width, left, right 使用 w_100
+height, top, bottom 使用 h_100
+textsize 使用 w_40
+padding 尽量使用 left_padding right_padd... 等等来使用.
+注意imageview,因为background和src不同, src要压缩比例的，注意设置scaleType.
+
+【资源文件分辨率问题】
+如果.9图片无法适配，请注意
+请看目录的图片，还是不太明白
+具体看这里:http://www.cocoachina.com/android/20151030/13971.html
+还有这里:http://www.androidtvdev.com/forum.php?mod=viewthread&tid=307&extra=
+

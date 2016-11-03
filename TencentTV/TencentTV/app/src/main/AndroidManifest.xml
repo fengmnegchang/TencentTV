@@ -24,7 +24,14 @@
         <activity android:name="com.open.tencenttv.DemoViewPagerActivity">
         </activity>
         <activity android:name="com.open.tencenttv.DemoMenuActivity" />
-        <activity android:name="com.open.tencenttv.DemoRecyclerviewActivity" />
+        <activity android:name="com.open.tencenttv.DemoRecyclerviewActivity" >
+        </activity>
+        <activity android:name="com.open.tencenttv.DemoRecyclerviewLeanBackActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <!-- 横向布局-->
         <activity
             android:name="com.open.tencenttv.DemoRecyclerviewActivity2"
@@ -37,10 +44,7 @@
         <activity
             android:name="com.open.tencenttv.TVMainActivity"
             android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <!--频道-->
         <activity
