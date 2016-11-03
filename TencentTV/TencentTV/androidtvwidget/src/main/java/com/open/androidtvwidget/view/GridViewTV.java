@@ -20,6 +20,11 @@ public class GridViewTV extends GridView {
         init(context, attrs);
     }
 
+    public GridViewTV(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init(context, attrs);
+    }
+
     @Override
     public boolean isInTouchMode() {
         return !(hasFocus() && !super.isInTouchMode());

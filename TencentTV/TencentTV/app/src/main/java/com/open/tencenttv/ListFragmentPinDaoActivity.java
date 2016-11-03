@@ -48,8 +48,8 @@ public class ListFragmentPinDaoActivity extends FragmentActivity {
         mainUpView1.setUpRectResource(R.drawable.white_light_10); // 设置移动边框的图片.
         mainUpView1.setDrawUpRectPadding(new Rect(25, 25, 23, 23)); // 边框图片设置间距
 
-        PinDaoListFragment leftFragment =  PinDaoListFragment.newInstance(mRecyclerViewBridge,mOldView);
-        PinDaoFragment rightFragment = PinDaoFragment.newInstance("ListFragmentPinDaoActivity");
+        PinDaoListFragment leftFragment =  PinDaoListFragment.newInstance(mainUpView1,mRecyclerViewBridge,mOldView);
+        PinDaoFragment rightFragment = PinDaoFragment.newInstance("ListFragmentPinDaoActivity",mainUpView1,mOldView,mRecyclerViewBridge);
 
 
         FragmentManager manager = getSupportFragmentManager();

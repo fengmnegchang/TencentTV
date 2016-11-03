@@ -177,7 +177,7 @@ public class PinDaoActivity extends FragmentActivity {
 
         fragments = new ArrayList<Fragment>();
         for(int i=0;i<data.size();i++){
-            fragments.add(PinDaoFragment.newInstance(data.get(i).getTypeName()));
+            fragments.add(PinDaoFragment.newInstance(data.get(i).getTypeName(),mainUpView1,mOldView,mRecyclerViewBridge));
         }
 
     }

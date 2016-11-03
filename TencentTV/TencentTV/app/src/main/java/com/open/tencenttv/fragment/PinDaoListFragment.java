@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.open.androidtvwidget.bridge.EffectNoDrawBridge;
+import com.open.androidtvwidget.view.MainUpView;
 import com.open.tencenttv.R;
 import com.open.tencenttv.adapter.PinDaoAdapter;
 import com.open.tencenttv.bean.PinDaoBean;
@@ -37,12 +38,13 @@ public class PinDaoListFragment extends ListFragment {
     private List<PinDaoBean> data = new ArrayList<PinDaoBean>();
     private View mOldView;
     private EffectNoDrawBridge mRecyclerViewBridge;
+    private MainUpView mainUpView1;
 
-
-    public static PinDaoListFragment newInstance(EffectNoDrawBridge mRecyclerViewBridge, View mOldView){
+    public static PinDaoListFragment newInstance(MainUpView mainUpView1,EffectNoDrawBridge mRecyclerViewBridge, View mOldView){
         PinDaoListFragment fragment = new PinDaoListFragment();
         fragment.mOldView = mOldView;
         fragment.mRecyclerViewBridge = mRecyclerViewBridge;
+        fragment.mainUpView1 = mainUpView1;
         return fragment;
     }
 
@@ -121,7 +123,7 @@ public class PinDaoListFragment extends ListFragment {
      * @param position
      */
     private void setSelectedFragment(int position){
-        PinDaoFragment rightFragment = PinDaoFragment.newInstance("ListFragmentPinDaoActivity"+position);
+        PinDaoFragment rightFragment = PinDaoFragment.newInstance("ListFragmentPinDaoActivity"+position,mainUpView1,mOldView,mRecyclerViewBridge);
         FragmentManager manager = getActivity().getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.frame_pindao, rightFragment).commit();
     }
