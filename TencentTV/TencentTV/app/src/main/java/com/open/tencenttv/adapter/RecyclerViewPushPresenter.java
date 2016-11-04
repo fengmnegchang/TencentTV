@@ -57,12 +57,21 @@ public class RecyclerViewPushPresenter extends OpenPresenter {
 
     @Override
     public int getItemViewType(int position) {
-        return 0;
+        if(position==0){
+            return 0;
+        }else{
+            return 1;
+        }
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_recyclerview_push, parent, false);
+        View view;
+        if(viewType==0){
+              view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_recyclerview_history, parent, false);
+        }else{
+              view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_recyclerview_push, parent, false);
+        }
         return new GridViewHolder(view);
     }
 

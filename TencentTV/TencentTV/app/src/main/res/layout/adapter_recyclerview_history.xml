@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--focusableInTouchMode只是测试鼠标效果-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/key_bg_rectangle"
+    android:focusableInTouchMode="true"
+    android:layout_margin="2dp"
+    android:focusable="true">
+
+    <include layout="@layout/adapter_personal_center_type0"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        />
+    <include layout="@layout/adapter_personal_center_type12"
+        android:layout_marginTop="101dp"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        />
+    <include layout="@layout/adapter_personal_center_type12"
+        android:layout_marginTop="162dp"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        />
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:gravity="center"
+        android:text="item1"
+        android:textAlignment="center"
+        android:background="#FFFFFF"
+        android:textColor="#FF0000"
+        android:textSize="20sp" />
+</FrameLayout>

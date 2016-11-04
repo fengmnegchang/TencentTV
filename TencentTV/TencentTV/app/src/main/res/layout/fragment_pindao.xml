@@ -12,10 +12,9 @@
         android:layout_gravity="center"
         android:layout_margin="20dp"
         android:clipChildren="false"
-        android:columnWidth="150dp"
         android:gravity="center_vertical"
         android:horizontalSpacing="12dp"
-        android:numColumns="auto_fit"
+        android:numColumns="4"
         android:scrollbars="none"
         android:verticalSpacing="20dp" />
 
