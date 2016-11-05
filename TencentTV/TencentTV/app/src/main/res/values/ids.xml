@@ -12,4 +12,7 @@
     <item type="id" name="menu_1_3"></item>
     <item type="id" name="menu_1_4"></item>
     <item type="id" name="menu_1_5"></item>
+
+    <item type="id" name="expandable_text"/>
+    <item type="id" name="expand_collapse"/>
 </resources>

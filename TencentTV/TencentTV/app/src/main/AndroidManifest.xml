@@ -10,6 +10,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:screenOrientation="landscape"
         android:theme="@style/AppTheme">
         <!-- 测试的主Activity-->
         <activity
@@ -34,16 +35,13 @@
             android:launchMode="singleTask">
 
         </activity>
+
         <!--
         腾讯视频主页
         -->
         <activity
             android:name="com.open.tencenttv.TVMainActivity"
             android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <!--频道-->
         <activity
@@ -59,7 +57,13 @@
         <activity android:name="com.open.tencenttv.PinDaoViewPagerActivity">
 
         </activity>
-
+        <!--视频预览-->
+        <activity android:name="com.open.tencenttv.VedioPreViewActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

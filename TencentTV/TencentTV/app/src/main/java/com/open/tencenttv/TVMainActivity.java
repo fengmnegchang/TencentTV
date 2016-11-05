@@ -157,6 +157,10 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
             @Override
             public void onItemClick(RecyclerViewTV parent, View itemView, int position) {
                 System.out.println("recycler_push item" + position + " ========onItemClick ");
+                //进入频道
+                Intent intent = new Intent();
+                intent.setClass(TVMainActivity.this,PinDaoActivity.class);
+                startActivity(intent);
             }
         });
     }

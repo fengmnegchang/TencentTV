@@ -1,5 +1,6 @@
 package com.open.tencenttv.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.open.androidtvwidget.bridge.EffectNoDrawBridge;
 import com.open.androidtvwidget.view.MainUpView;
 import com.open.tencenttv.R;
+import com.open.tencenttv.VedioPreViewActivity;
 import com.open.tencenttv.adapter.PinDaoFragmentAdapter;
 import com.open.tencenttv.widget.HeaderGridView;
 
@@ -105,9 +107,14 @@ public class PinDaoFragment  extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mFindhandler.removeCallbacksAndMessages(null);
                 mSavePos = position; // 保存原来的位置(不要按照我的抄，只是DEMO)
-                initGridViewData(new Random().nextInt(3));
-                mFindhandler.sendMessageDelayed(mFindhandler.obtainMessage(), 111);
+//                initGridViewData(new Random().nextInt(3));
+//                mFindhandler.sendMessageDelayed(mFindhandler.obtainMessage(), 111);
                 Toast.makeText(getActivity(), "GridView Item " + position + " pos:" + mSavePos, Toast.LENGTH_LONG).show();
+
+                //进入频道
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), VedioPreViewActivity.class);
+                startActivity(intent);
             }
         });
         initGridViewData(new Random().nextInt(4));

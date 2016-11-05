@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/darkgray">
+
+    <!--演员-->
+    <com.open.androidtvwidget.view.ReflectItemView
+        android:id="@+id/item_actor"
+        android:layout_width="@dimen/w_150"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/w_20"
+        android:layout_marginTop="@dimen/h_60"
+        android:background="@color/darkorchid"
+        android:paddingBottom="@dimen/h_20"
+        android:paddingTop="@dimen/h_20"
+        app:isShape="true"
+        app:radius="@dimen/w_10">
+
+        <ImageView
+            android:layout_width="@dimen/w_30"
+            android:layout_height="@dimen/h_30"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/h_20"
+            android:src="@drawable/actor_logo" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/h_60"
+            android:gravity="center"
+            android:text="演职员"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+    </com.open.androidtvwidget.view.ReflectItemView>
+
+
+    <!--追剧-->
+    <com.open.androidtvwidget.view.ReflectItemView
+        android:id="@+id/item_follow"
+        android:layout_width="@dimen/w_150"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_actor"
+        android:layout_marginLeft="@dimen/w_20"
+        android:layout_marginTop="@dimen/h_1"
+        android:background="@color/darkorchid"
+        android:paddingBottom="@dimen/h_20"
+        android:paddingTop="@dimen/h_20"
+        app:isShape="true"
+        app:radius="@dimen/w_10">
+
+        <ImageView
+            android:layout_width="@dimen/w_30"
+            android:layout_height="@dimen/h_30"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/h_20"
+            android:src="@drawable/actor_logo" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/h_60"
+            android:gravity="center"
+            android:text="追剧"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+    </com.open.androidtvwidget.view.ReflectItemView>
+
+    <TextView
+        android:id="@+id/text_drama_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/w_40"
+        android:layout_marginTop="@dimen/h_60"
+        android:layout_toRightOf="@+id/item_actor"
+        android:gravity="center"
+        android:text="幻城（TV版）  第5集"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+    <FrameLayout
+        android:id="@+id/layout_drama"
+        android:layout_width="@dimen/w_1000"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/text_drama_name"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/item_actor"
+        android:background="@drawable/mainview_tuijian"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
+
+
+    <com.open.tencenttv.widget.ExpandableTextView
+        android:id="@+id/expand_text_view"
+        android:layout_width="@dimen/w_1000"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/w_40"
+        android:layout_marginBottom="@dimen/h_60"
+        android:layout_toRightOf="@+id/item_actor"
+        android:gravity="center"
+        expandableTextView:maxCollapsedLines="4">
+
+        <TextView
+            android:id="@id/expandable_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:layout_gravity="center|bottom"
+            android:gravity="left|top"
+            android:textSize="16sp" />
+
+        <ImageButton
+            android:id="@id/expand_collapse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:background="@android:color/transparent"
+            android:padding="16dp" />
+
+    </com.open.tencenttv.widget.ExpandableTextView>
+
+
+</RelativeLayout>
