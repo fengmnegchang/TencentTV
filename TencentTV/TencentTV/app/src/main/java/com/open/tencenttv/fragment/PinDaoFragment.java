@@ -79,7 +79,7 @@ public class PinDaoFragment  extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         gridView.addHeaderView(headerView);
         // 加载数据.
-        getData(200);
+        getData(20);
         //
         updateGridViewAdapter();
 

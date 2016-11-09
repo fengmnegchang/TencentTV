@@ -14,8 +14,11 @@
         android:clipChildren="false"
         android:gravity="center_vertical"
         android:horizontalSpacing="12dp"
-        android:numColumns="20"
+        android:numColumns="5"
         android:scrollbars="none"
+        android:clickable="true"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
         android:verticalSpacing="20dp" />
 
 </RelativeLayout>

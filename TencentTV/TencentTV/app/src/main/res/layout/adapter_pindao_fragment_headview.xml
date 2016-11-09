@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="380dp"
+    android:layout_height="220dp"
     android:orientation="vertical"
     android:layout_gravity="center|top"
     >
@@ -21,16 +21,17 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="180dp"
         android:scaleType="fitXY"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         android:layout_below="@+id/text_pindao_name"
         android:layout_gravity="center|top"
         android:id="@+id/image_top"
         android:src="@drawable/grid_view_item_test" >
     </ImageView>
 
+    <!--
     <ImageView
         android:layout_width="300dp"
         android:layout_height="160dp"
@@ -55,5 +56,5 @@
         android:layout_gravity="center|top"
         android:src="@drawable/grid_view_item_test" >
     </ImageView>
-
+-->
 </RelativeLayout>

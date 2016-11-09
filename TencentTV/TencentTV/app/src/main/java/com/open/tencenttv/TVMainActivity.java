@@ -9,14 +9,22 @@ import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.open.androidtvwidget.bridge.EffectNoDrawBridge;
 import com.open.androidtvwidget.leanback.adapter.GeneralAdapter;
 import com.open.androidtvwidget.leanback.recycle.LinearLayoutManagerTV;
 import com.open.androidtvwidget.leanback.recycle.RecyclerViewTV;
+import com.open.androidtvwidget.view.ListViewTV;
 import com.open.androidtvwidget.view.MainUpView;
+import com.open.tencenttv.adapter.PersonalCenterAdapter;
 import com.open.tencenttv.adapter.RecyclerViewPresenter;
 import com.open.tencenttv.adapter.RecyclerViewPushPresenter;
+import com.open.tencenttv.bean.PersonalCenterBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ****************************************************************************************************************************************************************************
@@ -33,11 +41,11 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
 
     private static final String TAG = TVMainActivity.class.getSimpleName();
 
-//    private List<PersonalCenterBean> data;
+    private List<PersonalCenterBean> data;
     private MainUpView mainUpView1;
     private LayoutInflater mInflater;
     private View mOldView;
-//    private ListViewTV listView;
+    private ListViewTV listView;
     /**
      * Top视频类型列表 电视+电影+
      **/
@@ -60,7 +68,7 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tv_main);
         this.mInflater = LayoutInflater.from(getApplicationContext());
-//        listView = (ListViewTV) findViewById(R.id.listview);
+        listView = (ListViewTV) findViewById(R.id.listview);
         mainUpView1 = (MainUpView) findViewById(R.id.mainUpView1);
         // 默认是 OpenEff...，建议使用 NoDraw... ...
         mainUpView1.setEffectBridge(new EffectNoDrawBridge());
@@ -68,52 +76,52 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
         mRecyclerViewBridge.setTranDurAnimTime(200);
         mainUpView1.setUpRectResource(R.drawable.white_light_10); // 设置移动边框的图片.
         mainUpView1.setDrawUpRectPadding(new Rect(25, 25, 23, 23)); // 边框图片设置间距.
-//        initData();
-//        listView.setAdapter(new PersonalCenterAdapter(this,data));
-//        listView.setOnItemSelectedListener(new OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                System.out.println("listView item" + view.getId() + ";postion=" + (int) id + " ========onItemSelected ");
-//                if (view != null) {
-//                    view.bringToFront();
-//                    mRecyclerViewBridge.setFocusView(view, mOldView, 1.1f);
-//                    mOldView = view;
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//                System.out.println("listView item" + " ========onNothingSelected ");
-//            }
-//        });
-//
-//        listView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View view, boolean b) {
-//                //失去焦点时，将子view还原
-//                System.out.println("listView item" + view.getId() + " ========onFocusChange " + b);
-//                if (!b) {
-//                    for (int i = 0; i < listView.getChildCount(); i++) {
-//                        View mvView = listView.getChildAt(i);
-//                        mRecyclerViewBridge.setUnFocusView(mvView);
-//                    }
-//                }
-//
-//            }
-//        });
-//
-//        listView.setOnItemClickListener(new OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                if (view != null) {
-//                    view.bringToFront();
-//                    mRecyclerViewBridge.setFocusView(view, mOldView, 1.1f);
-//                    mOldView = view;
-//                }
-//                System.out.println("listView item" + (int) id + " ========onItemClick ");
-//                Toast.makeText(getApplicationContext(), "position : " + position, Toast.LENGTH_LONG).show();
-//            }
-//        });
+        initData();
+        listView.setAdapter(new PersonalCenterAdapter(this,data));
+        listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println("listView item" + view.getId() + ";postion=" + (int) id + " ========onItemSelected ");
+                if (view != null) {
+                    view.bringToFront();
+                    mRecyclerViewBridge.setFocusView(view, mOldView, 1.1f);
+                    mOldView = view;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                System.out.println("listView item" + " ========onNothingSelected ");
+            }
+        });
+
+        listView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                //失去焦点时，将子view还原
+                System.out.println("listView item" + view.getId() + " ========onFocusChange " + b);
+                if (!b) {
+                    for (int i = 0; i < listView.getChildCount(); i++) {
+                        View mvView = listView.getChildAt(i);
+                        mRecyclerViewBridge.setUnFocusView(mvView);
+                    }
+                }
+
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (view != null) {
+                    view.bringToFront();
+                    mRecyclerViewBridge.setFocusView(view, mOldView, 1.1f);
+                    mOldView = view;
+                }
+                System.out.println("listView item" + (int) id + " ========onItemClick ");
+                Toast.makeText(getApplicationContext(), "position : " + position, Toast.LENGTH_LONG).show();
+            }
+        });
 
 
         mRecyclerView = (RecyclerViewTV) findViewById(R.id.recyclerView);
@@ -279,27 +287,27 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
         mOldView = itemView;
     }
 
-//    public void initData() {
-//        data = new ArrayList<PersonalCenterBean>();
-//        //上次观看
-//        PersonalCenterBean mPersonalCenterBean = new PersonalCenterBean();
-//        mPersonalCenterBean.setType(0);
-//        mPersonalCenterBean.setTypeName("上次观看");
-//        mPersonalCenterBean.setContent("杨澜访谈录2015");
-//        data.add(mPersonalCenterBean);
-//
-//        //最近观看
-//        mPersonalCenterBean = new PersonalCenterBean();
-//        mPersonalCenterBean.setType(1);
-//        mPersonalCenterBean.setTypeName("最近观看");
-//        data.add(mPersonalCenterBean);
-//
-//        //我的应用
-//        mPersonalCenterBean = new PersonalCenterBean();
-//        mPersonalCenterBean.setType(2);
-//        mPersonalCenterBean.setTypeName("我的应用");
-//        data.add(mPersonalCenterBean);
-//    }
+    public void initData() {
+        data = new ArrayList<PersonalCenterBean>();
+        //上次观看
+        PersonalCenterBean mPersonalCenterBean = new PersonalCenterBean();
+        mPersonalCenterBean.setType(0);
+        mPersonalCenterBean.setTypeName("上次观看");
+        mPersonalCenterBean.setContent("杨澜访谈录2015");
+        data.add(mPersonalCenterBean);
+
+        //最近观看
+        mPersonalCenterBean = new PersonalCenterBean();
+        mPersonalCenterBean.setType(1);
+        mPersonalCenterBean.setTypeName("最近观看");
+        data.add(mPersonalCenterBean);
+
+        //我的应用
+        mPersonalCenterBean = new PersonalCenterBean();
+        mPersonalCenterBean.setType(2);
+        mPersonalCenterBean.setTypeName("我的应用");
+        data.add(mPersonalCenterBean);
+    }
 
 
 

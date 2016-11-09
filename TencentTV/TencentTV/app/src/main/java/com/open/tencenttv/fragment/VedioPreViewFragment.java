@@ -1,25 +1,35 @@
 package com.open.tencenttv.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.open.androidtvwidget.bridge.EffectNoDrawBridge;
+import com.open.androidtvwidget.view.FrameMainLayout;
 import com.open.androidtvwidget.view.ListViewTV;
 import com.open.androidtvwidget.view.MainUpView;
+import com.open.androidtvwidget.view.ReflectItemView;
+import com.open.androidtvwidget.view.SmoothHorizontalScrollView;
 import com.open.tencenttv.R;
 import com.open.tencenttv.adapter.DramaAdapter;
 import com.open.tencenttv.adapter.DramaCountAdapter;
 import com.open.tencenttv.bean.DramaBean;
 import com.open.tencenttv.bean.DramaCountBean;
 import com.open.tencenttv.widget.ExpandableTextView;
+import com.open.tencenttv.widget.ListPopupWindow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,12 +45,11 @@ import java.util.List;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class VedioPreViewFragment extends Fragment {
+public class VedioPreViewFragment extends Fragment implements View.OnClickListener{
     public static final String TAG = VedioPreViewFragment.class.getSimpleName();
     private MainUpView mainUpView1;
     private View mOldView;
     private EffectNoDrawBridge mRecyclerViewBridge;
-    private ExpandableTextView expand_text_view;//可折叠textview
 
 
     //剧集分页处理
@@ -53,6 +62,31 @@ public class VedioPreViewFragment extends Fragment {
     private List<DramaCountBean> drama_count_list;
 
     public static  final int PAGER_COUNT = 20;
+
+    //剧情预览
+    private  FrameLayout layout_drama;
+    private  ExpandableTextView expand_text_view;
+    private  ImageButton expand_collapse;//折叠textview
+
+    //scrollview
+    private SmoothHorizontalScrollView hscroll_view;
+    private FrameMainLayout main_lay11;
+
+
+    //演员表
+    private ReflectItemView item_actor;
+    //追剧
+    private ReflectItemView item_follow;
+    /***
+     * 默认初始化焦点
+     */
+    Handler mFocusHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            mRecyclerViewBridge.setFocusView(layout_drama, 1.1f);
+            mOldView = layout_drama;
+        }
+    };
 
     public static VedioPreViewFragment newInstance(MainUpView mainUpView1, View mOldView, EffectNoDrawBridge mRecyclerViewBridge) {
         VedioPreViewFragment fragment = new VedioPreViewFragment();
@@ -70,14 +104,41 @@ public class VedioPreViewFragment extends Fragment {
         listview_drama_pager = (ListViewTV) view.findViewById(R.id.listview_drama_pager);
         listview_drama_count = (ListViewTV) view.findViewById(R.id.listview_drama_count);
 
+        layout_drama = (FrameLayout) view.findViewById(R.id.layout_drama);
+        expand_text_view = (ExpandableTextView) view.findViewById(R.id.expand_text_view);
+        expand_collapse = (ImageButton) view.findViewById(R.id.expand_collapse);
+
+        hscroll_view = (SmoothHorizontalScrollView)  view.findViewById(R.id.hscroll_view);
+        main_lay11 = (FrameMainLayout) view.findViewById(R.id.main_lay);
+
+        item_actor = (ReflectItemView) view.findViewById(R.id.item_actor);
+        item_follow = (ReflectItemView) view.findViewById(R.id.item_follow);
+
         initData();
         return view;
     }
 
-
+    public float getDimension(int id) {
+        return getResources().getDimension(id);
+    }
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        hscroll_view.setFadingEdge((int)getDimension(R.dimen.w_100)); // 滚动窗口也需要适配.
+        main_lay11.getViewTreeObserver().addOnGlobalFocusChangeListener(new ViewTreeObserver.OnGlobalFocusChangeListener() {
+            @Override
+            public void onGlobalFocusChanged(final View oldFocus, final View newFocus) {
+                if (newFocus != null)
+                    newFocus.bringToFront(); // 防止放大的view被压在下面. (建议使用MainLayout)
+                float scale = 1.2f;
+                mainUpView1.setFocusView(newFocus, mOldView, scale);
+                mOldView = newFocus; // 4.3以下需要自己保存.
+                // 测试是否让边框绘制在下面，还是上面. (建议不要使用此函数)
+                if (newFocus != null) {
+
+                }
+            }
+        });
         expand_text_view.setOnExpandStateChangeListener(new ExpandableTextView.OnExpandStateChangeListener() {
             @Override
             public void onExpandStateChanged(TextView textView, boolean isExpanded) {
@@ -154,7 +215,23 @@ public class VedioPreViewFragment extends Fragment {
         FragmentManager manager = getActivity().getSupportFragmentManager();
         LikeDramaFragment likeDramaFragment = LikeDramaFragment.newInstance(mainUpView1,mOldView,mRecyclerViewBridge);
         manager.beginTransaction().replace(R.id.layout_you_like_drama, likeDramaFragment).commit();
+        mFocusHandler.sendEmptyMessageDelayed(10, 1000);
 
+        for (int i = 0; i < main_lay11.getChildCount(); i++) {
+            main_lay11.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+//						v.performClick();
+                        v.requestFocus();
+                    }
+                    return false;
+                }
+            });
+        }
+
+        item_actor.setOnClickListener(this);
+        item_follow.setOnClickListener(this);
     }
 
 
@@ -188,5 +265,18 @@ public class VedioPreViewFragment extends Fragment {
             drama_pager_list.add(bean);
         }
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.item_actor:
+                //弹出popupwindow
+                ListPopupWindow addPopWindow = new ListPopupWindow(getActivity(),mainUpView1,mOldView,mRecyclerViewBridge);
+                addPopWindow.showPopupWindow(item_actor);
+                break;
+            case R.id.item_follow:
+                break;
+        }
     }
 }

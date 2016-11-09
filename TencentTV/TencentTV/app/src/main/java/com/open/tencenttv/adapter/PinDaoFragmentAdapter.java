@@ -56,14 +56,14 @@ public class PinDaoFragmentAdapter extends BaseAdapter {
 //        bindViewData(position, viewHolder);
 //        return convertView;
         View view;
-        if(getItemViewType(position)==0){
-            view = mInflater.inflate(R.layout.adapter_pindao_fragment3, parent, false);
-//            view.setLayoutParams(new FrameLayout.LayoutParams(280,210));
-
-        }else{
+//        if(getItemViewType(position)==0){
+//            view = mInflater.inflate(R.layout.adapter_pindao_fragment3, parent, false);
+////            view.setLayoutParams(new FrameLayout.LayoutParams(280,210));
+//
+//        }else{
             view = mInflater.inflate(R.layout.adapter_pindao_fragment, parent, false);
 //            view.setLayoutParams(new FrameLayout.LayoutParams(150,210));
-        }
+//        }
 
         TextView titleTv = (TextView) view.findViewById(R.id.textView);
         titleTv.setText(mDatas.get(position));
