@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="160dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_height="210dp">
+
+    <ImageView
+        android:id="@+id/image_tpye_bg"
+        android:layout_width="200dp"
+        android:layout_height="210dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/mainview_huodong" />
+
+    <TextView
+        android:id="@+id/text_type_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/text_type_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:focusable="false"
+        android:gravity="center|left"
+        android:padding="5dp"
+        android:text="观看至第13集"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/text_type_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:focusable="false"
+        android:gravity="center|left"
+        android:padding="5dp"
+        android:text="杨澜访谈录2015"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
+
+
+</RelativeLayout>

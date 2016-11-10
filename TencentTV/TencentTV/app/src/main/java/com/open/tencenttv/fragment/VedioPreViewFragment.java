@@ -272,11 +272,13 @@ public class VedioPreViewFragment extends Fragment implements View.OnClickListen
         switch (view.getId()) {
             case R.id.item_actor:
                 //弹出popupwindow
-                ListPopupWindow addPopWindow = new ListPopupWindow(getActivity(),mainUpView1,mOldView,mRecyclerViewBridge);
+                ListPopupWindow addPopWindow = new ListPopupWindow(getActivity());
                 addPopWindow.showPopupWindow(item_actor);
                 break;
             case R.id.item_follow:
                 break;
         }
     }
+
+
 }

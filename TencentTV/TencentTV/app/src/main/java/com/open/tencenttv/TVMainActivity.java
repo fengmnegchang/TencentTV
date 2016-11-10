@@ -120,6 +120,10 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
                 }
                 System.out.println("listView item" + (int) id + " ========onItemClick ");
                 Toast.makeText(getApplicationContext(), "position : " + position, Toast.LENGTH_LONG).show();
+                //进入频道
+                Intent intent = new Intent();
+                intent.setClass(TVMainActivity.this,LastHistoryActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -199,9 +199,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_toRightOf="@+id/listview_drama_count"
-                android:clickable="true"
-                android:focusableInTouchMode="true"
-                android:focusable="true"
+                android:focusable="false"
                 />
 
 

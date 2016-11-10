@@ -7,7 +7,7 @@
     android:clipToPadding="false"
     android:focusable="false"
     android:focusableInTouchMode="false"
-    android:paddingLeft="30dp">
+    >
 
 
     <FrameLayout

@@ -2,6 +2,7 @@ package com.open.tencenttv.widget;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,8 +32,12 @@ import java.util.List;
  */
 public class ListPopupWindow extends PopupWindow {
     private View conentView;
+    private MainUpView mainUpView1;
+    private LayoutInflater mInflater;
+    private View mOldView;
+    private EffectNoDrawBridge mRecyclerViewBridge;
 
-    public ListPopupWindow(final Activity context,final MainUpView mainUpView1,final View mOldView,EffectNoDrawBridge mRecyclerViewBridge) {
+    public ListPopupWindow(final Activity context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         conentView = inflater.inflate(R.layout.popup_listview, null);
@@ -41,7 +46,7 @@ public class ListPopupWindow extends PopupWindow {
         // 设置SelectPicPopupWindow的View
         this.setContentView(conentView);
         // 设置SelectPicPopupWindow弹出窗体的宽
-        this.setWidth(w / 2 + 50);
+        this.setWidth(LayoutParams.WRAP_CONTENT);
         // 设置SelectPicPopupWindow弹出窗体的高
         this.setHeight(LayoutParams.WRAP_CONTENT);
         // 设置SelectPicPopupWindow弹出窗体可点击
@@ -57,6 +62,15 @@ public class ListPopupWindow extends PopupWindow {
         // 设置SelectPicPopupWindow弹出窗体动画效果
         this.setAnimationStyle(R.style.AnimationPreview);
 
+        this.mInflater = LayoutInflater.from(context);
+        mainUpView1 = (MainUpView) conentView.findViewById(R.id.mainUpView1);
+        // 默认是 OpenEff...，建议使用 NoDraw... ...
+        mainUpView1.setEffectBridge(new EffectNoDrawBridge());
+        mRecyclerViewBridge = (EffectNoDrawBridge) mainUpView1.getEffectBridge();
+        mRecyclerViewBridge.setTranDurAnimTime(200);
+        mainUpView1.setUpRectResource(R.drawable.white_light_10); // 设置移动边框的图片.
+        mainUpView1.setDrawUpRectPadding(new Rect(25, 25, 23, 23)); // 边框图片设置间距
+
 
         ListViewTV listView = (ListViewTV) conentView.findViewById(R.id.listview);
         List<ActorBean> list = new ArrayList<ActorBean>();
@@ -69,7 +83,8 @@ public class ListPopupWindow extends PopupWindow {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (view != null) {
-                    mainUpView1.setFocusView(view, mOldView, 1.2f);
+                    mainUpView1.setFocusView(view, mOldView, 1.1f);
+                    mOldView = view;
                 }
             }
 
@@ -84,6 +99,8 @@ public class ListPopupWindow extends PopupWindow {
                 ListPopupWindow.this.dismiss();
             }
         });
+
+        listView.setDefaultSelect(0);
     }
 
     /**
@@ -94,7 +111,7 @@ public class ListPopupWindow extends PopupWindow {
     public void showPopupWindow(View parent) {
         if (!this.isShowing()) {
             // 以下拉方式显示popupwindow
-            this.showAsDropDown(parent, parent.getLayoutParams().width / 2, 18);
+            this.showAsDropDown(parent, parent.getLayoutParams().width / 2, 100);
         } else {
             this.dismiss();
         }

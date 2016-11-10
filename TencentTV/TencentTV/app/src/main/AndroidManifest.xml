@@ -42,7 +42,6 @@
         <activity
             android:name="com.open.tencenttv.TVMainActivity"
             android:launchMode="singleTask">
-
         </activity>
         <!--频道-->
         <activity
@@ -60,6 +59,10 @@
         </activity>
         <!--视频预览-->
         <activity android:name="com.open.tencenttv.VedioPreViewActivity">
+
+        </activity>
+        <!--观看历史记录-->
+        <activity android:name="com.open.tencenttv.LastHistoryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

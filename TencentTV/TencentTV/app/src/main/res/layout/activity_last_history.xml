@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:focusable="false"
+    android:focusableInTouchMode="false">
+
+    <com.open.androidtvwidget.view.SmoothHorizontalScrollView
+        android:id="@+id/hscroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000000"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <com.open.androidtvwidget.view.FrameMainLayout
+            android:id="@+id/main_lay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="2200dp"
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false">
+
+                <!--登陆有礼 图片广告-->
+                <com.open.androidtvwidget.view.ReflectItemView
+                    android:id="@+id/item_login_adv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/w_40"
+                    android:layout_marginTop="@dimen/h_60"
+                    android:background="@color/darkorchid"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:nextFocusDown="@+id/recycler_history"
+                    app:isShape="true"
+                    app:radius="@dimen/w_10">
+
+                    <ImageView
+                        android:layout_width="@dimen/w_400"
+                        android:layout_height="@dimen/h_200"
+                        android:layout_gravity="center_horizontal"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/zongyi" />
+
+                </com.open.androidtvwidget.view.ReflectItemView>
+
+
+                <!--影视会员-->
+                <com.open.androidtvwidget.view.ReflectItemView
+                    android:id="@+id/item_member"
+                    android:layout_width="@dimen/w_260"
+                    android:layout_height="@dimen/h_200"
+                    android:layout_marginLeft="@dimen/w_15"
+                    android:layout_marginTop="@dimen/h_60"
+                    android:layout_toRightOf="@+id/item_login_adv"
+                    android:background="@color/darkorchid"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:nextFocusDown="@+id/recycler_history"
+                    app:isShape="true"
+                    app:radius="@dimen/w_10">
+
+                    <ImageView
+                        android:layout_width="@dimen/w_80"
+                        android:layout_height="@dimen/h_80"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/h_30"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_launcher" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/h_130"
+                        android:gravity="center"
+                        android:text="影视会员"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp" />
+                </com.open.androidtvwidget.view.ReflectItemView>
+
+
+                <!--签到抽大奖-->
+                <com.open.androidtvwidget.view.ReflectItemView
+                    android:id="@+id/item_sign"
+                    android:layout_width="@dimen/w_260"
+                    android:layout_height="@dimen/h_200"
+                    android:layout_marginLeft="@dimen/w_15"
+                    android:layout_marginTop="@dimen/h_60"
+                    android:layout_toRightOf="@+id/item_member"
+                    android:background="@color/darkorchid"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:nextFocusDown="@+id/recycler_history"
+                    app:isShape="true"
+                    app:radius="@dimen/w_10">
+
+                    <ImageView
+                        android:layout_width="@dimen/w_80"
+                        android:layout_height="@dimen/h_80"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/h_30"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_launcher" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/h_130"
+                        android:gravity="center"
+                        android:text="签到抽大奖"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp" />
+
+                </com.open.androidtvwidget.view.ReflectItemView>
+
+                <!--积分商城-->
+                <com.open.androidtvwidget.view.ReflectItemView
+                    android:id="@+id/item_shop"
+                    android:layout_width="@dimen/w_260"
+                    android:layout_height="@dimen/h_200"
+                    android:layout_marginLeft="@dimen/w_15"
+                    android:layout_marginTop="@dimen/h_60"
+                    android:layout_toRightOf="@+id/item_sign"
+                    android:background="@color/darkorchid"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:nextFocusDown="@+id/recycler_history"
+                    app:isShape="true"
+                    app:radius="@dimen/w_10">
+
+                    <ImageView
+                        android:layout_width="@dimen/w_80"
+                        android:layout_height="@dimen/h_80"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/h_30"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_launcher" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/h_130"
+                        android:gravity="center"
+                        android:text="积分商城"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp" />
+
+                </com.open.androidtvwidget.view.ReflectItemView>
+
+                <!--帮助与建议-->
+                <com.open.androidtvwidget.view.ReflectItemView
+                    android:id="@+id/item_help"
+                    android:layout_width="@dimen/w_260"
+                    android:layout_height="@dimen/h_200"
+                    android:layout_marginLeft="@dimen/w_15"
+                    android:layout_marginTop="@dimen/h_60"
+                    android:layout_toRightOf="@+id/item_shop"
+                    android:background="@color/darkorchid"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:nextFocusDown="@+id/recycler_history"
+                    app:isShape="true"
+                    app:radius="@dimen/w_10">
+
+                    <ImageView
+                        android:layout_width="@dimen/w_80"
+                        android:layout_height="@dimen/h_80"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/h_30"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_launcher" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/h_130"
+                        android:gravity="center"
+                        android:text="帮助与建议"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp" />
+
+                </com.open.androidtvwidget.view.ReflectItemView>
+
+                <TextView
+                    android:id="@+id/txt_history"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/item_login_adv"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center"
+                    android:text="观看"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+
+                <FrameLayout
+                    android:id="@+id/item_recycler_history"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:layout_below="@+id/txt_history"
+                    android:focusable="false" />
+
+            </RelativeLayout>
+
+
+        </com.open.androidtvwidget.view.FrameMainLayout>
+    </com.open.androidtvwidget.view.SmoothHorizontalScrollView>
+
+    <com.open.androidtvwidget.view.MainUpView
+        android:id="@+id/mainUpView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

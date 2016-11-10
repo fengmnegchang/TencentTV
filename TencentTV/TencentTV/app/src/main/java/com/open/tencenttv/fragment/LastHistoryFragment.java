@@ -15,14 +15,14 @@ import com.open.androidtvwidget.bridge.EffectNoDrawBridge;
 import com.open.androidtvwidget.view.GridViewTV;
 import com.open.androidtvwidget.view.MainUpView;
 import com.open.tencenttv.R;
-import com.open.tencenttv.adapter.LikeDramaAdapter;
+import com.open.tencenttv.adapter.LastHistoryAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * ****************************************************************************************************************************************************************************
- * 猜你喜欢 fragment
+ *
  *
  * @author :fengguangjing
  * @createTime: 16/11/2
@@ -31,7 +31,7 @@ import java.util.List;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class LikeDramaFragment extends Fragment {
+public class LastHistoryFragment extends Fragment {
     public static final String TAG = LikeDramaFragment.class.getSimpleName();
     private MainUpView mainUpView1;
     private View mOldView;
@@ -40,10 +40,10 @@ public class LikeDramaFragment extends Fragment {
     //gridview
     private List<String> data;
     private GridViewTV gridView;
-    private LikeDramaAdapter mAdapter;
+    private LastHistoryAdapter mAdapter;
 
-    public static LikeDramaFragment newInstance(MainUpView mainUpView1, View mOldView, EffectNoDrawBridge mRecyclerViewBridge) {
-        LikeDramaFragment fragment = new LikeDramaFragment();
+    public static LastHistoryFragment newInstance(MainUpView mainUpView1, View mOldView, EffectNoDrawBridge mRecyclerViewBridge) {
+        LastHistoryFragment fragment = new LastHistoryFragment();
         fragment.mainUpView1 = mainUpView1;
         fragment.mOldView = mOldView;
         fragment.mRecyclerViewBridge = mRecyclerViewBridge;
@@ -53,7 +53,7 @@ public class LikeDramaFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_like_drama, container, false);
+        View view = inflater.inflate(R.layout.fragment_last_history, container, false);
         gridView = (GridViewTV) view.findViewById(R.id.gridView);
         return view;
     }
@@ -127,7 +127,7 @@ public class LikeDramaFragment extends Fragment {
     }
 
     private void updateGridViewAdapter() {
-        mAdapter = new LikeDramaAdapter(getActivity(), data);
+        mAdapter = new LastHistoryAdapter(getActivity(), data);
         gridView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }
