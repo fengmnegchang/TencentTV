@@ -50,7 +50,7 @@ import com.tonicartos.widget.stickygridheaders.StickyGridHeadersSimpleArrayAdapt
  * 
  * @author Tonic Artos
  */
-public class ItemListFragment extends Fragment implements OnItemClickListener,
+public class LastHistoryStickYGridHeaderFragment extends Fragment implements OnItemClickListener,
         OnHeaderClickListener, OnHeaderLongClickListener {
     private static final String KEY_LIST_POSITION = "key_list_position";
 
@@ -91,11 +91,11 @@ public class ItemListFragment extends Fragment implements OnItemClickListener,
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public ItemListFragment() {
+    public LastHistoryStickYGridHeaderFragment() {
     }
 
-    public static ItemListFragment newInstance(MainUpView mainUpView1, View mOldView, EffectNoDrawBridge mRecyclerViewBridge) {
-        ItemListFragment fragment = new ItemListFragment();
+    public static LastHistoryStickYGridHeaderFragment newInstance(MainUpView mainUpView1, View mOldView, EffectNoDrawBridge mRecyclerViewBridge) {
+        LastHistoryStickYGridHeaderFragment fragment = new LastHistoryStickYGridHeaderFragment();
         return fragment;
     }
 
@@ -121,7 +121,7 @@ public class ItemListFragment extends Fragment implements OnItemClickListener,
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_item_grid, container, false);
+        return inflater.inflate(R.layout.fragment_last_history_stick_y_grid_header, container, false);
     }
 
     @Override
@@ -182,7 +182,7 @@ public class ItemListFragment extends Fragment implements OnItemClickListener,
 //            case R.id.menu_use_sticky_adapter:
 //                mGridView.setAdapter(new StickyGridHeadersSimpleArrayAdapter<String>(getActivity()
 //                        .getApplicationContext(), getResources().getStringArray(R.array.countries),
-//                        R.layout.header, R.layout.item));
+//                        R.layout.item_last_history_stick_header, R.layout.item));
 //                mMenu.findItem(R.id.menu_use_list_adapter).setVisible(true);
 //                mMenu.findItem(R.id.menu_toggle_sticky).setVisible(true);
 //                mMenu.findItem(R.id.menu_use_sticky_adapter).setVisible(false);
@@ -218,7 +218,7 @@ public class ItemListFragment extends Fragment implements OnItemClickListener,
         // mGridView.setNumColumns(StickyGridHeadersGridView.AUTO_FIT);
         mGridView.setAdapter(new StickyGridHeadersSimpleArrayAdapter<String>(getActivity()
                 .getApplicationContext(), getResources().getStringArray(R.array.countries),
-                R.layout.header, R.layout.item));
+                R.layout.item_last_history_stick_header, R.layout.item_last_history_stick_grid));
 
         if (savedInstanceState != null) {
             mFirstVisible = savedInstanceState.getInt(KEY_LIST_POSITION);

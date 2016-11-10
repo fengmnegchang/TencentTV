@@ -17,7 +17,7 @@ import com.open.androidtvwidget.view.FrameMainLayout;
 import com.open.androidtvwidget.view.MainUpView;
 import com.open.androidtvwidget.view.ReflectItemView;
 import com.open.androidtvwidget.view.SmoothHorizontalScrollView;
-import com.open.tencenttv.fragment.ItemListFragment;
+import com.open.tencenttv.fragment.LastHistoryStickYGridHeaderFragment;
 
 /**
  * ****************************************************************************************************************************************************************************
@@ -30,7 +30,7 @@ import com.open.tencenttv.fragment.ItemListFragment;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class LastHistoryActivity extends FragmentActivity implements ItemListFragment.Callbacks {
+public class LastHistoryActivity extends FragmentActivity implements LastHistoryStickYGridHeaderFragment.Callbacks {
     private static final String TAG = LastHistoryActivity.class.getSimpleName();
     private MainUpView mainUpView1;
     private LayoutInflater mInflater;
@@ -84,7 +84,7 @@ public class LastHistoryActivity extends FragmentActivity implements ItemListFra
             }
         });
         FragmentManager manager = getSupportFragmentManager();
-        ItemListFragment fragment = ItemListFragment.newInstance(mainUpView1,mOldView,mRecyclerViewBridge);
+        LastHistoryStickYGridHeaderFragment fragment = LastHistoryStickYGridHeaderFragment.newInstance(mainUpView1,mOldView,mRecyclerViewBridge);
         manager.beginTransaction().replace(R.id.item_recycler_history, fragment).commit();
 
         for (int i = 0; i < main_lay11.getChildCount(); i++) {
@@ -114,7 +114,7 @@ public class LastHistoryActivity extends FragmentActivity implements ItemListFra
     };
 
     /**
-     * Callback method from {@link ItemListFragment.Callbacks} indicating that
+     * Callback method from {@link LastHistoryStickYGridHeaderFragment.Callbacks} indicating that
      * the item with the given ID was selected.
      */
     @Override
