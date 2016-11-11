@@ -9,8 +9,8 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
         android:screenOrientation="landscape"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <!-- 测试的主Activity-->
         <activity
@@ -18,17 +18,15 @@
             android:launchMode="singleTask"></activity>
 
         <!-- 测试DEMO Activity -->
-        <activity android:name="com.open.tencenttv.DemoGridViewActivity">
-        </activity>
+        <activity android:name="com.open.tencenttv.DemoGridViewActivity"></activity>
         <activity android:name="com.open.tencenttv.DemoListViewActivity" />
-        <activity android:name="com.open.tencenttv.DemoKeyBoardActivity" />
-        <activity android:name="com.open.tencenttv.DemoViewPagerActivity">
+        <activity android:name="com.open.tencenttv.DemoKeyBoardActivity">
+
         </activity>
+        <activity android:name="com.open.tencenttv.DemoViewPagerActivity"></activity>
         <activity android:name="com.open.tencenttv.DemoMenuActivity" />
-        <activity android:name="com.open.tencenttv.DemoRecyclerviewActivity" >
-        </activity>
-        <activity android:name="com.open.tencenttv.DemoRecyclerviewLeanBackActivity" >
-        </activity>
+        <activity android:name="com.open.tencenttv.DemoRecyclerviewActivity"></activity>
+        <activity android:name="com.open.tencenttv.DemoRecyclerviewLeanBackActivity"></activity>
         <!-- 横向布局-->
         <activity
             android:name="com.open.tencenttv.DemoRecyclerviewActivity2"
@@ -41,18 +39,15 @@
         -->
         <activity
             android:name="com.open.tencenttv.TVMainActivity"
-            android:launchMode="singleTask">
-        </activity>
+            android:launchMode="singleTask"></activity>
         <!--频道-->
         <activity
             android:name="com.open.tencenttv.PinDaoActivity"
-            android:launchMode="singleTask">
-        </activity>
+            android:launchMode="singleTask"></activity>
         <!--频道 使用ListFragment-->
         <activity
             android:name="com.open.tencenttv.ListFragmentPinDaoActivity"
-            android:launchMode="singleTask">
-        </activity>
+            android:launchMode="singleTask"></activity>
         <!--频道 使用ViewPager-->
         <activity android:name="com.open.tencenttv.PinDaoViewPagerActivity">
 
@@ -63,6 +58,14 @@
         </activity>
         <!--观看历史记录-->
         <activity android:name="com.open.tencenttv.LastHistoryActivity">
+
+        </activity>
+        <!--设置-->
+        <activity android:name="com.open.tencenttv.SettingsActivity">
+
+        </activity>
+        <!--搜索-->
+        <activity android:name="com.open.tencenttv.SearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

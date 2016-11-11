@@ -265,19 +265,19 @@ public class StickyGridHeadersGridView extends GridView implements OnScrollListe
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         mOnItemClickListener.onItemClick(parent, view,
-                mAdapter.translatePosition(position).mPosition, id);
+                mAdapter.translatePosition((int)id).mPosition, id);
     }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         return mOnItemLongClickListener.onItemLongClick(parent, view,
-                mAdapter.translatePosition(position).mPosition, id);
+                mAdapter.translatePosition((int)id).mPosition, id);
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         mOnItemSelectedListener.onItemSelected(parent, view,
-                mAdapter.translatePosition(position).mPosition, id);
+                mAdapter.translatePosition((int)id).mPosition, id);
     }
 
     @Override

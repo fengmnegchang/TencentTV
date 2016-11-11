@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.open.tencenttv.R;
+
 import com.open.androidtvwidget.keyboard.SkbContainer;
 import com.open.androidtvwidget.keyboard.SoftKey;
 import com.open.androidtvwidget.keyboard.SoftKeyBoardListener;
@@ -133,6 +133,13 @@ public class DemoKeyBoardActivity extends Activity {
 				skbContainer.setSkbLayout(R.xml.skb_t9_keys);
 			}
 		});
+//		findViewById(R.id.t12_key_btn).setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				setSkbContainerMove();
+//				skbContainer.setSkbLayout(R.xml.skb_t12_keys);
+//			}
+//		});
 	}
 
 	private void setSkbContainerMove() {

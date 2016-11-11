@@ -26,7 +26,7 @@
             android:layout_height="match_parent">
 
             <RelativeLayout
-                android:layout_width="2200dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipChildren="false"
                 android:clipToPadding="false"
@@ -202,23 +202,12 @@
 
                 </com.open.androidtvwidget.view.ReflectItemView>
 
-                <TextView
-                    android:id="@+id/txt_history"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@+id/item_login_adv"
-                    android:layout_marginLeft="20dp"
-                    android:gravity="center"
-                    android:text="观看"
-                    android:textColor="#FFFFFF"
-                    android:textSize="16sp" />
-
                 <FrameLayout
                     android:id="@+id/item_recycler_history"
                     android:layout_width="match_parent"
-                    android:layout_height="220dp"
-                    android:layout_below="@+id/txt_history"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:layout_below="@+id/item_login_adv"
                     android:focusable="false" />
 
             </RelativeLayout>

@@ -1,0 +1,715 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.open.androidtvwidget.view.SmoothHorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/hscroll_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:fillViewport="true"
+    android:focusable="false"
+    android:focusableInTouchMode="false"
+    android:scrollbars="none">
+
+    <com.open.androidtvwidget.view.FrameMainLayout
+        android:id="@+id/main_lay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:focusable="false"
+            android:paddingLeft="20dp"
+            android:focusableInTouchMode="false">
+
+            <!--系统设置-->
+            <TextView
+                android:id="@+id/txt_system_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/h_40"
+                android:gravity="center"
+                android:text="系统设置"
+                android:textColor="#FFFFFF"
+                android:textSize="25sp" />
+            <!--网络设置-->
+            <TextView
+                android:id="@+id/txt_type_wifi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/txt_system_settings"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/h_40"
+                android:gravity="center"
+                android:text="网络设置"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+            <!--无线网络-->
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/item_wifi"
+                android:layout_width="@dimen/w_280"
+                android:layout_height="@dimen/h_160"
+                android:layout_below="@+id/txt_type_wifi"
+                android:layout_marginTop="@dimen/h_10"
+                android:background="@color/darkorchid"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingLeft="@dimen/w_20"
+                android:focusableInTouchMode="true"
+                app:isShape="true"
+                app:radius="@dimen/w_10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_10"
+                    android:gravity="left"
+                    android:text="无线网络"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_50"
+                    android:gravity="left"
+                    android:text="设置无线网络"
+                    android:textColor="#FFFF00"
+                    android:textSize="12sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="@dimen/h_90"
+                    android:gravity="center_horizontal|left"
+                    android:text="TPLINK_100"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/w_60"
+                    android:layout_height="@dimen/h_60"
+                    android:scaleType="fitXY"
+                    android:layout_marginTop="@dimen/h_80"
+                    android:layout_marginLeft="@dimen/w_190"
+                    android:src="@drawable/ic_launcher" />
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <!--有线网络-->
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/item_net"
+                android:layout_width="@dimen/w_280"
+                android:layout_height="@dimen/h_160"
+                android:layout_below="@+id/txt_type_wifi"
+                android:layout_marginTop="@dimen/h_20"
+                android:layout_toRightOf="@+id/item_wifi"
+                android:background="@color/darkorchid"
+                android:layout_marginLeft="@dimen/w_40"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingLeft="@dimen/w_20"
+                android:focusableInTouchMode="true"
+                app:isShape="true"
+                app:radius="@dimen/w_10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_10"
+                    android:gravity="left"
+                    android:text="有线网络"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_50"
+                    android:gravity="left"
+                    android:text="设置当前有线网络"
+                    android:textColor="#FFFF00"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/w_60"
+                    android:layout_height="@dimen/h_60"
+                    android:scaleType="fitXY"
+                    android:layout_marginTop="@dimen/h_80"
+                    android:layout_marginLeft="@dimen/w_190"
+                    android:src="@drawable/ic_launcher" />
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <!--宽带连接-->
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/item_poe_net"
+                android:layout_width="@dimen/w_280"
+                android:layout_height="@dimen/h_160"
+                android:layout_below="@+id/txt_type_wifi"
+                android:layout_marginTop="@dimen/h_10"
+                android:layout_toRightOf="@+id/item_net"
+                android:background="@color/darkorchid"
+                android:layout_marginLeft="@dimen/w_40"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingLeft="@dimen/w_20"
+                android:focusableInTouchMode="true"
+                app:isShape="true"
+                app:radius="@dimen/w_10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_10"
+                    android:gravity="left"
+                    android:text="宽带连接"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_50"
+                    android:gravity="left"
+                    android:text="设置PPPPoE拨号上网"
+                    android:textColor="#FFFF00"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/w_60"
+                    android:layout_height="@dimen/h_60"
+                    android:scaleType="fitXY"
+                    android:layout_marginTop="@dimen/h_80"
+                    android:layout_marginLeft="@dimen/w_190"
+                    android:src="@drawable/ic_launcher" />
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <!--网络测试-->
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/item_test_net"
+                android:layout_width="@dimen/w_280"
+                android:layout_height="@dimen/h_160"
+                android:layout_below="@+id/txt_type_wifi"
+                android:layout_marginTop="@dimen/h_10"
+                android:layout_toRightOf="@+id/item_poe_net"
+                android:background="@color/darkorchid"
+                android:layout_marginLeft="@dimen/w_40"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingLeft="@dimen/w_20"
+                android:focusableInTouchMode="true"
+                app:isShape="true"
+                app:radius="@dimen/w_10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_10"
+                    android:gravity="left"
+                    android:text="网络测试"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_50"
+                    android:gravity="left"
+                    android:text="检测当前网络状态"
+                    android:textColor="#FFFF00"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/w_60"
+                    android:layout_height="@dimen/h_60"
+                    android:scaleType="fitXY"
+                    android:layout_marginTop="@dimen/h_80"
+                    android:layout_marginLeft="@dimen/w_190"
+                    android:src="@drawable/ic_launcher" />
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <!--WLAN热点-->
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/item_wlan_hot"
+                android:layout_width="@dimen/w_280"
+                android:layout_height="@dimen/h_160"
+                android:layout_below="@+id/txt_type_wifi"
+                android:layout_marginTop="@dimen/h_10"
+                android:layout_toRightOf="@+id/item_test_net"
+                android:background="@color/darkorchid"
+                android:layout_marginLeft="@dimen/w_40"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingLeft="@dimen/w_20"
+                android:focusableInTouchMode="true"
+                app:isShape="true"
+                app:radius="@dimen/w_10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_10"
+                    android:gravity="left"
+                    android:text="WLAN热点"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_50"
+                    android:gravity="left"
+                    android:text="为其他设备提供wifi上网..."
+                    android:textColor="#FFFF00"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/w_60"
+                    android:layout_height="@dimen/h_60"
+                    android:scaleType="fitXY"
+                    android:layout_marginTop="@dimen/h_80"
+                    android:layout_marginLeft="@dimen/w_190"
+                    android:src="@drawable/ic_launcher" />
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <!--账号与支付-->
+            <TextView
+                android:id="@+id/txt_type_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/item_wifi"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/h_40"
+                android:gravity="center"
+                android:text="账号与支付"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+            <!--我的账号-->
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/item_my_account"
+                android:layout_width="@dimen/w_280"
+                android:layout_height="@dimen/h_160"
+                android:layout_below="@+id/txt_type_account"
+                android:layout_marginTop="@dimen/h_10"
+                android:background="@color/darkorchid"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingLeft="@dimen/w_20"
+                android:focusableInTouchMode="true"
+                app:isShape="true"
+                app:radius="@dimen/w_10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_10"
+                    android:gravity="left"
+                    android:text="我的账号"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_50"
+                    android:gravity="left"
+                    android:text="使用支付宝登陆"
+                    android:textColor="#FFFF00"
+                    android:textSize="12sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="@dimen/h_90"
+                    android:gravity="center_horizontal|left"
+                    android:text="未登陆"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/w_60"
+                    android:layout_height="@dimen/h_60"
+                    android:scaleType="fitXY"
+                    android:layout_marginTop="@dimen/h_80"
+                    android:layout_marginLeft="@dimen/w_190"
+                    android:src="@drawable/ic_launcher" />
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <!--支付管理-->
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/item_manager_account"
+                android:layout_width="@dimen/w_280"
+                android:layout_height="@dimen/h_160"
+                android:layout_marginTop="@dimen/h_20"
+                android:layout_toRightOf="@+id/item_my_account"
+                android:background="@color/darkorchid"
+                android:layout_marginLeft="@dimen/w_40"
+                android:layout_below="@+id/txt_type_account"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingLeft="@dimen/w_20"
+                android:focusableInTouchMode="true"
+                app:isShape="true"
+                app:radius="@dimen/w_10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_10"
+                    android:gravity="left"
+                    android:text="支付管理"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_50"
+                    android:gravity="left"
+                    android:text="授权支付宝账号在本设备..."
+                    android:textColor="#FFFF00"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/w_60"
+                    android:layout_height="@dimen/h_60"
+                    android:scaleType="fitXY"
+                    android:layout_marginTop="@dimen/h_80"
+                    android:layout_marginLeft="@dimen/w_190"
+                    android:src="@drawable/ic_launcher" />
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <!--安全锁-->
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/item_manager_pass"
+                android:layout_width="@dimen/w_280"
+                android:layout_height="@dimen/h_160"
+                android:layout_marginTop="@dimen/h_20"
+                android:layout_toRightOf="@+id/item_manager_account"
+                android:background="@color/darkorchid"
+                android:layout_marginLeft="@dimen/w_40"
+                android:layout_below="@+id/txt_type_account"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingLeft="@dimen/w_20"
+                android:focusableInTouchMode="true"
+                app:isShape="true"
+                app:radius="@dimen/w_10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_10"
+                    android:gravity="left"
+                    android:text="安全锁"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_50"
+                    android:gravity="left"
+                    android:text="避免儿童误操作购买物品"
+                    android:textColor="#FFFF00"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/w_60"
+                    android:layout_height="@dimen/h_60"
+                    android:scaleType="fitXY"
+                    android:layout_marginTop="@dimen/h_80"
+                    android:layout_marginLeft="@dimen/w_190"
+                    android:src="@drawable/ic_launcher" />
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <!--注册-->
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/item_register"
+                android:layout_width="@dimen/w_280"
+                android:layout_height="@dimen/h_160"
+                android:layout_marginTop="@dimen/h_20"
+                android:layout_toRightOf="@+id/item_manager_pass"
+                android:background="@color/darkorchid"
+                android:layout_marginLeft="@dimen/w_40"
+                android:layout_below="@+id/txt_type_account"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingLeft="@dimen/w_20"
+                android:focusableInTouchMode="true"
+                app:isShape="true"
+                app:radius="@dimen/w_10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_10"
+                    android:gravity="left"
+                    android:text="注册"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_50"
+                    android:gravity="left"
+                    android:text="注册新的淘宝账号"
+                    android:textColor="#FFFF00"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/w_60"
+                    android:layout_height="@dimen/h_60"
+                    android:scaleType="fitXY"
+                    android:layout_marginTop="@dimen/h_80"
+                    android:layout_marginLeft="@dimen/w_190"
+                    android:src="@drawable/ic_launcher" />
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+
+            <!--图像与声音-->
+            <TextView
+                android:id="@+id/txt_type_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/item_my_account"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/h_40"
+                android:gravity="center"
+                android:text="图像与声音"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+            <!--我的账号-->
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/item_destop"
+                android:layout_width="@dimen/w_280"
+                android:layout_height="@dimen/h_160"
+                android:layout_below="@+id/txt_type_image"
+                android:layout_marginTop="@dimen/h_10"
+                android:background="@color/darkorchid"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingLeft="@dimen/w_20"
+                android:focusableInTouchMode="true"
+                app:isShape="true"
+                app:radius="@dimen/w_10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_10"
+                    android:gravity="left"
+                    android:text="桌面背景"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_50"
+                    android:gravity="left"
+                    android:text="设置桌面背景壁纸"
+                    android:textColor="#FFFF00"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/w_60"
+                    android:layout_height="@dimen/h_60"
+                    android:scaleType="fitXY"
+                    android:layout_marginTop="@dimen/h_80"
+                    android:layout_marginLeft="@dimen/w_190"
+                    android:src="@drawable/ic_launcher" />
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <!--屏幕保护-->
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/item_screen"
+                android:layout_width="@dimen/w_280"
+                android:layout_height="@dimen/h_160"
+                android:layout_marginTop="@dimen/h_20"
+                android:layout_toRightOf="@+id/item_destop"
+                android:background="@color/darkorchid"
+                android:layout_marginLeft="@dimen/w_40"
+                android:layout_below="@+id/txt_type_image"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingLeft="@dimen/w_20"
+                android:focusableInTouchMode="true"
+                app:isShape="true"
+                app:radius="@dimen/w_10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_10"
+                    android:gravity="left"
+                    android:text="屏幕保护"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_50"
+                    android:gravity="left"
+                    android:text="授权支付宝账号在本设备..."
+                    android:textColor="#FFFF00"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/w_60"
+                    android:layout_height="@dimen/h_60"
+                    android:scaleType="fitXY"
+                    android:layout_marginTop="@dimen/h_80"
+                    android:layout_marginLeft="@dimen/w_190"
+                    android:src="@drawable/ic_launcher" />
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <!--输出分辨率-->
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/item_screen_dp"
+                android:layout_width="@dimen/w_280"
+                android:layout_height="@dimen/h_160"
+                android:layout_marginTop="@dimen/h_20"
+                android:layout_toRightOf="@+id/item_screen"
+                android:background="@color/darkorchid"
+                android:layout_marginLeft="@dimen/w_40"
+                android:layout_below="@+id/txt_type_image"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingLeft="@dimen/w_20"
+                android:focusableInTouchMode="true"
+                app:isShape="true"
+                app:radius="@dimen/w_10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_10"
+                    android:gravity="left"
+                    android:text="输出分辨率"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_50"
+                    android:gravity="left"
+                    android:text="设置屏幕保护样式及时间"
+                    android:textColor="#FFFF00"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="@dimen/h_90"
+                    android:gravity="center_horizontal|left"
+                    android:text="5分钟"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/w_60"
+                    android:layout_height="@dimen/h_60"
+                    android:scaleType="fitXY"
+                    android:layout_marginTop="@dimen/h_80"
+                    android:layout_marginLeft="@dimen/w_190"
+                    android:src="@drawable/ic_launcher" />
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <!--画面调整-->
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/item_image_adjust"
+                android:layout_width="@dimen/w_280"
+                android:layout_height="@dimen/h_160"
+                android:layout_marginTop="@dimen/h_20"
+                android:layout_toRightOf="@+id/item_screen_dp"
+                android:background="@color/darkorchid"
+                android:layout_marginLeft="@dimen/w_40"
+                android:layout_below="@+id/txt_type_image"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingLeft="@dimen/w_20"
+                android:focusableInTouchMode="true"
+                app:isShape="true"
+                app:radius="@dimen/w_10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_10"
+                    android:gravity="left"
+                    android:text="画面调整"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_50"
+                    android:gravity="left"
+                    android:text="设置图像显示大小"
+                    android:textColor="#FFFF00"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/w_60"
+                    android:layout_height="@dimen/h_60"
+                    android:scaleType="fitXY"
+                    android:layout_marginTop="@dimen/h_80"
+                    android:layout_marginLeft="@dimen/w_190"
+                    android:src="@drawable/ic_launcher" />
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+
+            <!--声音设置-->
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/item_sound"
+                android:layout_width="@dimen/w_280"
+                android:layout_height="@dimen/h_160"
+                android:layout_marginTop="@dimen/h_20"
+                android:layout_toRightOf="@+id/item_image_adjust"
+                android:background="@color/darkorchid"
+                android:layout_marginLeft="@dimen/w_40"
+                android:layout_below="@+id/txt_type_image"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingLeft="@dimen/w_20"
+                android:focusableInTouchMode="true"
+                app:isShape="true"
+                app:radius="@dimen/w_10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_10"
+                    android:gravity="left"
+                    android:text="声音设置"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/h_50"
+                    android:gravity="left"
+                    android:text="设置系统声音"
+                    android:textColor="#FFFF00"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/w_60"
+                    android:layout_height="@dimen/h_60"
+                    android:scaleType="fitXY"
+                    android:layout_marginTop="@dimen/h_80"
+                    android:layout_marginLeft="@dimen/w_190"
+                    android:src="@drawable/ic_launcher" />
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+        </RelativeLayout>
+        <com.open.androidtvwidget.view.MainUpView
+            android:id="@+id/mainUpView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </com.open.androidtvwidget.view.FrameMainLayout>
+</com.open.androidtvwidget.view.SmoothHorizontalScrollView>
+

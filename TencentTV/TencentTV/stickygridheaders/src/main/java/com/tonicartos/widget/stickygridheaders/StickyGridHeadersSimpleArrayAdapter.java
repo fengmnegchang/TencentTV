@@ -34,11 +34,11 @@ public class StickyGridHeadersSimpleArrayAdapter<T> extends BaseAdapter implemen
         StickyGridHeadersSimpleAdapter {
     protected static final String TAG = StickyGridHeadersSimpleArrayAdapter.class.getSimpleName();
 
-    private int mHeaderResId;
+    public int mHeaderResId;
 
-    private LayoutInflater mInflater;
+    public LayoutInflater mInflater;
 
-    private int mItemResId;
+    public int mItemResId;
 
     private List<T> mItems;
 
@@ -135,7 +135,7 @@ public class StickyGridHeadersSimpleArrayAdapter<T> extends BaseAdapter implemen
         return convertView;
     }
 
-    private void init(Context context, List<T> items, int headerResId, int itemResId) {
+    public void init(Context context, List<T> items, int headerResId, int itemResId) {
         this.mItems = items;
         this.mHeaderResId = headerResId;
         this.mItemResId = itemResId;
