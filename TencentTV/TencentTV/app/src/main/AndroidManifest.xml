@@ -39,7 +39,9 @@
         -->
         <activity
             android:name="com.open.tencenttv.TVMainActivity"
-            android:launchMode="singleTask"></activity>
+            android:launchMode="singleTask">
+
+        </activity>
         <!--频道-->
         <activity
             android:name="com.open.tencenttv.PinDaoActivity"
@@ -66,6 +68,9 @@
         </activity>
         <!--搜索-->
         <activity android:name="com.open.tencenttv.SearchActivity">
+
+        </activity>
+        <activity android:name="com.open.tencenttv.SearchKeyBoardActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
