@@ -1,23 +1,32 @@
 package com.open.tencenttv;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.open.androidtvwidget.bridge.EffectNoDrawBridge;
 import com.open.androidtvwidget.keyboard.SkbContainer;
 import com.open.androidtvwidget.keyboard.SoftKey;
 import com.open.androidtvwidget.keyboard.SoftKeyBoardListener;
 import com.open.androidtvwidget.utils.OPENLOG;
+import com.open.androidtvwidget.view.MainUpView;
 import com.open.tencenttv.bean.CircularBean;
 import com.open.tencenttv.bean.PanBean;
 import com.open.tencenttv.widget.CircularPopupWindow;
+import com.open.tencenttv.widget.androidtagview.TagContainerLayout;
+import com.open.tencenttv.widget.androidtagview.TagView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -31,17 +40,33 @@ import java.util.ArrayList;
  * @description: ****************************************************************************************************************************************************************************
  */
 public class SearchKeyBoardActivity extends FragmentActivity {
-    TextView input_tv;
-    SkbContainer skbContainer;
+    private TextView input_tv;
+    private SkbContainer skbContainer;
+    private TagContainerLayout mTagContainerLayout;
+
+    private MainUpView mainUpView1;
+    private LayoutInflater mInflater;
+    private View mOldView;
+    private EffectNoDrawBridge mRecyclerViewBridge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_key_board);
 
+        this.mInflater = LayoutInflater.from(getApplicationContext());
+        mainUpView1 = (MainUpView) findViewById(R.id.mainUpView1);
+        // 默认是 OpenEff...，建议使用 NoDraw... ...
+        mainUpView1.setEffectBridge(new EffectNoDrawBridge());
+        mRecyclerViewBridge = (EffectNoDrawBridge) mainUpView1.getEffectBridge();
+        mRecyclerViewBridge.setTranDurAnimTime(200);
+        mainUpView1.setUpRectResource(R.drawable.white_light_10); // 设置移动边框的图片.
+        mainUpView1.setDrawUpRectPadding(new Rect(25, 25, 23, 23)); // 边框图片设置间距
 
         input_tv = (TextView) findViewById(R.id.input_tv);
         skbContainer = (SkbContainer) findViewById(R.id.skbContainer);
+        mTagContainerLayout = (TagContainerLayout) findViewById(R.id.tagcontainerLayout);
+
         skbContainer.setFocusable(true);
         skbContainer.setFocusableInTouchMode(true);
         // 设置属性(默认是不移动的选中边框)
@@ -74,7 +99,7 @@ public class SearchKeyBoardActivity extends FragmentActivity {
         skbContainer.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                OPENLOG.D("hasFocus:"+hasFocus);
+                OPENLOG.D("hasFocus:" + hasFocus);
                 if (hasFocus) {
                     if (mOldSoftKey != null)
                         skbContainer.setKeySelected(mOldSoftKey);
@@ -87,15 +112,104 @@ public class SearchKeyBoardActivity extends FragmentActivity {
             }
         });
 
+        List<String> list2 = new ArrayList<String>();
+        list2.add("China");
+        list2.add("USA");
+        list2.add("Austria");
+        list2.add("Japan");
+        list2.add("Sudan");
+        list2.add("Spain");
+        list2.add("UK");
+        list2.add("Germany");
+        list2.add("Niger");
+        list2.add("Poland");
+        list2.add("Norway");
+        list2.add("Uruguay");
+        list2.add("Brazil");
+        mTagContainerLayout.setTags(list2);
+        mTagContainerLayout.setOnTagClickListener(new TagView.OnTagClickListener() {
+
+            @Override
+            public void onTagClick(TagView view, int position, String text) {
+                mainUpView1.setFocusView(view, mOldView, 1.1f);
+                mOldView = view;
+                Toast.makeText(SearchKeyBoardActivity.this, "click-position:" + position + ", text:" + text,
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onTagLongClick(TagView view, final int position, String text) {
+                AlertDialog dialog = new AlertDialog.Builder(SearchKeyBoardActivity.this)
+                        .setTitle("long click")
+                        .setMessage("You will delete this tag!")
+                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mTagContainerLayout.removeTag(position);
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .create();
+                dialog.show();
+            }
+
+            @Override
+            public void onTagCrossClick(TagView view, int position) {
+//                mTagContainerLayout1.removeTag(position);
+                Toast.makeText(SearchKeyBoardActivity.this, "Click TagView cross! position = " + position,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
+//        mTagContainerLayout.setOnItemListener(new TagContainerLayout.OnItemListener(){
+//            @Override
+//            public void onReviseFocusFollow(TagContainerLayout parent, View itemView, int position) {
+//                mRecyclerViewBridge.setFocusView(itemView, 1.2f);
+//                mOldView = itemView;
+//            }
+//
+//            @Override
+//            public void onItemPreSelected(TagContainerLayout parent, View itemView, int position) {
+//                mRecyclerViewBridge.setUnFocusView(mOldView);
+//            }
+//
+//            @Override
+//            public void onItemSelected(TagContainerLayout parent, View itemView, int position) {
+//                mRecyclerViewBridge.setFocusView(itemView, 1.2f);
+//                mOldView = itemView;
+//            }
+//        });
+
+
+        mTagContainerLayout.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    mainUpView1.setFocusView(mTagContainerLayout.getChildAt(0), mOldView, 1.1f);
+                } else {
+                    for (int i = 0; i < mTagContainerLayout.getChildCount(); i++) {
+                        mainUpView1.setUnFocusView(mTagContainerLayout.getChildAt(i));
+                    }
+                }
+            }
+        });
+
+
+
     }
 
     private void setSkbContainerMove() {
         mOldSoftKey = null;
         skbContainer.setMoveSoftKey(true); // 设置是否移动按键边框.
-        RectF rectf = new RectF((int)getResources().getDimension(R.dimen.
-                w_40), (int)getResources().getDimension(R.dimen.
-                h_40), (int)getResources().getDimension(R.dimen.
-                w_40), (int)getResources().getDimension(R.dimen.
+        RectF rectf = new RectF((int) getResources().getDimension(R.dimen.
+                w_40), (int) getResources().getDimension(R.dimen.
+                h_40), (int) getResources().getDimension(R.dimen.
+                w_40), (int) getResources().getDimension(R.dimen.
                 h_40));
         skbContainer.setSoftKeySelectPadding(rectf); // 设置移动边框相差的间距.
         skbContainer.setMoveDuration(200); // 设置移动边框的时间(默认:300)
@@ -132,10 +246,11 @@ public class SearchKeyBoardActivity extends FragmentActivity {
 
     /**
      * 处理T9键盘的按键.
+     *
      * @param softKey
      */
     private void onCommitT9Text(SoftKey softKey) {
-        switch (softKey.getKeyCode()){
+        switch (softKey.getKeyCode()) {
             case 1251://1
                 input_tv.append("1");
                 break;
@@ -150,19 +265,19 @@ public class SearchKeyBoardActivity extends FragmentActivity {
                 input_tv.setText("");
                 break;
             default:
-                CircularBean circularBean = new  CircularBean();
+                CircularBean circularBean = new CircularBean();
                 circularBean.setXoff(0);
                 circularBean.setYoff(-400);
                 ArrayList<PanBean> panBeenlist = new ArrayList<PanBean>();
-                circularBean.setCenterValue(softKey.getKeyLabel().charAt(0)+"");
-                for(int i=1;i<softKey.getKeyLabel().length();i++){
+                circularBean.setCenterValue(softKey.getKeyLabel().charAt(0) + "");
+                for (int i = 1; i < softKey.getKeyLabel().length(); i++) {
                     PanBean panBean = new PanBean();
                     panBean.setKeycode(softKey.getKeyCode());
-                    panBean.setKeyValue(softKey.getKeyLabel().charAt(i)+"");
+                    panBean.setKeyValue(softKey.getKeyLabel().charAt(i) + "");
                     panBeenlist.add(panBean);
                 }
                 circularBean.setPanList(panBeenlist);
-                CircularPopupWindow mCircularPopupWindow = new CircularPopupWindow(this,circularBean,input_tv);
+                CircularPopupWindow mCircularPopupWindow = new CircularPopupWindow(this, circularBean, input_tv);
                 mCircularPopupWindow.showPopupWindow(skbContainer);
                 break;
         }

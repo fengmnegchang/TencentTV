@@ -11,5 +11,5 @@
      
      <!-- 滚动窗口 -->
     <dimen name="fading_edge">80dp</dimen>
-
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

@@ -1,20 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="#000000"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
     <TextView
         android:id="@+id/input_tv"
         android:layout_width="400dp"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="@dimen/h_100"
         android:gravity="center_vertical"
+        android:text="大家都在搜"
+        android:textColor="#FFFFFF"
         android:textSize="25sp" />
 
     <com.open.androidtvwidget.keyboard.SkbContainer
         android:id="@+id/skbContainer"
-        android:layout_below="@+id/input_tv"
         android:layout_width="400dp"
-        android:layout_height="450dp" >
-    </com.open.androidtvwidget.keyboard.SkbContainer>
+        android:layout_height="450dp"
+        android:layout_below="@+id/input_tv" />
+
+
+    <TextView
+        android:id="@+id/txt_label_all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/h_50"
+        android:layout_toRightOf="@+id/skbContainer"
+        android:text="大家都在搜"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
+
+    <com.open.tencenttv.widget.androidtagview.TagContainerLayout
+        android:id="@+id/tagcontainerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/skbContainer"
+        android:layout_below="@+id/txt_label_all"
+        android:padding="10dp"
+        app:container_background_color="#00000000"
+        app:container_border_color="#3300ff00"
+        app:container_border_radius="0dp"
+        app:container_border_width="4dp"
+        app:container_enable_drag="true"
+        app:horizontal_interval="10dp"
+        app:tag_clickable="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:tag_theme="random"
+        app:vertical_interval="10dp" />
+
+
+    <com.open.androidtvwidget.view.MainUpView
+        android:id="@+id/mainUpView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </RelativeLayout>
