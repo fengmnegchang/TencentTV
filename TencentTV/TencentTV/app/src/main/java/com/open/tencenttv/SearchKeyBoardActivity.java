@@ -4,7 +4,6 @@ package com.open.tencenttv;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -14,8 +13,11 @@ import com.open.androidtvwidget.keyboard.SkbContainer;
 import com.open.androidtvwidget.keyboard.SoftKey;
 import com.open.androidtvwidget.keyboard.SoftKeyBoardListener;
 import com.open.androidtvwidget.utils.OPENLOG;
-import com.open.tencenttv.adapter.PanAdapter;
-import com.open.tencenttv.widget.CircularMenu;
+import com.open.tencenttv.bean.CircularBean;
+import com.open.tencenttv.bean.PanBean;
+import com.open.tencenttv.widget.CircularPopupWindow;
+
+import java.util.ArrayList;
 
 
 /**
@@ -29,8 +31,6 @@ import com.open.tencenttv.widget.CircularMenu;
  * @description: ****************************************************************************************************************************************************************************
  */
 public class SearchKeyBoardActivity extends FragmentActivity {
-    private CircularMenu wheelMenuView;
-    private PanAdapter adapter;
     TextView input_tv;
     SkbContainer skbContainer;
 
@@ -38,10 +38,7 @@ public class SearchKeyBoardActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_key_board);
-        wheelMenuView = (CircularMenu) findViewById(R.id.panview);
 
-        adapter = new PanAdapter();
-        wheelMenuView.setAdapter(adapter);
 
         input_tv = (TextView) findViewById(R.id.input_tv);
         skbContainer = (SkbContainer) findViewById(R.id.skbContainer);
@@ -96,10 +93,10 @@ public class SearchKeyBoardActivity extends FragmentActivity {
         mOldSoftKey = null;
         skbContainer.setMoveSoftKey(true); // 设置是否移动按键边框.
         RectF rectf = new RectF((int)getResources().getDimension(R.dimen.
-                w_80), (int)getResources().getDimension(R.dimen.
-                h_80), (int)getResources().getDimension(R.dimen.
-                w_80), (int)getResources().getDimension(R.dimen.
-                h_80));
+                w_40), (int)getResources().getDimension(R.dimen.
+                h_40), (int)getResources().getDimension(R.dimen.
+                w_40), (int)getResources().getDimension(R.dimen.
+                h_40));
         skbContainer.setSoftKeySelectPadding(rectf); // 设置移动边框相差的间距.
         skbContainer.setMoveDuration(200); // 设置移动边框的时间(默认:300)
         skbContainer.setSelectSofkKeyFront(true); // 设置选中边框在最前面.
@@ -138,7 +135,39 @@ public class SearchKeyBoardActivity extends FragmentActivity {
      * @param softKey
      */
     private void onCommitT9Text(SoftKey softKey) {
+        switch (softKey.getKeyCode()){
+            case 1251://1
+                input_tv.append("1");
+                break;
+            case 1250://0
+                input_tv.append("0");
+                break;
+            case 1260://删除
+                String text = input_tv.getText().toString();
+                input_tv.setText(text.substring(0, text.length() - 1));
+                break;
+            case 1261://清除
+                input_tv.setText("");
+                break;
+            default:
+                CircularBean circularBean = new  CircularBean();
+                circularBean.setXoff(0);
+                circularBean.setYoff(-400);
+                ArrayList<PanBean> panBeenlist = new ArrayList<PanBean>();
+                circularBean.setCenterValue(softKey.getKeyLabel().charAt(0)+"");
+                for(int i=1;i<softKey.getKeyLabel().length();i++){
+                    PanBean panBean = new PanBean();
+                    panBean.setKeycode(softKey.getKeyCode());
+                    panBean.setKeyValue(softKey.getKeyLabel().charAt(i)+"");
+                    panBeenlist.add(panBean);
+                }
+                circularBean.setPanList(panBeenlist);
+                CircularPopupWindow mCircularPopupWindow = new CircularPopupWindow(this,circularBean,input_tv);
+                mCircularPopupWindow.showPopupWindow(skbContainer);
+                break;
+        }
         Toast.makeText(SearchKeyBoardActivity.this, "keycode:" + softKey.getKeyCode(), Toast.LENGTH_SHORT).show();
+
     }
 
 }

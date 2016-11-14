@@ -7,31 +7,47 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.open.tencenttv.R;
+import com.open.tencenttv.bean.PanBean;
+
+import java.util.List;
 
 
 /**
- * Created by sunger on 16/1/26.
+ * ****************************************************************************************************************************************************************************
+ *
+ * @author :fengguangjing
+ * @createTime: 16/11/14
+ * @version:
+ * @modifyTime:
+ * @modifyAuthor:
+ * @description: ****************************************************************************************************************************************************************************
  */
 public class PanAdapter extends BaseAdapter {
+    List<PanBean> list;
+    public PanAdapter(List<PanBean> list){
+        this.list = list;
+
+    }
     @Override
     public int getCount() {
-        return 4;
+        return list.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return list.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView textView = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_keyword_pan, null,false);
-        textView.setText("Item" + position);
+        PanBean bean = (PanBean) getItem(position);
+        textView.setText(bean.getKeyValue());
         return textView;
     }
 }

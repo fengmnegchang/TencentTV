@@ -44,7 +44,7 @@ public class SearchActivity extends FragmentActivity {
 //        wheelMenuView.setCenterView(R.layout.center_layout);
 //        wheelMenuView.setRadiusLineWidth(20);
 //        wheelMenuView.setStartAngle(5);
-        adapter = new PanAdapter();
+        adapter = new PanAdapter(null);
         wheelMenuView.setAdapter(adapter);
         editText1 = (EditText) findViewById(R.id.editText1);
         editText2 = (EditText) findViewById(R.id.editText2);

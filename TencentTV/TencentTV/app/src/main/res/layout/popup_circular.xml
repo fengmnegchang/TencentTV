@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+
+    <com.open.tencenttv.widget.CircularMenu
+        android:id="@+id/panview"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_below="@+id/skbContainer"
+        app:backgroundColor="#c1c3c6"
+        app:centerViewLayout="@layout/layout_keyword_pan_center"
+        app:innerRadius="60dp"
+        app:itemColor="@android:color/white"
+        app:itemCount="4"
+        app:lineWidth="2dp"
+        app:pressedColor="@android:color/holo_blue_dark"
+        app:radius="120dp"
+        app:radiusLineWidth="1dp"
+        app:startAngle="45"/>
+
+</RelativeLayout>
