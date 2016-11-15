@@ -54,8 +54,6 @@ public class TagView extends View {
     /** OnTagClickListener for click action*/
     private OnTagClickListener mOnTagClickListener;
 
-
-
     /** Move slop(default 20px)*/
     private int mMoveSlop = 20;
 
@@ -130,6 +128,10 @@ public class TagView extends View {
     }
 
     private void init(String text){
+        setClickable(true);
+        setFocusable(true);
+        setFocusableInTouchMode(true);
+
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mRipplePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mRipplePaint.setStyle(Paint.Style.FILL);
@@ -417,11 +419,9 @@ public class TagView extends View {
         void onTagClick(TagView view, int position, String text);
         void onTagLongClick(TagView view, int position, String text);
         void onTagCrossClick(TagView view, int position);
-    }
 
-
-    public interface OnTagSelectListener{
-        void onTagSelect(TagView view, int position, String text);
+        void onItemPreSelected(View itemView,int position);
+        void onItemSelected( View itemView,int position);
     }
 
     public int getTextDirection() {

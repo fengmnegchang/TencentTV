@@ -128,6 +128,18 @@ public class SearchKeyBoardActivity extends FragmentActivity {
         list2.add("Brazil");
         mTagContainerLayout.setTags(list2);
         mTagContainerLayout.setOnTagClickListener(new TagView.OnTagClickListener() {
+            @Override
+            public void onItemPreSelected(View itemView,int position) {
+                mRecyclerViewBridge.setUnFocusView(mOldView);
+                System.out.println("item ========onItemPreSelected "+position);
+            }
+
+            @Override
+            public void onItemSelected(View itemView,int position) {
+                mRecyclerViewBridge.setFocusView(itemView, 1.2f);
+                mOldView = itemView;
+                System.out.println("item  ========onItemSelected "+position);
+            }
 
             @Override
             public void onTagClick(TagView view, int position, String text) {
@@ -166,24 +178,7 @@ public class SearchKeyBoardActivity extends FragmentActivity {
             }
         });
 
-//        mTagContainerLayout.setOnItemListener(new TagContainerLayout.OnItemListener(){
-//            @Override
-//            public void onReviseFocusFollow(TagContainerLayout parent, View itemView, int position) {
-//                mRecyclerViewBridge.setFocusView(itemView, 1.2f);
-//                mOldView = itemView;
-//            }
-//
-//            @Override
-//            public void onItemPreSelected(TagContainerLayout parent, View itemView, int position) {
-//                mRecyclerViewBridge.setUnFocusView(mOldView);
-//            }
-//
-//            @Override
-//            public void onItemSelected(TagContainerLayout parent, View itemView, int position) {
-//                mRecyclerViewBridge.setFocusView(itemView, 1.2f);
-//                mOldView = itemView;
-//            }
-//        });
+
 
 
         mTagContainerLayout.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -191,6 +186,7 @@ public class SearchKeyBoardActivity extends FragmentActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     mainUpView1.setFocusView(mTagContainerLayout.getChildAt(0), mOldView, 1.1f);
+                    mOldView = mTagContainerLayout.getChildAt(0);
                 } else {
                     for (int i = 0; i < mTagContainerLayout.getChildCount(); i++) {
                         mainUpView1.setUnFocusView(mTagContainerLayout.getChildAt(i));
