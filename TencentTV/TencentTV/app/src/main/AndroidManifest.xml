@@ -69,10 +69,9 @@
         <activity android:name="com.open.tencenttv.SettingsActivity">
 
         </activity>
-        <!--搜索-->
-        <activity android:name="com.open.tencenttv.SearchActivity">
-
-        </activity>
+        <!--搜索
+        <activity android:name="com.open.tencenttv.SearchActivity"/>
+       -->
         <activity android:name="com.open.tencenttv.SearchKeyBoardActivity">
 
         </activity>

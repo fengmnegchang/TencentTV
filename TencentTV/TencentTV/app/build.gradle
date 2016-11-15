@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.getkeepsafe.dexcount'
 
 android {
     compileSdkVersion 24
@@ -10,6 +10,8 @@ android {
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+        // Enabling multidex support.
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -19,14 +21,68 @@ android {
     }
     productFlavors {
     }
+//    defaultConfig {
+//        minSdkVersion 10
+//        targetSdkVersion 22
+//        // Enabling multidex support.
+//        multiDexEnabled true
+//    }
+//
+//    //multi channel
+//    productFlavors {
+//    }
+//
+//
+//    dexOptions {
+//        javaMaxHeapSize "32g"
+//        preDexLibraries = false
+//    }
+//
+//    // main project (not contain speex-libs2) .so file copy to apk's lib file dir
+//    // speex-libs2's library libspeex.so  need copy to main project libs-armeabi file dir
+//    // when change to eclipse project, need to delete libspeex.so file where  main project libs-armeabi
+//    task nativeLibsToJar(type: Zip, description: "create a jar archive of the native libs") {
+//        destinationDir file("$projectDir/libs")
+//        baseName "Native_Libs2"
+//        extension "jar"
+//        from fileTree(dir: "libs", include: "**/*.so")
+//        into "lib"
+//    }
+//    tasks.withType(JavaCompile) {
+//        compileTask -> compileTask.dependsOn(nativeLibsToJar)
+//    }
+//
+//
+//    //multi-dex main dex idx-number size 48000
+//    afterEvaluate {
+//        tasks.matching {
+//            it.name.startsWith('dex')
+//        }.each { dx ->
+//            if (dx.additionalParameters == null) {
+//                dx.additionalParameters = []
+//            }
+//            dex.additionalParameters += '--set-max-idx-number=48000'
+//            dx.additionalParameters += '--multi-dex' // enable multidex
+//
+//            // optional
+//            dx.additionalParameters += "--main-dex-list=$projectDir/class-list.txt".toString() // enable the main-dex-list
+//            dx.additionalParameters += '--minimal-main-dex'
+//        }
+//    }
+//
+//    lintOptions {
+//        disable "ResourceType"
+//    }
 }
 
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+    compile 'com.android.support:multidex:1.0.0'
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile project(':androidtvwidget')
     compile project(':verticalviewpager')
     compile project(':stickygridheaders')
+    compile project(':androidvolley')
 }
