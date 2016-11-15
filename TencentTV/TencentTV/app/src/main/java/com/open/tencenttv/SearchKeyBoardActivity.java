@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -42,23 +41,33 @@ import java.util.List;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class SearchKeyBoardActivity extends FragmentActivity {
+public class SearchKeyBoardActivity extends CommonFragmentActivity {
     private TextView input_tv;
     private SkbContainer skbContainer;
     private TagContainerLayout mTagContainerLayout;
-
-    private MainUpView mainUpView1;
-    private LayoutInflater mInflater;
-    private View mOldView;
-    private EffectNoDrawBridge mRecyclerViewBridge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_key_board);
+        init();
+    }
 
+    @Override
+    protected void findView() {
+        super.findView();
         this.mInflater = LayoutInflater.from(getApplicationContext());
         mainUpView1 = (MainUpView) findViewById(R.id.mainUpView1);
+
+        input_tv = (TextView) findViewById(R.id.input_tv);
+        skbContainer = (SkbContainer) findViewById(R.id.skbContainer);
+        mTagContainerLayout = (TagContainerLayout) findViewById(R.id.tagcontainerLayout);
+
+    }
+
+    @Override
+    protected void initValue() {
+        super.initValue();
         // 默认是 OpenEff...，建议使用 NoDraw... ...
         mainUpView1.setEffectBridge(new EffectNoDrawBridge());
         mRecyclerViewBridge = (EffectNoDrawBridge) mainUpView1.getEffectBridge();
@@ -66,9 +75,7 @@ public class SearchKeyBoardActivity extends FragmentActivity {
         mainUpView1.setUpRectResource(R.drawable.white_light_10); // 设置移动边框的图片.
         mainUpView1.setDrawUpRectPadding(new Rect(25, 25, 23, 23)); // 边框图片设置间距
 
-        input_tv = (TextView) findViewById(R.id.input_tv);
-        skbContainer = (SkbContainer) findViewById(R.id.skbContainer);
-        mTagContainerLayout = (TagContainerLayout) findViewById(R.id.tagcontainerLayout);
+
 
         skbContainer.setFocusable(true);
         skbContainer.setFocusableInTouchMode(true);
@@ -77,6 +84,28 @@ public class SearchKeyBoardActivity extends FragmentActivity {
         skbContainer.setSkbLayout(R.xml.skb_t9_keys);
         //
         skbContainer.setSelectSofkKeyFront(true); // 设置选中边框最前面.
+
+        List<String> list2 = new ArrayList<String>();
+        list2.add("China");
+        list2.add("USA");
+        list2.add("Austria");
+        list2.add("Japan");
+        list2.add("Sudan");
+        list2.add("Spain");
+        list2.add("UK");
+        list2.add("Germany");
+        list2.add("Niger");
+        list2.add("Poland");
+        list2.add("Norway");
+        list2.add("Uruguay");
+        list2.add("Brazil");
+        mTagContainerLayout.setTags(list2);
+
+    }
+
+    @Override
+    protected void bindEvent() {
+        super.bindEvent();
         // 监听键盘事件.
         skbContainer.setOnSoftKeyBoardListener(new SoftKeyBoardListener() {
             @Override
@@ -115,21 +144,7 @@ public class SearchKeyBoardActivity extends FragmentActivity {
             }
         });
 
-        List<String> list2 = new ArrayList<String>();
-        list2.add("China");
-        list2.add("USA");
-        list2.add("Austria");
-        list2.add("Japan");
-        list2.add("Sudan");
-        list2.add("Spain");
-        list2.add("UK");
-        list2.add("Germany");
-        list2.add("Niger");
-        list2.add("Poland");
-        list2.add("Norway");
-        list2.add("Uruguay");
-        list2.add("Brazil");
-        mTagContainerLayout.setTags(list2);
+
         mTagContainerLayout.setOnTagClickListener(new TagView.OnTagClickListener() {
             @Override
             public void onItemPreSelected(View itemView,int position) {
@@ -183,7 +198,6 @@ public class SearchKeyBoardActivity extends FragmentActivity {
 
 
 
-
         mTagContainerLayout.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -206,6 +220,7 @@ public class SearchKeyBoardActivity extends FragmentActivity {
 
         manager.beginTransaction().replace(R.id.frame_listview, rightFragment).commit();
         manager.beginTransaction().replace(R.id.frame_pindao, leftFragment).commit();
+
     }
 
     private void setSkbContainerMove() {

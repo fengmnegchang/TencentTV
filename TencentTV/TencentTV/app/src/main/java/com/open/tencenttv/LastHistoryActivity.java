@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -30,12 +29,7 @@ import com.open.tencenttv.fragment.LastHistoryStickYGridHeaderFragment;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class LastHistoryActivity extends FragmentActivity implements LastHistoryStickYGridHeaderFragment.Callbacks {
-    private static final String TAG = LastHistoryActivity.class.getSimpleName();
-    private MainUpView mainUpView1;
-    private LayoutInflater mInflater;
-    private View mOldView;
-    private EffectNoDrawBridge mRecyclerViewBridge;
+public class LastHistoryActivity extends CommonFragmentActivity implements LastHistoryStickYGridHeaderFragment.Callbacks {
 
     private ReflectItemView item_login_adv;//登陆有礼 图片广告
     private ReflectItemView item_member;//影视会员
@@ -53,7 +47,29 @@ public class LastHistoryActivity extends FragmentActivity implements LastHistory
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_last_history);
+        init();
+    }
 
+
+    Handler mFirstHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            mainUpView1.setFocusView(item_login_adv,mOldView,1.1f);
+        }
+    };
+
+    /**
+     * Callback method from {@link LastHistoryStickYGridHeaderFragment.Callbacks} indicating that
+     * the item with the given ID was selected.
+     */
+    @Override
+    public void onItemSelected(int id) {
+         System.out.println("onItemSelected == "+id);
+    }
+
+    @Override
+    protected void findView() {
+        super.findView();
         this.mInflater = LayoutInflater.from(getApplicationContext());
         mainUpView1 = (MainUpView) findViewById(R.id.mainUpView1);
         item_login_adv = (ReflectItemView) findViewById(R.id.item_login_adv);
@@ -64,7 +80,11 @@ public class LastHistoryActivity extends FragmentActivity implements LastHistory
 
         hscroll_view = (SmoothHorizontalScrollView) findViewById(R.id.hscroll_view);
         main_lay11 = (FrameMainLayout) findViewById(R.id.main_lay);
+    }
 
+    @Override
+    protected void initValue() {
+        super.initValue();
         // 默认是 OpenEff...，建议使用 NoDraw... ...
         mainUpView1.setEffectBridge(new EffectNoDrawBridge());
         mRecyclerViewBridge = (EffectNoDrawBridge) mainUpView1.getEffectBridge();
@@ -73,6 +93,11 @@ public class LastHistoryActivity extends FragmentActivity implements LastHistory
         mainUpView1.setDrawUpRectPadding(new Rect(25, 25, 23, 23)); // 边框图片设置间距
 
         hscroll_view.setFadingEdge((int) getDimension(R.dimen.w_100)); // 滚动窗口也需要适配.
+    }
+
+    @Override
+    protected void bindEvent() {
+        super.bindEvent();
         main_lay11.getViewTreeObserver().addOnGlobalFocusChangeListener(new ViewTreeObserver.OnGlobalFocusChangeListener() {
             @Override
             public void onGlobalFocusChanged(final View oldFocus, final View newFocus) {
@@ -100,25 +125,5 @@ public class LastHistoryActivity extends FragmentActivity implements LastHistory
             });
         }
         mFirstHandler.sendMessageDelayed(mFirstHandler.obtainMessage(), 188);
-
-    }
-
-    public float getDimension(int id) {
-        return getResources().getDimension(id);
-    }
-    Handler mFirstHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            mainUpView1.setFocusView(item_login_adv,mOldView,1.1f);
-        }
-    };
-
-    /**
-     * Callback method from {@link LastHistoryStickYGridHeaderFragment.Callbacks} indicating that
-     * the item with the given ID was selected.
-     */
-    @Override
-    public void onItemSelected(int id) {
-         System.out.println("onItemSelected == "+id);
     }
 }

@@ -4,7 +4,6 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,13 +26,7 @@ import com.open.androidtvwidget.view.SmoothHorizontalScrollView;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class SettingsActivity extends FragmentActivity {
-    private static final String TAG = SettingsActivity.class.getSimpleName();
-    private MainUpView mainUpView1;
-    private LayoutInflater mInflater;
-    private View mOldView;
-    private EffectNoDrawBridge mRecyclerViewBridge;
-
+public class SettingsActivity extends CommonFragmentActivity {
     //scrollview
     private SmoothHorizontalScrollView hscroll_view;
     private FrameMainLayout main_lay11;
@@ -44,14 +37,22 @@ public class SettingsActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        init();
+    }
 
+    @Override
+    protected void findView() {
+        super.findView();
         this.mInflater = LayoutInflater.from(getApplicationContext());
         mainUpView1 = (MainUpView) findViewById(R.id.mainUpView1);
-
         hscroll_view = (SmoothHorizontalScrollView) findViewById(R.id.hscroll_view);
         main_lay11 = (FrameMainLayout) findViewById(R.id.main_lay);
         item_wifi =  (ReflectItemView)findViewById(R.id.item_wifi);
+    }
 
+    @Override
+    protected void initValue() {
+        super.initValue();
         // 默认是 OpenEff...，建议使用 NoDraw... ...
         mainUpView1.setEffectBridge(new EffectNoDrawBridge());
         mRecyclerViewBridge = (EffectNoDrawBridge) mainUpView1.getEffectBridge();
@@ -60,6 +61,11 @@ public class SettingsActivity extends FragmentActivity {
         mainUpView1.setDrawUpRectPadding(new Rect(25, 25, 23, 23)); // 边框图片设置间距
 
         hscroll_view.setFadingEdge((int) getDimension(R.dimen.w_100)); // 滚动窗口也需要适配.
+    }
+
+    @Override
+    protected void bindEvent() {
+        super.bindEvent();
         main_lay11.getViewTreeObserver().addOnGlobalFocusChangeListener(new ViewTreeObserver.OnGlobalFocusChangeListener() {
             @Override
             public void onGlobalFocusChanged(final View oldFocus, final View newFocus) {
@@ -83,11 +89,6 @@ public class SettingsActivity extends FragmentActivity {
             });
         }
         mFirstHandler.sendMessageDelayed(mFirstHandler.obtainMessage(), 188);
-
-    }
-
-    public float getDimension(int id) {
-        return getResources().getDimension(id);
     }
 
     Handler mFirstHandler = new Handler() {

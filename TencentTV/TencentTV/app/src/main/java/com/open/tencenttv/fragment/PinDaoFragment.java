@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import android.widget.Toast;
 
 import com.open.androidtvwidget.bridge.EffectNoDrawBridge;
 import com.open.androidtvwidget.view.MainUpView;
+import com.open.tencenttv.BaseV4Fragment;
 import com.open.tencenttv.R;
 import com.open.tencenttv.VedioPreViewActivity;
 import com.open.tencenttv.adapter.PinDaoFragmentAdapter;
@@ -36,13 +36,9 @@ import java.util.Random;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class PinDaoFragment  extends Fragment {
-    public static final String TAG = PinDaoFragment.class.getSimpleName();
+public class PinDaoFragment  extends BaseV4Fragment {
     private String pindaoName;
     TextView text_pindao_name;
-    private MainUpView mainUpView1;
-    private View mOldView;
-    private EffectNoDrawBridge mRecyclerViewBridge;
 
     //gridview
     private List<String> data;

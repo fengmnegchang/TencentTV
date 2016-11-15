@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +14,7 @@ import android.widget.Toast;
 
 import com.open.androidtvwidget.bridge.EffectNoDrawBridge;
 import com.open.androidtvwidget.view.MainUpView;
+import com.open.tencenttv.BaseV4ListFragment;
 import com.open.tencenttv.R;
 import com.open.tencenttv.adapter.PinDaoAdapter;
 import com.open.tencenttv.bean.PinDaoBean;
@@ -33,12 +33,8 @@ import java.util.List;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class PinDaoListFragment extends ListFragment {
-    public static final String TAG = PinDaoListFragment.class.getSimpleName();
+public class PinDaoListFragment extends BaseV4ListFragment {
     private List<PinDaoBean> data = new ArrayList<PinDaoBean>();
-    private View mOldView;
-    private EffectNoDrawBridge mRecyclerViewBridge;
-    private MainUpView mainUpView1;
 
     public static PinDaoListFragment newInstance(MainUpView mainUpView1,EffectNoDrawBridge mRecyclerViewBridge, View mOldView){
         PinDaoListFragment fragment = new PinDaoListFragment();

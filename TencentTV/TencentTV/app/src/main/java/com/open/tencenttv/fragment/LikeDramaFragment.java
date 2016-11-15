@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import android.widget.Toast;
 import com.open.androidtvwidget.bridge.EffectNoDrawBridge;
 import com.open.androidtvwidget.view.GridViewTV;
 import com.open.androidtvwidget.view.MainUpView;
+import com.open.tencenttv.BaseV4Fragment;
 import com.open.tencenttv.R;
 import com.open.tencenttv.adapter.LikeDramaAdapter;
 
@@ -31,11 +31,7 @@ import java.util.List;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class LikeDramaFragment extends Fragment {
-    public static final String TAG = LikeDramaFragment.class.getSimpleName();
-    private MainUpView mainUpView1;
-    private View mOldView;
-    private EffectNoDrawBridge mRecyclerViewBridge;
+public class LikeDramaFragment extends BaseV4Fragment {
 
     //gridview
     private List<String> data;

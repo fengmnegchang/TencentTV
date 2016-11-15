@@ -1,6 +1,5 @@
 package com.open.tencenttv;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -44,14 +43,8 @@ import java.util.List;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemListener {
-
-    private static final String TAG = TVMainActivity.class.getSimpleName();
-
+public class TVMainActivity extends CommonFragmentActivity implements RecyclerViewTV.OnItemListener {
     private List<PersonalCenterBean> data;
-    private MainUpView mainUpView1;
-    private LayoutInflater mInflater;
-    private View mOldView;
     private ListViewTV listView;
     /**
      * Top视频类型列表 电视+电影+
@@ -67,8 +60,6 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
     private RecyclerViewPushPresenter mRecyclerPushPresenter;
     private GeneralAdapter mRecyclerPushGeneralAdapter;
 
-    //    private RecyclerViewBridge mRecyclerViewBridge;
-    EffectNoDrawBridge mRecyclerViewBridge;
     //scrollview
     private SmoothHorizontalScrollView hscroll_view;
     private FrameMainLayout main_lay11;
@@ -80,11 +71,40 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tv_main);
+        init();
+    }
+
+    @Override
+    protected void findView() {
+        super.findView();
         this.mInflater = LayoutInflater.from(getApplicationContext());
         hscroll_view = (SmoothHorizontalScrollView) findViewById(R.id.hscroll_view);
         main_lay11 = (FrameMainLayout) findViewById(R.id.main_lay);
         listView = (ListViewTV) findViewById(R.id.listview);
         mainUpView1 = (MainUpView) findViewById(R.id.mainUpView1);
+
+
+        mRecyclerView = (RecyclerViewTV) findViewById(R.id.recyclerView);
+//        mRecyclerViewBridge = (RecyclerViewBridge) mainUpView1.getEffectBridge();
+//        mRecyclerViewBridge.setUpRectResource(R.drawable.video_cover_cursor);
+//        float density = getResources().getDisplayMetrics().density;
+//        RectF receF = new RectF(getDimension(R.dimen.w_45) * density, getDimension(R.dimen.h_40) * density,
+//                getDimension(R.dimen.w_45) * density, getDimension(R.dimen.h_40) * density);
+//        mRecyclerViewBridge.setDrawUpRectPadding(receF);
+        recyclerViewLinerLayout(LinearLayoutManager.HORIZONTAL);
+
+
+        //推荐排行
+        recycler_push = (RecyclerViewTV) findViewById(R.id.recycler_push);
+        recyclerPushLinerLayout(LinearLayoutManager.HORIZONTAL);
+
+        edit_search = (EditText) findViewById(R.id.edit_search);
+        item_edit = (ReflectItemView) findViewById(R.id.item_edit);
+    }
+
+    @Override
+    protected void initValue() {
+        super.initValue();
         // 默认是 OpenEff...，建议使用 NoDraw... ...
         mainUpView1.setEffectBridge(new EffectNoDrawBridge());
         mRecyclerViewBridge = (EffectNoDrawBridge) mainUpView1.getEffectBridge();
@@ -93,6 +113,11 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
         mainUpView1.setDrawUpRectPadding(new Rect(25, 25, 23, 23)); // 边框图片设置间距.
         initData();
         listView.setAdapter(new PersonalCenterAdapter(this,data));
+    }
+
+    @Override
+    protected void bindEvent() {
+        super.bindEvent();
         listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -153,15 +178,6 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
         });
 
 
-        mRecyclerView = (RecyclerViewTV) findViewById(R.id.recyclerView);
-//        mRecyclerViewBridge = (RecyclerViewBridge) mainUpView1.getEffectBridge();
-//        mRecyclerViewBridge.setUpRectResource(R.drawable.video_cover_cursor);
-//        float density = getResources().getDisplayMetrics().density;
-//        RectF receF = new RectF(getDimension(R.dimen.w_45) * density, getDimension(R.dimen.h_40) * density,
-//                getDimension(R.dimen.w_45) * density, getDimension(R.dimen.h_40) * density);
-//        mRecyclerViewBridge.setDrawUpRectPadding(receF);
-
-        recyclerViewLinerLayout(LinearLayoutManager.HORIZONTAL);
         mRecyclerView.setOnItemListener(this);
         // item 单击事件处理.
         mRecyclerView.setOnItemClickListener(new RecyclerViewTV.OnItemClickListener() {
@@ -175,19 +191,7 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
             }
         });
 
-//        // 延时请求其它位置的item.
-//        Handler handler = new Handler() {
-//            @Override
-//            public void handleMessage(Message msg) {
-//                onItemSelected(mRecyclerView, null, 0);
-//            }
-//        };
-//        handler.sendMessageDelayed(handler.obtainMessage(), 188);
 
-
-        //推荐排行
-        recycler_push = (RecyclerViewTV) findViewById(R.id.recycler_push);
-        recyclerPushLinerLayout(LinearLayoutManager.HORIZONTAL);
         recycler_push.setOnItemListener(this);
         // item 单击事件处理.
         recycler_push.setOnItemClickListener(new RecyclerViewTV.OnItemClickListener() {
@@ -224,8 +228,6 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
             });
         }
 
-        edit_search = (EditText) findViewById(R.id.edit_search);
-        item_edit = (ReflectItemView) findViewById(R.id.item_edit);
         edit_search.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
@@ -320,9 +322,6 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
 //    };
 
 
-    public float getDimension(int id) {
-        return getResources().getDimension(id);
-    }
 
 
     @Override
@@ -380,7 +379,5 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
         mPersonalCenterBean.setTypeName("我的应用");
         data.add(mPersonalCenterBean);
     }
-
-
 
 }

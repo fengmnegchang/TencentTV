@@ -21,7 +21,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +31,7 @@ import android.widget.Toast;
 
 import com.open.androidtvwidget.bridge.EffectNoDrawBridge;
 import com.open.androidtvwidget.view.MainUpView;
+import com.open.tencenttv.BaseV4Fragment;
 import com.open.tencenttv.R;
 import com.open.tencenttv.VedioPreViewActivity;
 import com.open.tencenttv.adapter.StickGridHeadersLastHistoryAdapter;
@@ -53,7 +53,7 @@ import java.util.List;
  *
  * @author Tonic Artos
  */
-public class LastHistoryStickYGridHeaderFragment extends Fragment implements OnItemClickListener,
+public class LastHistoryStickYGridHeaderFragment extends BaseV4Fragment implements OnItemClickListener,
         OnHeaderClickListener, OnHeaderLongClickListener {
 //    private static final String KEY_LIST_POSITION = "key_list_position";
 
@@ -89,9 +89,6 @@ public class LastHistoryStickYGridHeaderFragment extends Fragment implements OnI
 //    private Menu mMenu;
 
     private Toast mToast;
-    private MainUpView mainUpView1;
-    private View mOldView;
-    private EffectNoDrawBridge mRecyclerViewBridge;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the

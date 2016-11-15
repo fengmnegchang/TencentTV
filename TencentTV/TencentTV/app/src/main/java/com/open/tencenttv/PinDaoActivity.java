@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,13 +30,8 @@ import java.util.List;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class PinDaoActivity extends FragmentActivity {
-    private static final String TAG = PinDaoActivity.class.getSimpleName();
-    private MainUpView mainUpView1;
-    private LayoutInflater mInflater;
-    private View mOldView;
+public class PinDaoActivity extends CommonFragmentActivity {
     private ListViewTV listView;
-    private EffectNoDrawBridge mRecyclerViewBridge;
     private List<PinDaoBean> data = new ArrayList<PinDaoBean>();
     private List<Fragment> fragments;
 
@@ -45,9 +39,21 @@ public class PinDaoActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pindao);
+        init();
+
+    }
+
+    @Override
+    protected void findView() {
+        super.findView();
         this.mInflater = LayoutInflater.from(getApplicationContext());
         listView = (ListViewTV) findViewById(R.id.listview);
         mainUpView1 = (MainUpView) findViewById(R.id.mainUpView1);
+    }
+
+    @Override
+    protected void initValue() {
+        super.initValue();
         // 默认是 OpenEff...，建议使用 NoDraw... ...
         mainUpView1.setEffectBridge(new EffectNoDrawBridge());
         mRecyclerViewBridge = (EffectNoDrawBridge) mainUpView1.getEffectBridge();
@@ -57,6 +63,12 @@ public class PinDaoActivity extends FragmentActivity {
 
         initData();
         listView.setAdapter(new PinDaoAdapter(this,data));
+    }
+
+    @Override
+    protected void bindEvent() {
+        super.bindEvent();
+
         listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -182,7 +194,4 @@ public class PinDaoActivity extends FragmentActivity {
 
     }
 
-    public float getDimension(int id) {
-        return getResources().getDimension(id);
-    }
 }

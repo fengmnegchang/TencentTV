@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -23,6 +22,7 @@ import com.open.androidtvwidget.view.ListViewTV;
 import com.open.androidtvwidget.view.MainUpView;
 import com.open.androidtvwidget.view.ReflectItemView;
 import com.open.androidtvwidget.view.SmoothHorizontalScrollView;
+import com.open.tencenttv.BaseV4Fragment;
 import com.open.tencenttv.R;
 import com.open.tencenttv.adapter.DramaAdapter;
 import com.open.tencenttv.adapter.DramaCountAdapter;
@@ -45,12 +45,7 @@ import java.util.List;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class VedioPreViewFragment extends Fragment implements View.OnClickListener{
-    public static final String TAG = VedioPreViewFragment.class.getSimpleName();
-    private MainUpView mainUpView1;
-    private View mOldView;
-    private EffectNoDrawBridge mRecyclerViewBridge;
-
+public class VedioPreViewFragment extends BaseV4Fragment implements View.OnClickListener{
 
     //剧集分页处理
     private ListViewTV listview_drama_pager;
