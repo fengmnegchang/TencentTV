@@ -7,6 +7,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,8 @@ import com.open.androidtvwidget.utils.OPENLOG;
 import com.open.androidtvwidget.view.MainUpView;
 import com.open.tencenttv.bean.CircularBean;
 import com.open.tencenttv.bean.PanBean;
+import com.open.tencenttv.fragment.PinDaoFragment;
+import com.open.tencenttv.fragment.PinDaoListFragment;
 import com.open.tencenttv.widget.CircularPopupWindow;
 import com.open.tencenttv.widget.androidtagview.TagContainerLayout;
 import com.open.tencenttv.widget.androidtagview.TagView;
@@ -195,8 +198,14 @@ public class SearchKeyBoardActivity extends FragmentActivity {
             }
         });
 
+        //搜索内容
 
+        FragmentManager manager = getSupportFragmentManager();
+        PinDaoListFragment rightFragment =  PinDaoListFragment.newInstance(mainUpView1,mRecyclerViewBridge,mOldView);
+        PinDaoFragment leftFragment = PinDaoFragment.newInstance("ListFragmentPinDaoActivity",mainUpView1,mOldView,mRecyclerViewBridge);
 
+        manager.beginTransaction().replace(R.id.frame_listview, rightFragment).commit();
+        manager.beginTransaction().replace(R.id.frame_pindao, leftFragment).commit();
     }
 
     private void setSkbContainerMove() {

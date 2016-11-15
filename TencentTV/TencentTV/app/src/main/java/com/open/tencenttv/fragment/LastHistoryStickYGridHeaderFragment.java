@@ -17,6 +17,7 @@
 package com.open.tencenttv.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import android.widget.Toast;
 import com.open.androidtvwidget.bridge.EffectNoDrawBridge;
 import com.open.androidtvwidget.view.MainUpView;
 import com.open.tencenttv.R;
+import com.open.tencenttv.VedioPreViewActivity;
 import com.open.tencenttv.adapter.StickGridHeadersLastHistoryAdapter;
 import com.open.tencenttv.bean.LastHistoryBean;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
@@ -179,6 +181,10 @@ public class LastHistoryStickYGridHeaderFragment extends Fragment implements OnI
             mainUpView1.setFocusView(view, mOldView, 1.2f);
         }
         mOldView = view;
+        //进入频道
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), VedioPreViewActivity.class);
+        startActivity(intent);
     }
 
 //    @Override

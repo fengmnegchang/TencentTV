@@ -40,7 +40,10 @@
         <activity
             android:name="com.open.tencenttv.TVMainActivity"
             android:launchMode="singleTask">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <!--频道-->
         <activity
@@ -71,10 +74,7 @@
 
         </activity>
         <activity android:name="com.open.tencenttv.SearchKeyBoardActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
     </application>
 

@@ -57,8 +57,30 @@
         android:focusableInTouchMode="true"
         app:tag_theme="random"
         app:vertical_interval="10dp" />
+    <FrameLayout
+        android:id="@+id/frame_listview"
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentRight="true"
+        android:focusable="false"
+        android:listSelector="#00000000"
+        android:dividerHeight="2dp"
+        android:scrollbars="none" />
 
-
+    <FrameLayout
+        android:id="@+id/frame_pindao"
+        android:focusableInTouchMode="false"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/skbContainer"
+        android:layout_toLeftOf="@+id/frame_listview"
+        android:layout_height="match_parent"
+        android:focusable="false"
+        />
     <com.open.androidtvwidget.view.MainUpView
         android:id="@+id/mainUpView1"
         android:layout_width="wrap_content"

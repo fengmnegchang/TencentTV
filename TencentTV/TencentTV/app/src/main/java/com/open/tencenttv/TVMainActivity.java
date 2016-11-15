@@ -7,17 +7,24 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.open.androidtvwidget.bridge.EffectNoDrawBridge;
 import com.open.androidtvwidget.leanback.adapter.GeneralAdapter;
 import com.open.androidtvwidget.leanback.recycle.LinearLayoutManagerTV;
 import com.open.androidtvwidget.leanback.recycle.RecyclerViewTV;
+import com.open.androidtvwidget.view.FrameMainLayout;
 import com.open.androidtvwidget.view.ListViewTV;
 import com.open.androidtvwidget.view.MainUpView;
+import com.open.androidtvwidget.view.ReflectItemView;
+import com.open.androidtvwidget.view.SmoothHorizontalScrollView;
 import com.open.tencenttv.adapter.PersonalCenterAdapter;
 import com.open.tencenttv.adapter.RecyclerViewPresenter;
 import com.open.tencenttv.adapter.RecyclerViewPushPresenter;
@@ -62,12 +69,20 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
 
     //    private RecyclerViewBridge mRecyclerViewBridge;
     EffectNoDrawBridge mRecyclerViewBridge;
+    //scrollview
+    private SmoothHorizontalScrollView hscroll_view;
+    private FrameMainLayout main_lay11;
+
+    private EditText edit_search;
+    private ReflectItemView item_edit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tv_main);
         this.mInflater = LayoutInflater.from(getApplicationContext());
+        hscroll_view = (SmoothHorizontalScrollView) findViewById(R.id.hscroll_view);
+        main_lay11 = (FrameMainLayout) findViewById(R.id.main_lay);
         listView = (ListViewTV) findViewById(R.id.listview);
         mainUpView1 = (MainUpView) findViewById(R.id.mainUpView1);
         // 默认是 OpenEff...，建议使用 NoDraw... ...
@@ -127,7 +142,7 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
                     startActivity(intent);
                 }else if(position==1){
                     Intent intent = new Intent();
-                    intent.setClass(TVMainActivity.this, SearchActivity.class);
+                    intent.setClass(TVMainActivity.this, SearchKeyBoardActivity.class);
                     startActivity(intent);
                 }else if(position==2){
                     Intent intent = new Intent();
@@ -182,6 +197,49 @@ public class TVMainActivity extends Activity implements RecyclerViewTV.OnItemLis
                 //进入频道
                 Intent intent = new Intent();
                 intent.setClass(TVMainActivity.this,PinDaoActivity.class);
+                startActivity(intent);
+            }
+        });
+        hscroll_view.setFadingEdge((int) getDimension(R.dimen.w_100)); // 滚动窗口也需要适配.
+        main_lay11.getViewTreeObserver().addOnGlobalFocusChangeListener(new ViewTreeObserver.OnGlobalFocusChangeListener() {
+            @Override
+            public void onGlobalFocusChanged(final View oldFocus, final View newFocus) {
+                if (newFocus != null)
+                    newFocus.bringToFront(); // 防止放大的view被压在下面. (建议使用MainLayout)
+                float scale = 1.1f;
+                mainUpView1.setFocusView(newFocus, mOldView, scale);
+                mOldView = newFocus; // 4.3以下需要自己保存.
+            }
+        });
+        for (int i = 0; i < main_lay11.getChildCount(); i++) {
+            main_lay11.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+//						v.performClick();
+                        v.requestFocus();
+                    }
+                    return false;
+                }
+            });
+        }
+
+        edit_search = (EditText) findViewById(R.id.edit_search);
+        item_edit = (ReflectItemView) findViewById(R.id.item_edit);
+        edit_search.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                Intent intent = new Intent();
+                intent.setClass(TVMainActivity.this, SearchKeyBoardActivity.class);
+                startActivity(intent);
+                return false;
+            }
+        });
+        item_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(TVMainActivity.this, SearchKeyBoardActivity.class);
                 startActivity(intent);
             }
         });
