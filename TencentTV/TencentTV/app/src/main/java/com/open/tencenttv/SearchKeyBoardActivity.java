@@ -273,7 +273,7 @@ public class SearchKeyBoardActivity extends FragmentActivity {
                     panBeenlist.add(panBean);
                 }
                 circularBean.setPanList(panBeenlist);
-                CircularPopupWindow mCircularPopupWindow = new CircularPopupWindow(this, circularBean, input_tv);
+                CircularPopupWindow mCircularPopupWindow = new CircularPopupWindow(this, circularBean, input_tv,mainUpView1,mOldView,mRecyclerViewBridge);
                 mCircularPopupWindow.showPopupWindow(skbContainer);
                 break;
         }

@@ -320,6 +320,36 @@ public class CircularMenu extends ViewGroup {
             if (getChildAt(i + 2) != null)
                 removeView(getChildAt(i + 2));
             View view = adapter.getView(i, null, this);
+            view.setTag(i);
+            view.setClickable(true);
+            view.setFocusable(true);
+            view.setFocusableInTouchMode(true);
+            view.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (null != onItemClickListener) {
+                        if (null != view) {
+                            onItemClickListener.onItemClick((int)view.getTag());
+                        }
+                    }
+                }
+            });
+            view.setOnFocusChangeListener(new OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (null != onItemClickListener) {
+                        if (null != view) {
+                            if (b) {
+                                view.setSelected(true);
+                                onItemClickListener.onItemSelected(view,(int)view.getTag());
+                            }else{
+                                view.setSelected(false);
+                                onItemClickListener.onItemPreSelected(view,(int)view.getTag());
+                            }
+                        }
+                    }
+                }
+            });
             addView(view, i + 2);
         }
     }
@@ -338,6 +368,9 @@ public class CircularMenu extends ViewGroup {
         void onItemClick(int position);
 
         void onCenterClick();
+
+        void onItemPreSelected(View itemView,int position);
+        void onItemSelected( View itemView,int position);
     }
 
     private class CustomView extends View {

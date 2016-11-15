@@ -9,6 +9,8 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.open.androidtvwidget.bridge.EffectNoDrawBridge;
+import com.open.androidtvwidget.view.MainUpView;
 import com.open.tencenttv.R;
 import com.open.tencenttv.adapter.PanAdapter;
 import com.open.tencenttv.bean.CircularBean;
@@ -28,11 +30,12 @@ public class CircularPopupWindow extends PopupWindow {
     View conentView;
     CircularBean circularBean;
 
-    public CircularPopupWindow(final Activity context, final CircularBean circularBean,final TextView input_tv) {
+    public CircularPopupWindow(final Activity context, final CircularBean circularBean,final TextView input_tv,MainUpView mainUpView1,  View mOldView, final  EffectNoDrawBridge mRecyclerViewBridge) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         conentView = inflater.inflate(R.layout.popup_circular, null);
         this.circularBean = circularBean;
+
         int h = context.getWindowManager().getDefaultDisplay().getHeight();
         int w = context.getWindowManager().getDefaultDisplay().getWidth();
         // 设置SelectPicPopupWindow的View
@@ -63,6 +66,18 @@ public class CircularPopupWindow extends PopupWindow {
         wheelMenuView.setAdapter(adapter);
         wheelMenuView.setItemCount(circularBean.getPanList().size());
         wheelMenuView.setOnItemClickListener(new CircularMenu.OnItemClickListener() {
+            @Override
+            public void onItemPreSelected(View itemView, int position) {
+                mRecyclerViewBridge.setUnFocusView(itemView);
+                System.out.println("item ========onItemPreSelected "+position);
+            }
+
+            @Override
+            public void onItemSelected(View itemView, int position) {
+                mRecyclerViewBridge.setFocusView(itemView, 2f);
+                System.out.println("item  ========onItemSelected "+position);
+            }
+
             @Override
             public void onItemClick(int position) {
                 input_tv.append(circularBean.getPanList().get(position).getKeyValue());
