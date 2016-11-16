@@ -8,8 +8,8 @@ import android.widget.TextView;
 import com.open.androidtvwidget.leanback.adapter.GeneralAdapter;
 import com.open.androidtvwidget.leanback.mode.OpenPresenter;
 import com.open.tencenttv.R;
+import com.open.tencenttv.bean.NavPopPinDaoBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,14 +23,17 @@ import java.util.List;
  * @description: ****************************************************************************************************************************************************************************
  */
 public class RecyclerViewPresenter extends OpenPresenter {
-
-    private final List<String> labels;
+    private List<String> labels;
+    private List<NavPopPinDaoBean> list;
     private GeneralAdapter mAdapter;
 
+    public RecyclerViewPresenter(List<NavPopPinDaoBean> list) {
+        this.list = list;
+    }
+
     public RecyclerViewPresenter(int count) {
-        this.labels = new ArrayList<String>(count);
-        for (int i = 0; i < count; i++) {
-            labels.add(String.valueOf(i));
+        for(int i=0;i<count;i++){
+            labels.add("item"+i);
         }
     }
 
@@ -52,12 +55,17 @@ public class RecyclerViewPresenter extends OpenPresenter {
 
     @Override
     public int getItemCount() {
-        return labels.size();
+        return list.size();
     }
 
     @Override
     public int getItemViewType(int position) {
         return 0;
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return list.get(position);
     }
 
     @Override
@@ -70,7 +78,8 @@ public class RecyclerViewPresenter extends OpenPresenter {
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         GridViewHolder gridViewHolder = (GridViewHolder) viewHolder;
         TextView textView = (TextView) gridViewHolder.tv;
-        textView.setText("item " + labels.get(position));
+        NavPopPinDaoBean bean = (NavPopPinDaoBean) getItem(position);
+        textView.setText(bean.getPindaoName());
     }
 
 }

@@ -40,7 +40,7 @@ public class StickyGridHeadersSimpleArrayAdapter<T> extends BaseAdapter implemen
 
     public int mItemResId;
 
-    private List<T> mItems;
+    public List<T> mItems;
 
     public StickyGridHeadersSimpleArrayAdapter(Context context, List<T> items, int headerResId,
             int itemResId) {

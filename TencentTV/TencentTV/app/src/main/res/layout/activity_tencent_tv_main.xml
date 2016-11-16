@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.open.androidtvwidget.view.SmoothHorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/hscroll_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@+id/text_center"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <com.open.androidtvwidget.view.FrameMainLayout
+        android:id="@+id/main_lay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#000000"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:paddingLeft="30dp">
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/item_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:isShape="true"
+                app:radius="@dimen/w_10">
+
+                <EditText
+                    android:id="@+id/edit_search"
+                    android:layout_width="200dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/edittext_shape"
+                    android:drawableLeft="@drawable/g_search_icon"
+                    android:hint="大家都在搜 喜剧总动员"
+                    android:text="大家都在搜 喜剧总动员"
+                    android:textColor="@color/black" />
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/item_settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/item_edit"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:focusableInTouchMode="true"
+                android:paddingLeft="@dimen/w_20"
+                app:isShape="true"
+                app:radius="@dimen/w_10">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/delete" />
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <com.open.androidtvwidget.view.ReflectItemView
+                android:id="@+id/item_m"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@+id/item_settings"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_marginLeft="15dp"
+                android:paddingLeft="@dimen/w_20"
+                app:isShape="true"
+                app:radius="@dimen/w_10">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/delete" />
+            </com.open.androidtvwidget.view.ReflectItemView>
+
+            <ImageView
+                android:id="@+id/img_wifi"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_toLeftOf="@+id/text_date"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:src="@drawable/delete" />
+
+            <TextView
+                android:id="@+id/text_date"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="20dp"
+                android:focusable="false"
+                android:gravity="center"
+                android:text="20:20"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+
+            <com.open.androidtvwidget.leanback.recycle.RecyclerViewTV
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_below="@+id/item_edit"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/main_bg"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="2dp" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/recyclerView"
+                android:layout_marginTop="15dp"
+                android:id="@+id/lay_tuijian"
+                />
+           <!-- <TextView
+                android:id="@+id/text_center"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_below="@+id/recyclerView"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:focusable="false"
+                android:gravity="center"
+                android:text="个人中心"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="25sp" />
+
+
+            <com.open.androidtvwidget.view.ListViewTV
+                android:id="@+id/listview"
+                android:layout_width="300dp"
+                android:layout_height="220dp"
+                android:layout_below="@+id/text_center"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="20dp"
+                android:focusable="false"
+                android:listSelector="#00000000"
+                android:scrollbars="none" />
+
+            <com.open.androidtvwidget.leanback.recycle.RecyclerViewTV
+                android:id="@+id/recycler_push"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_below="@+id/text_center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_toRightOf="@+id/listview"
+                android:background="@drawable/main_bg"
+                android:focusable="false"
+                android:padding="2dp" />
+
+            -->
+            <com.open.androidtvwidget.view.MainUpView
+                android:id="@+id/mainUpView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+    </com.open.androidtvwidget.view.FrameMainLayout>
+</com.open.androidtvwidget.view.SmoothHorizontalScrollView>

@@ -1,12 +1,9 @@
 /*
  Copyright 2013 Tonic Artos
-
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
-
  http://www.apache.org/licenses/LICENSE-2.0
-
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -240,12 +237,12 @@ public class LastHistoryStickYGridHeaderFragment extends BaseV4Fragment implemen
         // mGridView.setNumColumns(StickyGridHeadersGridView.AUTO_FIT);
         List<LastHistoryBean> list = new ArrayList<LastHistoryBean>();
         LastHistoryBean bean;
-        for (int i = 0; i <10; i++) {
+        for (int i = 0; i <15; i++) {
             bean = new LastHistoryBean();
-            if(i<=3){
+            if(i<=8){
                 bean.setItemType(1);
                 bean.setItemTypeName("观看");
-            }else if(i<=7){
+            }else if(i<=11){
                 bean.setItemType(2);
                 bean.setItemTypeName("应用");
             }else{

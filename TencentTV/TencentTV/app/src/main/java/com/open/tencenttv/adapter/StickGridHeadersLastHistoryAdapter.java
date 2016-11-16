@@ -73,7 +73,7 @@ public class StickGridHeadersLastHistoryAdapter extends StickyGridHeadersSimpleA
         }
 
         LastHistoryBean item = getItem(position);
-        holder.textView.setText(item.getDramaName());
+        holder.textView.setText(item.getDramaName()+position);
         return convertView;
     }
 

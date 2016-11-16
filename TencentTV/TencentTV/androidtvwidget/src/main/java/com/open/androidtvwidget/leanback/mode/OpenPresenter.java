@@ -30,6 +30,10 @@ public abstract class OpenPresenter {
         return 0;
     }
 
+    public Object getItem(int position){
+        return null;
+    }
+
     public abstract ViewHolder onCreateViewHolder(ViewGroup parent, int viewType);
 
     public void onViewAttachedToWindow(ViewHolder viewHolder) {
