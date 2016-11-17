@@ -19,7 +19,7 @@ public class DefualtListPresenter extends OpenPresenter {
 
     private static final float DEFUALT_SCALE = 1.2f;
 
-    List<Object> mItems;
+    public List<Object> mItems;
     private RecyclerViewTV.OnItemListener mOnItemListener;
     private RecyclerViewTV.OnItemClickListener mOnItemClickListener; // item 单击事件.
 

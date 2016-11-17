@@ -165,7 +165,7 @@ public class MediumRecyclerviewLeanBackActivity extends CommonFragmentActivity i
         // 行选中的事件.
 //        mRecyclerView.setOnChildViewHolderSelectedListener(mRowSelectedListener);
         // 更新数据测试.
-        handler.sendEmptyMessageDelayed(10, 6666);
+        handler.sendEmptyMessageDelayed(10, 666);
 
     }
 

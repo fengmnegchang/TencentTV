@@ -36,6 +36,7 @@ import android.widget.Toast;
 import com.open.androidtvwidget.bridge.EffectNoDrawBridge;
 import com.open.androidtvwidget.view.MainUpView;
 import com.open.tencenttv.BaseV4Fragment;
+import com.open.tencenttv.MediumRecyclerviewLeanBackActivity;
 import com.open.tencenttv.R;
 import com.open.tencenttv.VedioPreViewActivity;
 import com.open.tencenttv.adapter.StickGridHeadersNewFeatureAdapter;
@@ -187,7 +188,7 @@ public class NewFeatureStickYGridHeaderFragment extends BaseV4Fragment implement
         mOldView = view;
         //进入频道
         Intent intent = new Intent();
-        intent.setClass(getActivity(), VedioPreViewActivity.class);
+        intent.setClass(getActivity(), MediumRecyclerviewLeanBackActivity.class);
         startActivity(intent);
     }
 

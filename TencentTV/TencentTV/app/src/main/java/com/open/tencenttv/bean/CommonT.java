@@ -1,5 +1,7 @@
 package com.open.tencenttv.bean;
 
+import android.graphics.Bitmap;
+
 import com.open.androidtvwidget.leanback.mode.ListRow;
 
 import java.io.Serializable;
@@ -16,6 +18,7 @@ public class CommonT implements Serializable {
     private ArrayList<NewFeatureBean> newfeaturelist = new ArrayList<NewFeatureBean>();//推荐组别
     private ArrayList<ListRow> mediumlist = new ArrayList<ListRow>();//频道分类数据
     private ArrayList<SliderNavBean> sliderNavlist = new ArrayList<SliderNavBean>();//导航大图
+    private Bitmap bitmap;
 
     public ArrayList<NavPopPinDaoBean> getNavpoplist() {
         return navpoplist;
@@ -48,5 +51,13 @@ public class CommonT implements Serializable {
 
     public void setSliderNavlist(ArrayList<SliderNavBean> sliderNavlist) {
         this.sliderNavlist = sliderNavlist;
+    }
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
     }
 }

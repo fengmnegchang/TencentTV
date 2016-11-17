@@ -12,6 +12,10 @@ import android.widget.TextView;
 
 import com.open.androidtvwidget.leanback.mode.DefualtListPresenter;
 import com.open.tencenttv.R;
+import com.open.tencenttv.andenginetask.CallEarliest;
+import com.open.tencenttv.andenginetask.Callable;
+import com.open.tencenttv.andenginetask.Callback;
+import com.open.tencenttv.bean.CommonT;
 import com.open.tencenttv.imageloader.ImageLoader;
 
 /**
@@ -19,10 +23,12 @@ import com.open.tencenttv.imageloader.ImageLoader;
  * 如果你想改变标题头的样式，那就写自己的吧.
  * Created by hailongqiu on 2016/8/25.
  */
-public class MediumListPresenter extends DefualtListPresenter {
+public class MediumListPresenter extends AsyncTaskListPresenter  {
     ImageLoader mImageLoader;
     boolean mIsSelect;
     Context context;
+    OpenCardView openCardView;
+    String imageurl = "";
     /**
      * 你可以重写这里，传入AutoGridViewLayoutManger.
      */
@@ -47,7 +53,7 @@ public class MediumListPresenter extends DefualtListPresenter {
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
         Movie movie = ((Movie) getItem(position));
-        OpenCardView openCardView = (OpenCardView) viewHolder.view;
+        openCardView = (OpenCardView) viewHolder.view;
         openCardView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -60,8 +66,8 @@ public class MediumListPresenter extends DefualtListPresenter {
         });
 
         if(movie.getLz_srcurl()!=null && movie.getLz_srcurl().length()>0){
-            Bitmap bitmap = mImageLoader.getBitmap(movie.getLz_srcurl());
-            openCardView.setBackground(new BitmapDrawable(bitmap));
+            imageurl = movie.getLz_srcurl();
+            doAsync(this,this,this);
         }else{
             openCardView.setBackgroundResource(R.drawable.mainview_cloudlist);
         }
@@ -86,4 +92,17 @@ public class MediumListPresenter extends DefualtListPresenter {
         }
     }
 
+    @Override
+    public CommonT call() throws Exception {
+        CommonT mCommonT = new CommonT();
+        Bitmap bitmap = mImageLoader.getBitmap(imageurl);
+        mCommonT.setBitmap(bitmap);
+        return mCommonT;
+    }
+
+    @Override
+    public void onCallback(CommonT result) {
+        super.onCallback(result);
+        openCardView.setBackground(new BitmapDrawable(result.getBitmap()));
+    }
 }
