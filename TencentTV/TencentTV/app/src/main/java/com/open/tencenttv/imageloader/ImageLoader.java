@@ -212,7 +212,7 @@ public class ImageLoader {
 		// executorService.execute(new PhotosLoader(p));
 	}
 
-	private Bitmap getBitmap(String url) {
+	public Bitmap getBitmap(String url) {
 		final long startTime = SystemClock.uptimeMillis();
 		Uri uri = Uri.parse(url);
 		Bitmap bitmap = null;

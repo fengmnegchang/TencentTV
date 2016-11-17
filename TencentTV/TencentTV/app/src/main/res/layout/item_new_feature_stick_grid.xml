@@ -4,9 +4,6 @@
     android:layout_height="150dp"
     android:layout_margin="2dp"
     android:background="@drawable/key_bg_rectangle"
-    android:clickable="true"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
     android:id="@+id/item_lay"
     >
 

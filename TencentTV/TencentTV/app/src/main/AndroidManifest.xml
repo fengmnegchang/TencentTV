@@ -28,10 +28,15 @@
         <activity android:name="com.open.tencenttv.DemoKeyBoardActivity">
 
         </activity>
-        <activity android:name="com.open.tencenttv.DemoViewPagerActivity"></activity>
+        <activity android:name="com.open.tencenttv.DemoViewPagerActivity">
+        </activity>
         <activity android:name="com.open.tencenttv.DemoMenuActivity" />
-        <activity android:name="com.open.tencenttv.DemoRecyclerviewActivity"></activity>
-        <activity android:name="com.open.tencenttv.DemoRecyclerviewLeanBackActivity"></activity>
+        <activity android:name="com.open.tencenttv.DemoRecyclerviewActivity">
+
+        </activity>
+        <activity android:name="com.open.tencenttv.DemoRecyclerviewLeanBackActivity">
+
+        </activity>
         <!-- 横向布局-->
         <activity
             android:name="com.open.tencenttv.DemoRecyclerviewActivity2"
@@ -45,10 +50,6 @@
         <activity
             android:name="com.open.tencenttv.TencentTVMainActivity"
             android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.open.tencenttv.TVMainActivity"
@@ -84,6 +85,19 @@
        -->
         <activity android:name="com.open.tencenttv.SearchKeyBoardActivity">
 
+        </activity>
+        <!--分类内容-->
+        <activity android:name="com.open.tencenttv.MediumRecyclerviewLeanBackActivity">
+        </activity>
+        <!--viewpager视频大图滚动-->
+        <activity android:name="com.open.tencenttv.MediumViewPagerActivity">
+        </activity>
+        <!--使用竖向 ViewPager-->
+        <activity android:name="com.open.tencenttv.MediumFragmentDirectionActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

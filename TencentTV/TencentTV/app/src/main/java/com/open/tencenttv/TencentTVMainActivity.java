@@ -199,7 +199,7 @@ public class TencentTVMainActivity extends CommonFragmentActivity implements Rec
                 System.out.println("mRecyclerView item" + position + " ========onItemClick ");
                 //进入频道
                 Intent intent = new Intent();
-                intent.setClass(TencentTVMainActivity.this,PinDaoActivity.class);
+                intent.setClass(TencentTVMainActivity.this,MediumRecyclerviewLeanBackActivity.class);
                 startActivity(intent);
             }
         });

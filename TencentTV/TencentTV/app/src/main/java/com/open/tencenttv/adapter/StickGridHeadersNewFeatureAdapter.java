@@ -1,16 +1,13 @@
 package com.open.tencenttv.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.open.tencenttv.R;
-import com.open.tencenttv.VedioPreViewActivity;
 import com.open.tencenttv.bean.NewFeatureBean;
 import com.open.tencenttv.imageloader.ImageLoader;
 import com.open.tencenttv.utils.UrlUtils;
@@ -88,52 +85,41 @@ public class StickGridHeadersNewFeatureAdapter extends StickyGridHeadersSimpleAr
     @Override
     @SuppressWarnings("unchecked")
     public View getView(int position, View convertView, ViewGroup parent) {
-//        ViewHolder holder;
-//        if (convertView == null) {
-//            convertView = mInflater.inflate(mItemResId, parent, false);
-//            holder = new ViewHolder();
-//            holder.textView = (TextView) convertView.findViewById(android.R.id.text1);
-//            holder.imageView = (ImageView) convertView.findViewById(R.id.imageview);
-//            convertView.setTag(holder);
-//        } else {
-//            holder = (ViewHolder) convertView.getTag();
-//        }
-//
-//        NewFeatureBean item = getItem(position);
-//        holder.textView.setText(item.getTitle());
-//        if(item.getImageUrl()!=null && item.getImageUrl().length()>0){
-//            mImageLoader.DisplayImage(UrlUtils.TENCENT_IMAGE_URL+item.getImageUrl(), holder.imageView);
-//        }
-//        return convertView;
-
-        View view = mInflater.inflate(mItemResId, parent, false);
-        TextView textView = (TextView) view.findViewById(android.R.id.text1);
-        ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
-        NewFeatureBean item = getItem(position);
-        textView.setText(item.getTitle());
-        if (item.getImageUrl() != null && item.getImageUrl().length() > 0) {
-            mImageLoader.DisplayImage(UrlUtils.TENCENT_IMAGE_URL + item.getImageUrl(), imageView);
+        ViewHolder holder;
+        if (convertView == null) {
+            convertView = mInflater.inflate(mItemResId, parent, false);
+            holder = new ViewHolder();
+            holder.textView = (TextView) convertView.findViewById(android.R.id.text1);
+            holder.imageView = (ImageView) convertView.findViewById(R.id.imageview);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
-        FrameLayout item_lay = (FrameLayout) view.findViewById(R.id.item_lay);
-        item_lay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //进入频道
-                Intent intent = new Intent();
-                intent.setClass(context, VedioPreViewActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-            }
-        });
-        return view;
+
+        NewFeatureBean item = getItem(position);
+        holder.textView.setText(item.getTitle());
+        if(item.getImageUrl()!=null && item.getImageUrl().length()>0){
+            mImageLoader.DisplayImage(UrlUtils.TENCENT_IMAGE_URL+item.getImageUrl(), holder.imageView);
+        }
+        return convertView;
+
+//        View view = mInflater.inflate(mItemResId, parent, false);
+//        TextView textView = (TextView) view.findViewById(android.R.id.text1);
+//        ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
+//        NewFeatureBean item = getItem(position);
+//        textView.setText(item.getTitle());
+//        if (item.getImageUrl() != null && item.getImageUrl().length() > 0) {
+//            mImageLoader.DisplayImage(UrlUtils.TENCENT_IMAGE_URL + item.getImageUrl(), imageView);
+//        }
+//        return view;
     }
 
-//    protected class HeaderViewHolder {
-//        public TextView textView;
-//    }
+    protected class HeaderViewHolder {
+        public TextView textView;
+    }
 
-//    protected class ViewHolder {
-//        public TextView textView;
-//        public ImageView imageView;
-//    }
+    protected class ViewHolder {
+        public TextView textView;
+        public ImageView imageView;
+    }
 }

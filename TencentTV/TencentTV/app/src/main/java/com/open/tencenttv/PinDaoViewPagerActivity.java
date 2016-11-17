@@ -1,25 +1,32 @@
 package com.open.tencenttv;
 
-import android.app.Activity;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.view.PagerAdapter;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.open.androidtvwidget.bridge.EffectNoDrawBridge;
 import com.open.androidtvwidget.view.ListViewTV;
 import com.open.androidtvwidget.view.MainUpView;
+import com.open.tencenttv.adapter.MediumPagerAdapter;
 import com.open.tencenttv.adapter.PinDaoAdapter;
+import com.open.tencenttv.bean.CommonT;
 import com.open.tencenttv.bean.PinDaoBean;
+import com.open.tencenttv.bean.SliderNavBean;
+import com.open.tencenttv.utils.UrlUtils;
 import com.open.verticalviewpager.DirectionalViewPager;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 /**
  * ViewPager demo：
@@ -27,186 +34,126 @@ import java.util.List;
  * 移动边框的问题也需要注意.
  * @author hailongqiu
  */
-public class PinDaoViewPagerActivity extends Activity {
-    private List<View> viewList;// view数组
-    private View view1, view2, view3, view4;
+public class PinDaoViewPagerActivity extends CommonFragmentActivity {
+    MediumPagerAdapter mMediumPagerAdapter;
+    private List<SliderNavBean> sliderNavList = new ArrayList<SliderNavBean>();
+
     DirectionalViewPager viewpager;
-//    OpenTabHost mOpenTabHost;
-//    OpenTabTitleAdapter mOpenTabTitleAdapter;
     // 移动边框.
-    MainUpView mainUpView1;
     EffectNoDrawBridge mEffectNoDrawBridge;
     View mNewFocus;
     View mOldView;
     private ListViewTV listView;
-    private List<PinDaoBean> data = new ArrayList<PinDaoBean>();
+    private List<PinDaoBean> pinDaolist = new ArrayList<PinDaoBean>();
+    PinDaoAdapter mPinDaoAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pindao_viewpager);
-        listView = (ListViewTV) findViewById(R.id.listview);
+        init();
+    }
 
+    @Override
+    protected void findView() {
+        super.findView();
+        listView = (ListViewTV) findViewById(R.id.listview);
         // 初始化viewpager.
-        initAllViewPager();
+        viewpager = (DirectionalViewPager) findViewById(R.id.viewpager);
+        doAsync(this, this, this);
+    }
+
+    @Override
+    protected void initValue() {
+        super.initValue();
         // 初始化移动边框.
         initMoveBridge();
 
-        initData();
-        listView.setAdapter(new PinDaoAdapter(this,data));
-        listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("listView item" + view.getId() + ";postion=" + (int) id + " ========onItemSelected ");
-                if (view != null) {
-                    view.bringToFront();
-                    mEffectNoDrawBridge.setFocusView(view, mOldView, 1.1f);
-                    mOldView = view;
+        mPinDaoAdapter = new PinDaoAdapter(this,pinDaolist);
+        listView.setAdapter(mPinDaoAdapter);
+        // 初始化viewpager.
+        viewpager.setOrientation(DirectionalViewPager.VERTICAL);
+        mMediumPagerAdapter = new MediumPagerAdapter(this,sliderNavList);
+        viewpager.setAdapter(mMediumPagerAdapter);
+    }
+
+    @Override
+    public CommonT call() throws Exception {
+        CommonT mCommonT = new CommonT();
+        ArrayList<SliderNavBean> list = new ArrayList<SliderNavBean>();//导航大图
+        try {
+            // 解析网络标签
+            list = parseSliderNav(UrlUtils.TENCENT_TV_URL);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mCommonT.setSliderNavlist(list);
+        return mCommonT;
+    }
+
+    @Override
+    public void onCallback(CommonT result) {
+        super.onCallback(result);
+        sliderNavList.clear();
+        sliderNavList.addAll(result.getSliderNavlist());
+
+        pinDaolist.clear();
+        for(int i=0;i<result.getSliderNavlist().size();i++){
+            PinDaoBean bean = new PinDaoBean();
+            bean.setType(i);
+            bean.setTypeName(result.getSliderNavlist().get(i).getTitle());
+            pinDaolist.add(bean);
+        }
+        mMediumPagerAdapter.notifyDataSetChanged();
+        mPinDaoAdapter.notifyDataSetChanged();
+    }
+
+    public ArrayList<SliderNavBean> parseSliderNav(String href) {
+        ArrayList<SliderNavBean> list = new ArrayList<SliderNavBean>();
+        try {
+            href = makeURL(href, new HashMap<String, Object>() {
+                {
                 }
+            });
+            Log.i("url", "url = " + href);
 
-                viewpager.setCurrentItem((int) id);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                System.out.println("listView item" + " ========onNothingSelected ");
-            }
-        });
-
-        listView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                //失去焦点时，将子view还原
-                System.out.println("listView item" + view.getId() + " ========onFocusChange " + b);
-                if (!b) {
-                    for (int i = 0; i < listView.getChildCount(); i++) {
-                        View mvView = listView.getChildAt(i);
-                        mEffectNoDrawBridge.setUnFocusView(mvView);
+            Document doc = Jsoup.connect(href).userAgent(UrlUtils.userAgent).timeout(10000).get();
+            Element masthead = doc.select("div.slider_nav").first();
+            Elements aElements = masthead.select("a");
+            /**
+             * <a href="https://v.qq.com/x/cover/8479ahinkqm7czh.html" target="_blank" class="nav_link current" data-bgcolor="#e6d7b0" data-navcolor="深色" data-bgimage="http://puui.qpic.cn/tv/0/5785436_1680580/0">锦绣未央: 唐嫣玩腹黑？</a>
+             */
+            // 解析文件
+            if (aElements != null && aElements.size() > 1) {
+                for (int i = 1; i < aElements.size(); i++) {
+                    SliderNavBean sliderNavBean = new SliderNavBean();
+                    try {
+                        Element aElement = aElements.get(i).select("a").first();
+                        String hrefurl = aElement.attr("href");
+                        String title = aElement.text();
+                        String imageurl = aElement.attr("data-bgimage");
+                        System.out.println("i===" + i + "hrefurl==" + hrefurl + ";title===" + title + ";imageurl==" + imageurl);
+                        sliderNavBean.setTitle(title);
+                        sliderNavBean.setHrefUrl(hrefurl);
+                        sliderNavBean.setImageUrl(imageurl);
+                        list.add(sliderNavBean);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
-
             }
-        });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (view != null) {
-                    view.bringToFront();
-                    mEffectNoDrawBridge.setFocusView(view, mOldView, 1.1f);
-                    mOldView = view;
-                }
-                System.out.println("listView item" + (int) id + " ========onItemClick ");
-                Toast.makeText(getApplicationContext(), "position : " + position, Toast.LENGTH_LONG).show();
-
-
-            }
-        });
-        // 延时请求其它位置的item.
-        Handler handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                listView.setDefaultSelect(0);
-            }
-        };
-        handler.sendMessageDelayed(handler.obtainMessage(), 188);
-
+        return list;
     }
 
-    public void initData(){
-        PinDaoBean bean = new PinDaoBean();
-        bean.setType(0);
-        bean.setTypeName("筛选");
-        data.add(bean);
-
-        bean = new PinDaoBean();
-        bean.setType(1);
-        bean.setTypeName("搜索");
-        data.add(bean);
-
-        bean = new PinDaoBean();
-        bean.setType(2);
-        bean.setTypeName("大剧精选");
-        data.add(bean);
-
-
-        bean = new PinDaoBean();
-        bean.setType(2);
-        bean.setTypeName("卫视同步");
-        data.add(bean);
-
-//
-//        bean = new PinDaoBean();
-//        bean.setType(2);
-//        bean.setTypeName("抗战风云");
-//        data.add(bean);
-//
-//
-//        bean = new PinDaoBean();
-//        bean.setType(2);
-//        bean.setTypeName("会员专享");
-//        data.add(bean);
-//
-//        bean = new PinDaoBean();
-//        bean.setType(2);
-//        bean.setTypeName("热门话题");
-//        data.add(bean);
-//
-//        bean = new PinDaoBean();
-//        bean.setType(2);
-//        bean.setTypeName("剧星专场");
-//        data.add(bean);
-//
-//        bean = new PinDaoBean();
-//        bean.setType(2);
-//        bean.setTypeName("乡里乡亲");
-//        data.add(bean);
-
-
-
-    }
-
-    private void initMoveBridge() {
-        float density = getResources().getDisplayMetrics().density;
-        mainUpView1 = (MainUpView) findViewById(R.id.mainUpView1);
-        mEffectNoDrawBridge = new EffectNoDrawBridge();
-        mainUpView1.setEffectBridge(mEffectNoDrawBridge);
-        mEffectNoDrawBridge.setUpRectResource(R.drawable.white_light_10); // 设置移动边框图片.
-        RectF rectF = new RectF(getDimension(R.dimen.w_10) * density, getDimension(R.dimen.h_10) * density,
-                getDimension(R.dimen.w_10) * density, getDimension(R.dimen.h_10) * density);
-        mEffectNoDrawBridge.setDrawUpRectPadding(rectF);
-    }
-
-//    private void initAllTitleBar() {
-//        mOpenTabHost = (OpenTabHost) findViewById(R.id.openTabHost);
-//        mOpenTabTitleAdapter = new OpenTabTitleAdapter();
-//        mOpenTabHost.setOnTabSelectListener(this);
-//        mOpenTabHost.setAdapter(mOpenTabTitleAdapter);
-//    }
-
-    private void initAllViewPager() {
-        viewpager = (DirectionalViewPager) findViewById(R.id.viewpager);
-        //
-        LayoutInflater inflater = getLayoutInflater();
-        view1 = inflater.inflate(R.layout.fragment_pindao, null);
-        view2 = inflater.inflate(R.layout.fragment_pindao, null);
-        view3 = inflater.inflate(R.layout.fragment_pindao, null);
-        view4 = inflater.inflate(R.layout.fragment_pindao, null);
-        viewList = new ArrayList<View>();// 将要分页显示的View装入数组中
-        viewList.add(view1);
-        viewList.add(view2);
-        viewList.add(view3);
-        viewList.add(view4);
-//        // 初始化滚动窗口适配. (请注意哈，在不同的dpi下, 滚动相差的间距不一样哈)
-//        for (View view : viewList) {
-//            float density = getResources().getDisplayMetrics().density;
-//            SmoothHorizontalScrollView shsv = (SmoothHorizontalScrollView) view.findViewById(R.id.test_hscroll);
-//            shsv.setFadingEdge((int) (getDimension(R.dimen.w_200) * density));
-//        }
-        //
-        viewpager.setOrientation(DirectionalViewPager.VERTICAL);
-        viewpager.setAdapter(new DemoPagerAdapter());
-//        // 全局焦点监听. (这里只是demo，为了方便这样写，你可以不这样写)
+    @Override
+    protected void bindEvent() {
+        super.bindEvent();
+        // 初始化viewpager.
+// 全局焦点监听. (这里只是demo，为了方便这样写，你可以不这样写)
 //        viewpager.getViewTreeObserver().addOnGlobalFocusChangeListener(new OnGlobalFocusChangeListener() {
 //            @Override
 //            public void onGlobalFocusChanged(View oldFocus, View newFocus) {
@@ -277,71 +224,77 @@ public class PinDaoViewPagerActivity extends Activity {
 //        });
         // 初始化.
         viewpager.setCurrentItem(0);
-//        switchTab(mOpenTabHost, 0);
+
+        listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println("listView item" + view.getId() + ";postion=" + (int) id + " ========onItemSelected ");
+                if (view != null) {
+                    view.bringToFront();
+                    mEffectNoDrawBridge.setFocusView(view, mOldView, 1.1f);
+                    mOldView = view;
+                }
+
+                viewpager.setCurrentItem((int) id);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                System.out.println("listView item" + " ========onNothingSelected ");
+            }
+        });
+
+        listView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                //失去焦点时，将子view还原
+                System.out.println("listView item" + view.getId() + " ========onFocusChange " + b);
+                if (!b) {
+                    for (int i = 0; i < listView.getChildCount(); i++) {
+                        View mvView = listView.getChildAt(i);
+                        mEffectNoDrawBridge.setUnFocusView(mvView);
+                    }
+                }
+
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (view != null) {
+                    view.bringToFront();
+                    mEffectNoDrawBridge.setFocusView(view, mOldView, 1.1f);
+                    mOldView = view;
+                }
+                System.out.println("listView item" + (int) id + " ========onItemClick ");
+                Toast.makeText(getApplicationContext(), "position : " + position, Toast.LENGTH_LONG).show();
+
+
+            }
+        });
+
+        // 延时请求其它位置的item.
+        Handler handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                listView.setDefaultSelect(0);
+            }
+        };
+        handler.sendMessageDelayed(handler.obtainMessage(), 188);
+
     }
 
-//    @Override
-//    public void onTabSelect(OpenTabHost openTabHost, View titleWidget, int position) {
-//        if (viewpager != null) {
-//            viewpager.setCurrentItem(position);
-//        }
-//    }
 
-//    /**
-//     * demo (翻页的时候改变状态)
-//     * 将标题栏的文字颜色改变. <br>
-//     * 你可以写自己的东西，我这里只是DEMO.
-//     */
-//    public void switchTab(OpenTabHost openTabHost, int postion) {
-//        List<View> viewList = openTabHost.getAllTitleView();
-//        for (int i = 0; i < viewList.size(); i++) {
-//            TextViewWithTTF view = (TextViewWithTTF) openTabHost.getTitleViewIndexAt(i);
-//            if (view != null) {
-//                Resources res = view.getResources();
-//                if (res != null) {
-//                    if (i == postion) {
-//                        view.setTextColor(res.getColor(android.R.color.white));
-//                        view.setTypeface(null, Typeface.BOLD);
-//                        view.setSelected(true); // 为了显示 失去焦点，选中为 true的图片.
-//                    } else {
-//                        view.setTextColor(res.getColor(R.color.white_50));
-//                        view.setTypeface(null, Typeface.NORMAL);
-//                        view.setSelected(false);
-//                    }
-//                }
-//            }
-//        }
-//    }
-
-    private float getDimension(int id) {
-        return getResources().getDimension(id);
-    }
-
-    /**
-     * viewpager 的 adpater.
-     */
-    class DemoPagerAdapter extends PagerAdapter {
-
-        @Override
-        public int getCount() {
-            return viewList.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View arg0, Object arg1) {
-            return arg0 == arg1;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView(viewList.get(position));
-        }
-
-        public Object instantiateItem(ViewGroup container, int position) {
-            container.addView(viewList.get(position));
-            return viewList.get(position);
-        }
-
+    private void initMoveBridge() {
+        float density = getResources().getDisplayMetrics().density;
+        mainUpView1 = (MainUpView) findViewById(R.id.mainUpView1);
+        mEffectNoDrawBridge = new EffectNoDrawBridge();
+        mainUpView1.setEffectBridge(mEffectNoDrawBridge);
+        mEffectNoDrawBridge.setUpRectResource(R.drawable.white_light_10); // 设置移动边框图片.
+        RectF rectF = new RectF(getDimension(R.dimen.w_10) * density, getDimension(R.dimen.h_10) * density,
+                getDimension(R.dimen.w_10) * density, getDimension(R.dimen.h_10) * density);
+        mEffectNoDrawBridge.setDrawUpRectPadding(rectF);
     }
 
 }
