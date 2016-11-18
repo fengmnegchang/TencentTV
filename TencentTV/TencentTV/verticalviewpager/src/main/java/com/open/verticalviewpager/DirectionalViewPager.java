@@ -1075,5 +1075,10 @@ public class DirectionalViewPager extends ViewPager {
         public void onDataSetChanged() {
             dataSetChanged();
         }
+
+        @Override
+        public void onChanged() {
+
+        }
     }
 }

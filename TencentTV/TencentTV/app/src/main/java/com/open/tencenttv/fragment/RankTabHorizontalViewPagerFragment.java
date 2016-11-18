@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,11 +54,12 @@ public class RankTabHorizontalViewPagerFragment extends BaseV4Fragment implement
     EffectNoDrawBridge mEffectNoDrawBridge;
     View mNewFocus;
     RankPagerAdapter mRankPagerAdapter;
+//    RankViewPagerAdapter mRankViewPagerAdapter;
     private List<RankBean> titlerankList = new ArrayList<RankBean>();
     OpenTabHost mOpenTabHost;
     OpenTabTitleAdapter mOpenTabTitleAdapter;
     private List<String> titleList = new ArrayList<String>();
-    private List<RankFragment> listRankFragment = new ArrayList<RankFragment>();// view数组
+    private List<Fragment> listRankFragment = new ArrayList<Fragment>();// view数组
 
     public static RankTabHorizontalViewPagerFragment newInstance(MainUpView mainUpView1, View mOldView, EffectNoDrawBridge mEffectNoDrawBridge) {
         RankTabHorizontalViewPagerFragment fragment = new RankTabHorizontalViewPagerFragment();
@@ -75,15 +77,95 @@ public class RankTabHorizontalViewPagerFragment extends BaseV4Fragment implement
         // 初始化viewpager.
         viewpager = (ViewPager) view.findViewById(R.id.viewpager);
         mOpenTabHost = (OpenTabHost) view.findViewById(R.id.openTabHost);
-        doAsync(this, this, this);
         return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        doAsync(this, this, this);
 
-        // 初始化viewpager.
+    }
+
+    Handler mFocusHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+//            // 初始化.
+            switchTab(mOpenTabHost, 0);
+            viewpager.setCurrentItem(0);
+
+
+        }
+    };
+    /**
+     * demo (翻页的时候改变状态)
+     * 将标题栏的文字颜色改变. <br>
+     * 你可以写自己的东西，我这里只是DEMO.
+     */
+    public void switchTab(OpenTabHost openTabHost, int postion) {
+        List<View> viewList = openTabHost.getAllTitleView();
+        for (int i = 0; i < viewList.size(); i++) {
+            TextViewWithTTF view = (TextViewWithTTF) openTabHost.getTitleViewIndexAt(i);
+            if (view != null) {
+                Resources res = view.getResources();
+                if (res != null) {
+                    if (i == postion) {
+                        view.setTextColor(res.getColor(android.R.color.white));
+                        view.setTypeface(null, Typeface.BOLD);
+                        view.setSelected(true); // 为了显示 失去焦点，选中为 true的图片.
+                    } else {
+                        view.setTextColor(res.getColor(R.color.white_50));
+                        view.setTypeface(null, Typeface.NORMAL);
+                        view.setSelected(false);
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onTabSelect(OpenTabHost openTabHost, View titleWidget, int position) {
+        if (viewpager != null) {
+            viewpager.setCurrentItem(position);
+        }
+    }
+
+    @Override
+    public CommonT call() throws Exception {
+        CommonT mCommonT = new CommonT();
+        ArrayList<RankBean> list = new ArrayList<RankBean>();
+        try {
+            // 解析网络标签
+            list = parseTitleRank(UrlUtils.TENCENT_RANK_URL);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mCommonT.setTitlerankList(list);
+        return mCommonT;
+    }
+
+    @Override
+    public void onCallback(CommonT result) {
+        super.onCallback(result);
+        titlerankList.clear();
+        titlerankList.addAll(result.getTitlerankList());
+        //初始化标题栏.
+        titleList.clear();
+        listRankFragment.clear();
+        for(RankBean bean:result.getTitlerankList()){
+            titleList.add(bean.getRankName());
+//            RankFragment fragment = RankFragment.newInstance("",mainUpView1,mOldView,mRecyclerViewBridge);
+            Fragment fragment = RankV4Fragment.newInstance();
+            listRankFragment.add(fragment);
+        }
+        mOpenTabTitleAdapter = new OpenTabTitleAdapter(titleList);
+        mOpenTabHost.setAdapter(mOpenTabTitleAdapter);
+
+//        mRankViewPagerAdapter = new RankViewPagerAdapter(getActivity(),result.getTitlerankList());
+        mRankPagerAdapter = new RankPagerAdapter(getChildFragmentManager(),listRankFragment);
+        viewpager.setAdapter(mRankPagerAdapter);
+
+// 初始化viewpager.
         // 全局焦点监听. (这里只是demo，为了方便这样写，你可以不这样写)
         viewpager.getViewTreeObserver().addOnGlobalFocusChangeListener(new ViewTreeObserver.OnGlobalFocusChangeListener() {
             @Override
@@ -157,84 +239,7 @@ public class RankTabHorizontalViewPagerFragment extends BaseV4Fragment implement
         //初始化标题栏.
         mOpenTabHost.setOnTabSelectListener(this);
 
-//        mFocusHandler.sendEmptyMessageDelayed(10, 5000);
-    }
-
-    Handler mFocusHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-//            // 初始化.
-//            switchTab(mOpenTabHost, 0);
-//            viewpager.setCurrentItem(0);
-
-
-        }
-    };
-    /**
-     * demo (翻页的时候改变状态)
-     * 将标题栏的文字颜色改变. <br>
-     * 你可以写自己的东西，我这里只是DEMO.
-     */
-    public void switchTab(OpenTabHost openTabHost, int postion) {
-        List<View> viewList = openTabHost.getAllTitleView();
-        for (int i = 0; i < viewList.size(); i++) {
-            TextViewWithTTF view = (TextViewWithTTF) openTabHost.getTitleViewIndexAt(i);
-            if (view != null) {
-                Resources res = view.getResources();
-                if (res != null) {
-                    if (i == postion) {
-                        view.setTextColor(res.getColor(android.R.color.white));
-                        view.setTypeface(null, Typeface.BOLD);
-                        view.setSelected(true); // 为了显示 失去焦点，选中为 true的图片.
-                    } else {
-                        view.setTextColor(res.getColor(R.color.white_50));
-                        view.setTypeface(null, Typeface.NORMAL);
-                        view.setSelected(false);
-                    }
-                }
-            }
-        }
-    }
-
-    @Override
-    public void onTabSelect(OpenTabHost openTabHost, View titleWidget, int position) {
-        if (viewpager != null) {
-            viewpager.setCurrentItem(position);
-        }
-    }
-
-    @Override
-    public CommonT call() throws Exception {
-        CommonT mCommonT = new CommonT();
-        ArrayList<RankBean> list = new ArrayList<RankBean>();
-        try {
-            // 解析网络标签
-            list = parseTitleRank(UrlUtils.TENCENT_RANK_URL);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        mCommonT.setTitlerankList(list);
-        return mCommonT;
-    }
-
-    @Override
-    public void onCallback(CommonT result) {
-        super.onCallback(result);
-        titlerankList.clear();
-        titlerankList.addAll(result.getTitlerankList());
-        //初始化标题栏.
-        titleList.clear();
-        listRankFragment.clear();
-        for(RankBean bean:result.getTitlerankList()){
-            titleList.add(bean.getRankName());
-            RankFragment fragment = RankFragment.newInstance("",mainUpView1,mOldView,mRecyclerViewBridge);
-            listRankFragment.add(fragment);
-        }
-        mRankPagerAdapter = new RankPagerAdapter(getActivity().getSupportFragmentManager(),listRankFragment);
-        viewpager.setAdapter(mRankPagerAdapter);
-
-        mOpenTabTitleAdapter = new OpenTabTitleAdapter(titleList);
-        mOpenTabHost.setAdapter(mOpenTabTitleAdapter);
+        mFocusHandler.sendEmptyMessageDelayed(10, 5000);
     }
 
     public ArrayList<RankBean> parseTitleRank(String href) {
