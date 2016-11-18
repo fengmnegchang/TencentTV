@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/vp_main_lay"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="@drawable/main_bg"
+    android:clipChildren="false"
+    android:clipToPadding="false" >
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:visibility="visible" />
+
+</RelativeLayout>

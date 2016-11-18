@@ -6,12 +6,12 @@
     android:clipToPadding="false"
     android:orientation="vertical">
 
-<!--
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:id="@+id/lay_view_pager"
-        />-->
+        />
     <com.open.androidtvwidget.leanback.recycle.RecyclerViewTV
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"

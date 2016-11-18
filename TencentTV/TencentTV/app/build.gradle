@@ -81,10 +81,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
 //    compile 'com.android.support:multidex:1.0.0'
     compile 'com.android.support:appcompat-v7:24.2.0'
+    compile 'com.android.support:support-v4:24.2.0'
     compile project(':androidtvwidget')
     compile project(':verticalviewpager')
     compile project(':stickygridheaders')
     compile project(':androidvolley')
     compile project(':universalimageloader')
-    compile project(path: ':universalimageloader')
 }

@@ -24,6 +24,10 @@ public class OpenTabTitleAdapter extends BaseTabTitleAdapter {
 			titleList.add("设置");
 	}
 
+	public OpenTabTitleAdapter(List<String> titleList) {
+		 this.titleList = titleList;
+	}
+
 	@Override
 	public int getCount() {
 		return titleList.size();

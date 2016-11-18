@@ -53,10 +53,6 @@
         <activity
             android:name="com.open.tencenttv.TencentTVMainActivity"
             android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.open.tencenttv.TVMainActivity"
@@ -102,6 +98,13 @@
         <!--使用竖向 ViewPager-->
         <activity android:name="com.open.tencenttv.MediumFragmentDirectionActivity">
 
+        </activity>
+        <!--播放排行-->
+        <activity android:name="com.open.tencenttv.ListFragmentRankActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="220dp"
+    android:orientation="vertical"
+    android:layout_gravity="center|top"
+    >
+    <TextView
+        android:id="@+id/text_rank_name"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:focusable="false"
+        android:gravity="center|top"
+        android:textAlignment="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:padding="5dp"
+        android:textColor="#FFFFFF"
+        android:text="最近观看"
+        android:textSize="25sp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:scaleType="fitXY"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_below="@+id/text_rank_name"
+        android:layout_gravity="center|top"
+        android:id="@+id/image_top"
+        android:src="@drawable/grid_view_item_test" >
+    </ImageView>
+
+    <!--
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="160dp"
+        android:scaleType="fitXY"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_gravity="center|top"
+        android:layout_below="@+id/image_top"
+        android:id="@+id/image_left"
+        android:src="@drawable/grid_view_item_test" >
+    </ImageView>
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="160dp"
+        android:scaleType="fitXY"
+        android:layout_below="@+id/image_top"
+        android:id="@+id/image_right"
+        android:layout_toRightOf="@+id/image_left"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_gravity="center|top"
+        android:src="@drawable/grid_view_item_test" >
+    </ImageView>
+-->
+</RelativeLayout>

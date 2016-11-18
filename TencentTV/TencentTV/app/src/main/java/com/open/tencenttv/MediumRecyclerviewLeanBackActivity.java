@@ -5,6 +5,7 @@ import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,6 +24,7 @@ import com.open.androidtvwidget.leanback.recycle.RecyclerViewTV;
 import com.open.androidtvwidget.utils.OPENLOG;
 import com.open.androidtvwidget.view.MainUpView;
 import com.open.tencenttv.bean.CommonT;
+import com.open.tencenttv.fragment.MediumDirectionViewPagerFragment;
 import com.open.tencenttv.mode.MediumListPresenter;
 import com.open.tencenttv.mode.Movie;
 import com.open.tencenttv.mode.TestMoviceListPresenter;
@@ -89,6 +91,10 @@ public class MediumRecyclerviewLeanBackActivity extends CommonFragmentActivity i
         RectF receF = new RectF(getDimension(R.dimen.w_45) * density, getDimension(R.dimen.h_40) * density,
                 getDimension(R.dimen.w_45) * density, getDimension(R.dimen.h_40) * density);
         mRecyclerViewBridge.setDrawUpRectPadding(receF);
+
+        MediumDirectionViewPagerFragment fragment = MediumDirectionViewPagerFragment.newInstance(mainUpView1,mOldView,mRecyclerViewBridge);
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.lay_view_pager, fragment).commit();
     }
 
     @Override
