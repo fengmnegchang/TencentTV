@@ -85,4 +85,6 @@ dependencies {
     compile project(':verticalviewpager')
     compile project(':stickygridheaders')
     compile project(':androidvolley')
+    compile project(':universalimageloader')
+    compile project(path: ':universalimageloader')
 }

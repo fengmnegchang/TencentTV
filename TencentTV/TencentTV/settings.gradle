@@ -1,1 +1,1 @@
-include ':app', ':androidtvwidget', ':verticalviewpager', ':stickygridheaders', ':androidvolley'
+include ':app', ':androidtvwidget', ':verticalviewpager', ':stickygridheaders', ':androidvolley', ':universalimageloader'
