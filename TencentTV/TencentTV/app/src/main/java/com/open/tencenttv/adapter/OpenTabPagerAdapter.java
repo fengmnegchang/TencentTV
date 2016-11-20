@@ -14,22 +14,15 @@ import com.open.tencenttv.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OpenTabTitleAdapter extends BaseTabTitleAdapter {
+public class OpenTabPagerAdapter extends BaseTabTitleAdapter {
     private List<String> titleList = new ArrayList<String>();
 
-    public OpenTabTitleAdapter() {
-			titleList.add("推荐");
-			titleList.add("电影");
-			titleList.add("电视剧");
-			titleList.add("设置");
-    }
+
     Context context;
-    public OpenTabTitleAdapter(Context context, List<String> titleList) {
+    public OpenTabPagerAdapter(Context context, List<String> titleList, List<Integer> ids) {
         this.titleList = titleList;
         this.context = context;
-        for (int i = 0; i < titleList.size(); i++) {
-            ids.add(R.id.imageview);
-        }
+        this.ids = ids;
     }
 
     @Override
@@ -44,15 +37,15 @@ public class OpenTabTitleAdapter extends BaseTabTitleAdapter {
      * android:nextFocusUp="@+id/title_bar1" <br>
      * 就可以解决焦点问题哦.
      */
-//    private List<Integer> ids = new ArrayList<Integer>();
-	private List<Integer> ids = new ArrayList<Integer>() {
-		{
-			add(R.id.title_bar1);
-			add(R.id.title_bar2);
-			add(R.id.title_bar3);
-			add(R.id.title_bar4);
-		}
-	};
+    private List<Integer> ids = new ArrayList<Integer>();
+//	private List<Integer> ids = new ArrayList<Integer>() {
+//		{
+//			add(R.id.title_bar1);
+//			add(R.id.title_bar2);
+//			add(R.id.title_bar3);
+//			add(R.id.title_bar4);
+//		}
+//	};
 
     @Override
     public Integer getTitleWidgetID(int pos) {
@@ -61,10 +54,11 @@ public class OpenTabTitleAdapter extends BaseTabTitleAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        String title = titleList.get(position);
-        convertView = newTabIndicator(parent.getContext(), title, false);
-        convertView.setId(ids.get(position)); // 设置ID.
-
+        if(convertView==null) {
+            String title = titleList.get(position);
+            convertView = newTabIndicator(context, title, false);
+            convertView.setId(ids.get(position)); // 设置ID.
+        }
         return convertView;
     }
 

@@ -101,6 +101,9 @@
         </activity>
         <!--播放排行-->
         <activity android:name="com.open.tencenttv.ListFragmentRankActivity">
+
+        </activity>
+        <activity android:name="com.open.tencenttv.MediumTabHostViewPagerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

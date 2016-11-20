@@ -19,16 +19,16 @@
         android:dividerHeight="2dp"
         android:scrollbars="none" />
 
-    <com.open.verticalviewpager.DirectionalViewPager
-        android:id="@+id/viewpager"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_toRightOf="@+id/listview"
-        android:layout_marginLeft="20dp"
-        android:layout_gravity="center"
-        android:visibility="visible" />
-    <!-- 最顶层边框 -->
+    <!-- <com.open.verticalviewpager.DirectionalViewPager
+         android:id="@+id/viewpager"
+         android:layout_marginTop="20dp"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:layout_toRightOf="@+id/listview"
+         android:layout_marginLeft="20dp"
+         android:layout_gravity="center"
+         android:visibility="visible" /> -->
+     <!-- 最顶层边框 -->
 
     <com.open.androidtvwidget.view.MainUpView
         android:id="@+id/mainUpView1"

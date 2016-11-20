@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
@@ -19,9 +20,12 @@ import com.open.androidtvwidget.view.OpenTabHost;
 import com.open.androidtvwidget.view.OpenTabHost.OnTabSelectListener;
 import com.open.androidtvwidget.view.TextViewWithTTF;
 import com.open.tencenttv.adapter.MediumPagerAdapter;
+import com.open.tencenttv.adapter.OpenTabPagerAdapter;
 import com.open.tencenttv.adapter.OpenTabTitleAdapter;
+import com.open.tencenttv.adapter.RankPagerAdapter;
 import com.open.tencenttv.bean.CommonT;
 import com.open.tencenttv.bean.SliderNavBean;
+import com.open.tencenttv.fragment.RankV4Fragment;
 import com.open.tencenttv.utils.UrlUtils;
 
 import org.jsoup.Jsoup;
@@ -44,11 +48,15 @@ public class MediumTabHostViewPagerActivity extends CommonFragmentActivity imple
 //    private List<View> viewList  = new ArrayList<View>();// 将要分页显示的View装入数组中
     ViewPager viewpager;
     OpenTabHost mOpenTabHost;
-    OpenTabTitleAdapter mOpenTabTitleAdapter;
+    OpenTabPagerAdapter mOpenTabPagerAdapter;
+    List<String> titleList = new ArrayList<String>();
     // 移动边框.
     EffectNoDrawBridge mEffectNoDrawBridge;
     View mNewFocus;
 //    ImageLoader mImageLoader;
+    private List<Fragment> listRankFragment = new ArrayList<Fragment>();// view数组
+    private List<Integer> ids = new ArrayList<Integer>();
+    RankPagerAdapter mRankPagerAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,11 +79,9 @@ public class MediumTabHostViewPagerActivity extends CommonFragmentActivity imple
         super.initValue();
 //        mImageLoader = new ImageLoader(this);
 //        mImageLoader.setRequiredSize(5 * (int) getResources().getDimension(R.dimen.litpic_width));
-        //初始化标题栏.
-        mOpenTabTitleAdapter = new OpenTabTitleAdapter();
-        mOpenTabHost.setAdapter(mOpenTabTitleAdapter);
         // 初始化移动边框.
         initMoveBridge();
+
     }
 
     @Override
@@ -99,7 +105,8 @@ public class MediumTabHostViewPagerActivity extends CommonFragmentActivity imple
 //        LayoutInflater inflater = getLayoutInflater();
         list.clear();
         list.addAll(result.getSliderNavlist());
-//        for(SliderNavBean sliderNavBean:result.getSliderNavlist()){
+        titleList.clear();
+        for(SliderNavBean sliderNavBean:result.getSliderNavlist()){
 //            View view = inflater.inflate(R.layout.item_medium_pager, null);
 //            ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
 //            TextView textView = (TextView) view.findViewById(R.id.textview);
@@ -108,8 +115,18 @@ public class MediumTabHostViewPagerActivity extends CommonFragmentActivity imple
 //                mImageLoader.DisplayImage(sliderNavBean.getImageUrl(), imageView);
 //            }
 //            viewList.add(view);
-//        }
-        viewpager.setAdapter(new MediumPagerAdapter(this,list));
+            titleList.add(sliderNavBean.getTitle());
+            Fragment fragment = RankV4Fragment.newInstance();
+            listRankFragment.add(fragment);
+            ids.add(R.id.title_bar1);
+        }
+        //初始化标题栏.
+        mOpenTabPagerAdapter = new OpenTabPagerAdapter(this,titleList,ids);
+        mOpenTabHost.setAdapter(mOpenTabPagerAdapter);
+        mOpenTabPagerAdapter.notifyDataSetChanged();
+        mRankPagerAdapter = new RankPagerAdapter(getSupportFragmentManager(),listRankFragment,titleList);
+        viewpager.setAdapter(mRankPagerAdapter);
+//        viewpager.setAdapter(new MediumPagerAdapter(this,list));
     }
 
     public ArrayList<SliderNavBean> parseSliderNav(String href) {

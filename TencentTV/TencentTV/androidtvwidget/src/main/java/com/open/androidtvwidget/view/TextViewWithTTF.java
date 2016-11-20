@@ -28,9 +28,9 @@ public class TextViewWithTTF extends TextView {
     public TextViewWithTTF(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TextViewWithTTF);
-        setTypeface(SFontMgr.getTypeface(array.getString(R.styleable.TextViewWithTTF_ttf_name)));
-        array.recycle();
+//        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TextViewWithTTF);
+////        setTypeface(SFontMgr.getTypeface(array.getString(R.styleable.TextViewWithTTF_ttf_name)));
+//        array.recycle();
     }
 
     
@@ -38,11 +38,11 @@ public class TextViewWithTTF extends TextView {
     public TextViewWithTTF(Context context, String aTTFName)
     {
         super(context);
-        setTypeface(SFontMgr.getTypeface(aTTFName));
+//        setTypeface(SFontMgr.getTypeface(aTTFName));
     }
     
     public void setFont(String aTTFName) {
-    	setTypeface(SFontMgr.getTypeface(aTTFName));
+//    	setTypeface(SFontMgr.getTypeface(aTTFName));
     }
 }
 
