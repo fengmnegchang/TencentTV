@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.support.v4.view;
+package android.support.v4.view.verticalview;
 
 import android.database.DataSetObservable;
 import android.os.Parcelable;
@@ -74,7 +74,7 @@ import android.view.ViewGroup;
  * ViewPager will keep the current page active provided the adapter implements
  * the method {@link #getItemPosition(Object)}.</p>
  */
-public abstract class PagerAdapter {
+public abstract class PagerAdapter extends android.support.v4.view.PagerAdapter{
     private final DataSetObservable mObservable = new DataSetObservable();
     private DataSetObserver mViewPagerObserver;
 
@@ -297,6 +297,7 @@ public abstract class PagerAdapter {
     {
         public abstract void onDataSetChanged();
         public void onChanged();
+		public void onInvalidated();
 
     }
 

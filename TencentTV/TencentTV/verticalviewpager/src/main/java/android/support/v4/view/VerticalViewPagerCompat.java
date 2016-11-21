@@ -1,4 +1,4 @@
-package android.support.v4.view;
+package android.support.v4.view.verticalview;
 
 public final class VerticalViewPagerCompat {
     private VerticalViewPagerCompat() {}

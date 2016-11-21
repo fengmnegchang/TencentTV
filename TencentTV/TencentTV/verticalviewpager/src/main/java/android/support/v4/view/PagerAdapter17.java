@@ -1,3 +1,4 @@
+package android.support.v4.view.verticalview;
 ///*
 //2 * Copyright (C) 2011 The Android Open Source Project
 //3 *

@@ -17,6 +17,7 @@
 
 package com.open.verticalviewpager;
 
+import java.util.ArrayList;
 import android.content.Context;
 import android.os.Build;
 import android.os.Parcel;
@@ -24,11 +25,11 @@ import android.os.Parcelable;
 import android.support.v4.os.ParcelableCompat;
 import android.support.v4.os.ParcelableCompatCreatorCallbacks;
 import android.support.v4.view.MotionEventCompat;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.VelocityTrackerCompat;
-import android.support.v4.view.VerticalViewPagerCompat;
 import android.support.v4.view.ViewConfigurationCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.verticalview.PagerAdapter;
+import android.support.v4.view.verticalview.VerticalViewPagerCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -37,8 +38,6 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.Scroller;
-
-import java.util.ArrayList;
 
 /**
  * Layout manager that allows the user to flip horizontally or vertically
@@ -241,8 +240,8 @@ public class DirectionalViewPager extends ViewPager {
     /**
      * Like {@link View#scrollBy}, but scroll smoothly instead of immediately.
      *
-     *  dx the number of pixels to scroll by on the X axis
-     *   dy the number of pixels to scroll by on the Y axis
+     * @param dx the number of pixels to scroll by on the X axis
+     * @param dy the number of pixels to scroll by on the Y axis
      */
     void smoothScrollTo(int x, int y) {
         if (getChildCount() == 0) {
@@ -427,7 +426,7 @@ public class DirectionalViewPager extends ViewPager {
                     + " position=" + position + "}";
         }
 
-        public static final Creator<SavedState> CREATOR
+        public static final Parcelable.Creator<SavedState> CREATOR
                 = ParcelableCompat.newCreator(new ParcelableCompatCreatorCallbacks<SavedState>() {
                     @Override
                     public SavedState createFromParcel(Parcel in, ClassLoader loader) {
@@ -1076,9 +1075,22 @@ public class DirectionalViewPager extends ViewPager {
             dataSetChanged();
         }
 
-        @Override
-        public void onChanged() {
+		/* (non-Javadoc)
+		 * @see android.support.v4.view.verticalview.PagerAdapter.DataSetObserver#onChanged()
+		 */
+		@Override
+		public void onChanged() {
+			// TODO Auto-generated method stub
+			
+		}
 
-        }
+		/* (non-Javadoc)
+		 * @see android.support.v4.view.verticalview.PagerAdapter.DataSetObserver#onInvalidated()
+		 */
+		@Override
+		public void onInvalidated() {
+			// TODO Auto-generated method stub
+			
+		}
     }
 }
