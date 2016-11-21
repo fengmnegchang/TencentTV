@@ -154,15 +154,15 @@ public class RankTabHorizontalViewPagerFragment extends BaseV4Fragment implement
         listRankFragment.clear();
         for(RankBean bean:result.getTitlerankList()){
             titleList.add(bean.getRankName());
-//            RankFragment fragment = RankFragment.newInstance("",mainUpView1,mOldView,mRecyclerViewBridge);
+            RankFragment fragment = RankFragment.newInstance("",mainUpView1,mOldView,mRecyclerViewBridge);
 //            Fragment fragment = RankV4Fragment.newInstance();
-//            listRankFragment.add(fragment);
+            listRankFragment.add(fragment);
         }
         mOpenTabTitleAdapter = new OpenTabTitleAdapter(getActivity(),titleList);
         mOpenTabHost.setAdapter(mOpenTabTitleAdapter);
 
 //        mRankViewPagerAdapter = new RankViewPagerAdapter(getActivity(),result.getTitlerankList());
-//        mRankPagerAdapter = new RankPagerAdapter(getChildFragmentManager(),listRankFragment);
+        mRankPagerAdapter = new RankPagerAdapter(getChildFragmentManager(),listRankFragment,titleList);
         viewpager.setAdapter(mRankPagerAdapter);
 
 // 初始化viewpager.
