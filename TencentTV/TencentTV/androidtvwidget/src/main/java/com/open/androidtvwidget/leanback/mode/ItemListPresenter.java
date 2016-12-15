@@ -33,7 +33,7 @@ public class ItemListPresenter extends OpenPresenter {
         itemListViewHolder.mRecyclerViewTV.setOnItemClickListener(openPresenter.getOnItemClickListener());
     }
 
-    public static class ItemListViewHolder extends OpenPresenter.ViewHolder {
+    public static class ItemListViewHolder extends ViewHolder {
         private RecyclerViewTV mRecyclerViewTV;
         private DefualtListPresenter mDefualtListPresenter;
 

@@ -30,7 +30,7 @@ import java.io.OutputStream;
 /**
  * Disk cache based on "Least-Recently Used" principle. Adapter pattern, adapts
  * {@link DiskLruCache DiskLruCache} to
- * {@link com.nostra13.universalimageloader.cache.disc.DiskCache DiskCache}
+ * {@link DiskCache DiskCache}
  *
  * @author Sergey Tarasevich (nostra13[at]gmail[dot]com)
  * @see FileNameGenerator
@@ -59,7 +59,7 @@ public class LruDiskCache implements DiskCache {
 
 	/**
 	 * @param cacheDir          Directory for file caching
-	 * @param fileNameGenerator {@linkplain com.nostra13.universalimageloader.cache.disc.naming.FileNameGenerator
+	 * @param fileNameGenerator {@linkplain FileNameGenerator
 	 *                          Name generator} for cached files. Generated names must match the regex
 	 *                          <strong>[a-z0-9_-]{1,64}</strong>
 	 * @param cacheMaxSize      Max cache size in bytes. <b>0</b> means cache size is unlimited.
@@ -72,7 +72,7 @@ public class LruDiskCache implements DiskCache {
 	/**
 	 * @param cacheDir          Directory for file caching
 	 * @param reserveCacheDir   null-ok; Reserve directory for file caching. It's used when the primary directory isn't available.
-	 * @param fileNameGenerator {@linkplain com.nostra13.universalimageloader.cache.disc.naming.FileNameGenerator
+	 * @param fileNameGenerator {@linkplain FileNameGenerator
 	 *                          Name generator} for cached files. Generated names must match the regex
 	 *                          <strong>[a-z0-9_-]{1,64}</strong>
 	 * @param cacheMaxSize      Max cache size in bytes. <b>0</b> means cache size is unlimited.

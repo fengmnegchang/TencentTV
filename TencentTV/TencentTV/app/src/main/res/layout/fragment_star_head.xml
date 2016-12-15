@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/darkgray" >
+
+    <com.open.tencenttv.widget.CircleImageView
+        android:id="@+id/image_logo"
+        android:layout_width="@dimen/new_image_height"
+        android:layout_height="@dimen/new_image_height"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/mainview_cloudlist"
+        app:circle="false"
+        app:radius="@dimen/new_image_height" />
+
+    
+ <com.open.androidtvwidget.view.GridViewTV
+        android:id="@+id/gridView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="30dp"
+        android:layout_toRightOf="@+id/image_logo"
+        android:clipChildren="false"
+        android:columnWidth="80dp"
+        android:gravity="center_vertical"
+        android:layout_alignParentRight="true"
+        android:horizontalSpacing="12dp"
+        android:layout_marginRight="20dp"
+        android:numColumns="auto_fit"
+        android:scrollbars="none"
+        android:verticalSpacing="20dp" />
+ 
+ <com.open.tencenttv.widget.ExpandableTextView
+        android:id="@+id/expand_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:gravity="center|top"
+        android:layout_below="@+id/image_logo"
+        expandableTextView:maxCollapsedLines="4" >
+
+        <TextView
+            android:id="@id/expandable_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|top"
+            android:gravity="top"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+        <ImageButton
+            android:id="@id/expand_collapse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|right"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:padding="16dp" />
+    </com.open.tencenttv.widget.ExpandableTextView>
+</RelativeLayout>

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.open.tencenttv.R;
@@ -21,29 +20,17 @@ import java.util.List;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class LikeDramaAdapter extends BaseAdapter {
-    private List<String> mDatas;
-    private final LayoutInflater mInflater;
+public class LikeDramaAdapter extends CommonAdapter<String> {
+	private final LayoutInflater mInflater;
+    public LikeDramaAdapter(Context mContext, List<String> list) {
+		super(mContext, list);
+       mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	}
 
-    public LikeDramaAdapter(Context context, List<String> data) {
-        mDatas = data;
-        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-
-    @Override
-    public int getCount() {
-        return mDatas.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return mDatas.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
+//    public LikeDramaAdapter(Context context, List<String> data) {
+//        mDatas = data;
+//        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -59,7 +46,7 @@ public class LikeDramaAdapter extends BaseAdapter {
         View view;
         view = mInflater.inflate(R.layout.adapter_like_drama, parent, false);
         TextView titleTv = (TextView) view.findViewById(R.id.textView);
-        titleTv.setText(mDatas.get(position));
+        titleTv.setText((String)getItem(position));
         return view;
     }
 

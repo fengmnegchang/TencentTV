@@ -540,7 +540,7 @@ public class TagContainerLayout extends ViewGroup {
                 public void onClick(View view) {
                     if (null != mOnTagClickListener) {
                         if (null != view) {
-                            mOnTagClickListener.onTagClick((TagView)view,(int)view.getTag(),((TagView)view).getText());
+                            mOnTagClickListener.onTagClick((TagView)view,(Integer)view.getTag(),((TagView)view).getText());
                         }
                     }
                 }
@@ -552,10 +552,10 @@ public class TagContainerLayout extends ViewGroup {
                         if (null != view) {
                             if (b) {
                                 view.setSelected(true);
-                                mOnTagClickListener.onItemSelected(view,(int)view.getTag());
+                                mOnTagClickListener.onItemSelected(view,(Integer)view.getTag());
                             }else{
                                 view.setSelected(false);
-                                mOnTagClickListener.onItemPreSelected(view,(int)view.getTag());
+                                mOnTagClickListener.onItemPreSelected(view,(Integer)view.getTag());
                             }
                         }
                     }

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+     >
+
+    <TextView
+        android:id="@+id/text_mycomment_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="吐了"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/img_up"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/text_mycomment_content"
+        android:src="@drawable/up" />
+
+    <TextView
+        android:id="@+id/text_mycomment_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_mycomment_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="6dp"
+        android:layout_toRightOf="@+id/img_up"
+        android:text="(0)"
+        android:textColor="@color/black"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/img_poke"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/text_mycomment_content"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/text_mycomment_up"
+        android:src="@drawable/poke" />
+
+    <TextView
+        android:id="@+id/text_mycomment_poke"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_mycomment_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="6dp"
+        android:layout_toRightOf="@+id/img_poke"
+        android:text="(0)"
+        android:textColor="@color/black"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/img_repnum"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/text_mycomment_content"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/text_mycomment_poke"
+        android:src="@drawable/repnum" />
+
+    <TextView
+        android:id="@+id/text_mycomment_repnum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_mycomment_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="6dp"
+        android:layout_toRightOf="@+id/img_repnum"
+        android:text="(0)"
+        android:textColor="@color/black"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/text_mycomment_article"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/text_mycomment_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="6dp"
+        android:text="2016/12/12 下午1:48      来自《放弃我抓紧我_01》"
+        android:textColor="@color/black"
+        android:textSize="12sp" />
+
+</RelativeLayout>

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
 
 import com.open.androidtvwidget.bridge.RecyclerViewBridge;
@@ -15,13 +16,14 @@ import com.open.androidtvwidget.leanback.recycle.LinearLayoutManagerTV;
 import com.open.androidtvwidget.leanback.recycle.RecyclerViewTV;
 import com.open.androidtvwidget.view.MainUpView;
 import com.open.tencenttv.adapter.RecyclerViewPresenter;
+import com.open.tencenttv.widget.CircularPopupWindow;
 
 /**
  * recyclerview Demo.
  * setSelectedItemAtCentered 设置一直在中间. (如果设置 false，那么请使用setSelectedItemOffset来设置相差的边距)
  */
 public class DemoRecyclerviewActivity2 extends Activity implements RecyclerViewTV.OnItemListener {
-
+	public static final String TAG = DemoRecyclerviewActivity2.class.getSimpleName();
     private Context mContext;
     private RecyclerViewTV mRecyclerView;
     private MainUpView mainUpView1;
@@ -50,7 +52,7 @@ public class DemoRecyclerviewActivity2 extends Activity implements RecyclerViewT
         mRecyclerView.setOnItemClickListener(new RecyclerViewTV.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerViewTV parent, View itemView, int position) {
-                System.out.println("item" + position + " ========onItemClick ");
+                Log.i(TAG,"item" + position + " ========onItemClick ");
             }
         });
     }
@@ -120,7 +122,7 @@ public class DemoRecyclerviewActivity2 extends Activity implements RecyclerViewT
     public void onItemSelected(RecyclerViewTV parent, View itemView, int position) {
         mRecyclerViewBridge.setFocusView(itemView, 1.1f);
         oldView = itemView;
-        System.out.println("item" + position + " ========onItemSelected ");
+        Log.i(TAG,"item" + position + " ========onItemSelected ");
     }
 
     @Override

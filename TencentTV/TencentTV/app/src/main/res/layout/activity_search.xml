@@ -146,7 +146,7 @@
         app:itemCount="4"
         app:lineWidth="2dp"
         app:pressedColor="@android:color/holo_blue_dark"
-        app:radius="120dp"
+        app:panradius="120dp"
         app:radiusLineWidth="1dp"
         app:startAngle="45"></com.open.tencenttv.widget.CircularMenu>
 

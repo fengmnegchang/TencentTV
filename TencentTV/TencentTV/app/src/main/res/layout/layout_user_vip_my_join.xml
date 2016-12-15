@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="180dp"
+    android:layout_height="170dp"
+    android:background="@drawable/shape_rectangle_red"
+    >
+
+    <TextView
+        android:id="@+id/text_product_desc"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:text="3个月45元"
+        android:textColor="@color/black"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/text_month_price"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_product_desc"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="（仅需15元/月）"
+        android:textColor="@color/gray_8f"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/text_join_vip"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_month_price"
+        android:layout_marginTop="25dp"
+        android:background="@color/red"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="立即开通"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+</RelativeLayout>

@@ -13,4 +13,7 @@
     <dimen name="fading_edge">80dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="litpic_width">100dp</dimen>
+    
+    <dimen name="new_image_width">150dip</dimen> 
+    <dimen name="new_image_height">100dip</dimen> 
 </resources>

@@ -16,6 +16,7 @@
 
 package com.android.volley.toolbox;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Response;
@@ -26,13 +27,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A request for retrieving a {@link JSONObject} response body at a given URL, allowing for an
  * optional {@link JSONObject} to be passed in as part of the request body.
  */
 public class JsonObjectRequest extends JsonRequest<JSONObject> {
-
+	protected Map<String, String> cookies = new HashMap<String, String>();
     /**
      * Creates a new request.
      * @param method the HTTP method to use
@@ -47,7 +50,12 @@ public class JsonObjectRequest extends JsonRequest<JSONObject> {
         super(method, url, (jsonRequest == null) ? null : jsonRequest.toString(), listener,
                     errorListener);
     }
-
+    public JsonObjectRequest(int method, String url, Map<String, String> cookies,JSONObject jsonRequest,
+            Listener<JSONObject> listener, ErrorListener errorListener) {
+        super(method, url, (jsonRequest == null) ? null : jsonRequest.toString(), listener,
+                    errorListener);
+        this.cookies = cookies;
+    }
     /**
      * Constructor which defaults to <code>GET</code> if <code>jsonRequest</code> is
      * <code>null</code>, <code>POST</code> otherwise.
@@ -72,5 +80,16 @@ public class JsonObjectRequest extends JsonRequest<JSONObject> {
         } catch (JSONException je) {
             return Response.error(new ParseError(je));
         }
+    }
+    
+    /**
+     * Returns a list of extra HTTP headers to go along with this request. Can
+     * throw {@link AuthFailureError} as authentication may be required to
+     * provide these values.
+     * @throws AuthFailureError In the event of auth failure
+     */
+    @Override
+    public Map<String, String> getHeaders() throws AuthFailureError {
+        return cookies;
     }
 }

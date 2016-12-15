@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -163,7 +164,7 @@ public class VedioPreViewFragment extends BaseV4Fragment implements View.OnClick
                 drama_count_list.clear();;
                 drama_count_list.addAll(drama_pager_list.get((int)id).getCountBeanList());
                 countDramaAdapter.notifyDataSetChanged();
-                System.out.println("listview_drama_pager item" + view.getId() + " ========setOnItemSelectedListener " + id);
+                Log.i(TAG,"listview_drama_pager item" + view.getId() + " ========setOnItemSelectedListener " + id);
                 if (view != null) {
                     mainUpView1.setFocusView(view, mOldView, 1.2f);
                 }
@@ -180,7 +181,7 @@ public class VedioPreViewFragment extends BaseV4Fragment implements View.OnClick
                 drama_count_list.clear();;
                 drama_count_list.addAll(drama_pager_list.get((int)id).getCountBeanList());
                 countDramaAdapter.notifyDataSetChanged();
-                System.out.println("listview_drama_pager item" + view.getId() + " ========setOnItemClickListener " + id);
+                Log.i(TAG,"listview_drama_pager item" + view.getId() + " ========setOnItemClickListener " + id);
             }
         });
 
@@ -189,7 +190,7 @@ public class VedioPreViewFragment extends BaseV4Fragment implements View.OnClick
         listview_drama_count.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("listview_drama_count item" + view.getId() + " ========setOnItemSelectedListener " + id);
+                Log.i(TAG,"listview_drama_count item" + view.getId() + " ========setOnItemSelectedListener " + id);
                 if (view != null) {
                     mainUpView1.setFocusView(view, mOldView, 1.2f);
                 }
@@ -203,7 +204,7 @@ public class VedioPreViewFragment extends BaseV4Fragment implements View.OnClick
         listview_drama_count.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("listview_drama_count item" + view.getId() + " ========setOnItemClickListener " + id);
+                Log.i(TAG,"listview_drama_count item" + view.getId() + " ========setOnItemClickListener " + id);
             }
         });
 

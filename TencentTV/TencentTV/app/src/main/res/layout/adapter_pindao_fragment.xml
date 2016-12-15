@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- GridView TV版本:为了看清楚放大的效果，故意加了一个矩形 -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="150dp"
-    android:layout_height="210dp"
-    android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
 
     <ImageView
+        android:id="@+id/imagesrc"
         android:layout_width="150dp"
         android:layout_height="180dp"
         android:scaleType="fitXY"
@@ -13,14 +14,61 @@
     </ImageView>
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
+        android:id="@+id/textalt"
+        android:layout_width="wrap_content"
         android:layout_height="30dp"
+        android:layout_alignBottom="@+id/imagesrc"
         android:layout_gravity="bottom|center"
         android:gravity="center"
-        android:text="item1"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="吴亦凡刘亦菲高颜值青春"
         android:textAlignment="center"
-        android:textColor="#FF0000"
-        android:textSize="20sp" />
+        android:textColor="#FFFFFF"
+        android:textSize="12sp" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/textmask_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imagesrc"
+        android:layout_toLeftOf="@+id/textmod_score"
+        android:text="致青春·原来你还在这里"
+        android:textColor="#FF0000"
+        android:padding="3dp"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/textmod_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/imagesrc"
+        android:gravity="center"
+        android:text="6.5"
+        android:textColor="#FF0000"
+        android:layout_marginRight="12dp"
+        android:padding="3dp"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/textfigure_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textmask_txt"
+        android:text="主演：吴亦凡 刘亦菲"
+        android:textColor="#FF0000"
+        android:padding="3dp"
+        android:textSize="11sp" />
+    
+    <TextView
+        android:id="@+id/textfigure_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textfigure_desc"
+        android:text="9593万"
+        android:padding="3dp"
+        android:textColor="#FF0000"
+        android:textSize="11sp" />
+
+</RelativeLayout>

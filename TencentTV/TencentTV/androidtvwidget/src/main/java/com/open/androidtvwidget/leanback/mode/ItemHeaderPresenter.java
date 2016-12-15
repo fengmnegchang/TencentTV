@@ -27,7 +27,7 @@ public class ItemHeaderPresenter extends OpenPresenter {
         ((OpenMenuItemView) viewHolder.view).setTitle((String)item);
     }
 
-    static class ItemHeadViewHolder extends OpenPresenter.ViewHolder {
+    static class ItemHeadViewHolder extends ViewHolder {
         public ItemHeadViewHolder(View view) {
             super(view);
         }

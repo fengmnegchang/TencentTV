@@ -1,5 +1,14 @@
 package com.open.tencenttv;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import android.animation.Animator;
 import android.graphics.RectF;
 import android.os.Bundle;
@@ -15,18 +24,9 @@ import com.open.androidtvwidget.utils.OPENLOG;
 import com.open.androidtvwidget.view.MainUpView;
 import com.open.androidtvwidget.view.TextViewWithTTF;
 import com.open.tencenttv.adapter.MediumPagerAdapter;
-import com.open.tencenttv.bean.CommonT;
 import com.open.tencenttv.bean.SliderNavBean;
+import com.open.tencenttv.json.SliderNavJson;
 import com.open.tencenttv.utils.UrlUtils;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * ViewPager demo：
@@ -35,7 +35,7 @@ import java.util.List;
  *
  * @author hailongqiu
  */
-public class MediumViewPagerActivity extends CommonFragmentActivity {
+public class MediumViewPagerActivity extends CommonFragmentActivity<SliderNavJson> {
     ViewPager viewpager;
     // 移动边框.
     EffectNoDrawBridge mEffectNoDrawBridge;
@@ -66,8 +66,8 @@ public class MediumViewPagerActivity extends CommonFragmentActivity {
     }
 
     @Override
-    public CommonT call() throws Exception {
-        CommonT mCommonT = new CommonT();
+    public SliderNavJson call() throws Exception {
+    	SliderNavJson mCommonT = new SliderNavJson();
         ArrayList<SliderNavBean> list = new ArrayList<SliderNavBean>();//导航大图
         try {
             // 解析网络标签
@@ -75,12 +75,12 @@ public class MediumViewPagerActivity extends CommonFragmentActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        mCommonT.setSliderNavlist(list);
+        mCommonT.setList(list);
         return mCommonT;
     }
 
     @Override
-    public void onCallback(CommonT result) {
+    public void onCallback(SliderNavJson result) {
         super.onCallback(result);
         // 初始化viewpager.
 //        LayoutInflater inflater = getLayoutInflater();
@@ -95,7 +95,7 @@ public class MediumViewPagerActivity extends CommonFragmentActivity {
 //            viewList.add(view);
 //        }
         sliderNavList.clear();
-        sliderNavList.addAll(result.getSliderNavlist());
+        sliderNavList.addAll(result.getList());
         mMediumPagerAdapter = new MediumPagerAdapter(this,sliderNavList);
         viewpager.setAdapter(mMediumPagerAdapter);
     }
@@ -107,7 +107,7 @@ public class MediumViewPagerActivity extends CommonFragmentActivity {
                 {
                 }
             });
-            Log.i("url", "url = " + href);
+            Log.i(TAG, "url = " + href);
 
             Document doc = Jsoup.connect(href).userAgent(UrlUtils.userAgent).timeout(10000).get();
             Element masthead = doc.select("div.slider_nav").first();
@@ -124,7 +124,7 @@ public class MediumViewPagerActivity extends CommonFragmentActivity {
                         String hrefurl = aElement.attr("href");
                         String title = aElement.text();
                         String imageurl = aElement.attr("data-bgimage");
-                        System.out.println("i===" + i + "hrefurl==" + hrefurl + ";title===" + title + ";imageurl==" + imageurl);
+                        Log.i(TAG,"i===" + i + "hrefurl==" + hrefurl + ";title===" + title + ";imageurl==" + imageurl);
                         sliderNavBean.setTitle(title);
                         sliderNavBean.setHrefUrl(hrefurl);
                         sliderNavBean.setImageUrl(imageurl);

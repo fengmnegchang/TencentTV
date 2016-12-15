@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp" >
+
+    <TextView
+        android:id="@+id/txt_info_figure_date"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="2016 12月01日" />
+
+    <TextView
+        android:id="@+id/txt_div"
+        android:layout_width="1dp"
+        android:layout_height="150dp"
+        android:layout_marginLeft="7dp"
+        android:layout_toRightOf="@+id/txt_info_figure_date"
+        android:background="#f0f000" />
+
+    <TextView
+        android:id="@+id/txt_oval"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_toRightOf="@+id/txt_info_figure_date"
+        android:background="@drawable/time_axis_oval" />
+
+    <TextView
+        android:id="@+id/txt_feed_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/txt_oval"
+        android:text="《那年夏天》发特辑 胡歌出演“最坏的角色”" />
+
+    <LinearLayout
+        android:id="@+id/lay_figures_scroll_data_boss"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/txt_feed_title"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@+id/txt_oval"
+        android:orientation="horizontal" />
+
+    <TextView
+        android:id="@+id/txt_feed_desc_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lay_figures_scroll_data_boss"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@+id/txt_oval"
+        android:text=" 那年夏天 " />
+
+    <TextView
+        android:id="@+id/txt_feed_item_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/lay_figures_scroll_data_boss"
+        android:layout_marginLeft="10dp"
+        android:text="腾讯娱乐 2016-12-01 00:29" />
+
+</RelativeLayout>

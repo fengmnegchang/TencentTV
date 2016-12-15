@@ -171,7 +171,7 @@ class ImageLoaderEngine {
 	 * Stops engine, cancels all running and scheduled display image tasks. Clears internal data.
 	 * <br />
 	 * <b>NOTE:</b> This method doesn't shutdown
-	 * {@linkplain com.nostra13.universalimageloader.core.ImageLoaderConfiguration.Builder#taskExecutor(Executor)
+	 * {@linkplain ImageLoaderConfiguration.Builder#taskExecutor(Executor)
 	 * custom task executors} if you set them.
 	 */
 	void stop() {

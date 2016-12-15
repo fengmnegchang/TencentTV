@@ -1,0 +1,21 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".MainActivity">
+
+
+    <com.jayfang.dropdownmenu.DropDownMenu
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:id="@+id/menu"
+        android:layout_height="60dp"/>
+
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_below="@id/menu"
+        android:id="@+id/lv_list"
+        android:background="#ffffff"
+        android:layout_height="wrap_content"></ListView>
+
+</RelativeLayout>

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,32 +23,14 @@ import java.util.List;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class ActorAdapter extends BaseAdapter {
-    private List<ActorBean> data;
-    private Context mContext;
-    public ActorAdapter(Context mContext, List<ActorBean> data){
-        this.mContext = mContext;
-        this.data = data;
-    }
-
-    @Override
-    public int getCount() {
-        return data.size();
-    }
-
-    @Override
-    public ActorBean getItem(int position) {
-        return data.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
+public class ActorAdapter extends  CommonAdapter<ActorBean> {
+    public ActorAdapter(Context mContext, List<ActorBean> list) {
+		super(mContext, list);
+	}
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ActorBean bean = getItem(position);
+        ActorBean bean = (ActorBean) getItem(position);
         View view;
         view = LayoutInflater.from(mContext).inflate(R.layout.adapter_actor, null);
         ImageView image_actor_bg = (ImageView) view.findViewById(R.id.image_actor_bg);

@@ -2,20 +2,36 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/darkgray"
-    >
+    android:background="@color/darkgray" >
 
-    <com.open.tencenttv.widget.HeaderGridView
-        android:id="@+id/gridView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_margin="20dp"
-        android:clipChildren="false"
-        android:gravity="center_vertical"
-        android:horizontalSpacing="12dp"
-        android:numColumns="4"
-        android:scrollbars="none"
-        android:verticalSpacing="20dp" />
+    <com.open.tencenttv.widget.scroll.ObservableScrollView
+        android:id="@+id/scroll_more"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:fadingEdge="none"
+        android:fillViewport="true"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+             android:id="@+id/layout_more"
+            android:gravity="left|top"
+            android:orientation="vertical" >
+
+            <com.open.tencenttv.widget.HeaderGridView
+                android:id="@+id/gridView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:clipChildren="false"
+                android:gravity="center_vertical"
+                android:horizontalSpacing="12dp"
+                android:numColumns="4"
+                android:scrollbars="none"
+                android:verticalSpacing="10dp" />
+        </LinearLayout>
+    </com.open.tencenttv.widget.scroll.ObservableScrollView>
 
 </RelativeLayout>

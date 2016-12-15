@@ -420,8 +420,8 @@ public class TagView extends View {
         void onTagLongClick(TagView view, int position, String text);
         void onTagCrossClick(TagView view, int position);
 
-        void onItemPreSelected(View itemView,int position);
-        void onItemSelected( View itemView,int position);
+        void onItemPreSelected(View itemView, int position);
+        void onItemSelected(View itemView, int position);
     }
 
     public int getTextDirection() {

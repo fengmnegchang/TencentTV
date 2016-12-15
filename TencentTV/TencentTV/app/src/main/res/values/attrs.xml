@@ -9,7 +9,7 @@
     </declare-styleable>
     <declare-styleable name="PanView">
         <attr name="itemCount" format="integer" />
-        <attr name="radius" format="dimension" />
+        <attr name="panradius" format="dimension" />
         <attr name="innerRadius" format="dimension" />
         <attr name="lineWidth" format="dimension" />
         <attr name="radiusLineWidth" format="dimension" />
@@ -68,5 +68,13 @@
         <attr name="tag_cross_color" format="color" />
         <attr name="tag_cross_line_width" format="dimension" />
         <attr name="tag_cross_area_padding" format="dimension" />
+    </declare-styleable>
+    
+    <declare-styleable name="Theme">
+        <attr name="customImageViewStyle" format="reference" />
+    </declare-styleable>
+    <declare-styleable name="CustomImageView">
+        <attr name="circle" format="boolean" />
+        <attr name="radius" format="dimension" />
     </declare-styleable>
 </resources>

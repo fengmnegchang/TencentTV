@@ -1,12 +1,14 @@
 package com.open.tencenttv.mode;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.android.volley.Response;
@@ -15,21 +17,12 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.open.androidtvwidget.leanback.mode.DefualtListPresenter;
-import com.open.androidtvwidget.leanback.recycle.LinearLayoutManagerTV;
-import com.open.androidtvwidget.leanback.recycle.RecyclerViewTV;
 import com.open.tencenttv.andenginetask.AsyncTaskUtils;
 import com.open.tencenttv.andenginetask.CallEarliest;
 import com.open.tencenttv.andenginetask.Callable;
 import com.open.tencenttv.andenginetask.Callback;
 import com.open.tencenttv.andenginetask.IProgressListener;
 import com.open.tencenttv.andenginetask.ProgressCallable;
-import com.open.tencenttv.bean.CommonT;
-
-import org.json.JSONObject;
-
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * ****************************************************************************************************************************************************************************
@@ -42,7 +35,7 @@ import java.util.List;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class AsyncTaskListPresenter extends DefualtListPresenter implements CallEarliest<CommonT>, Callback<CommonT>, Callable<CommonT>, ProgressCallable<CommonT>,
+public class AsyncTaskListPresenter<T> extends DefualtListPresenter implements CallEarliest<T>, Callback<T>, Callable<T>, ProgressCallable<T>,
         Response.Listener<JSONObject>, Response.ErrorListener {
 
 
@@ -113,7 +106,7 @@ public class AsyncTaskListPresenter extends DefualtListPresenter implements Call
      * @see com.example.andenginetask.Callable#call()
      */
     @Override
-    public CommonT call() throws Exception {
+    public T call() throws Exception {
         // TODO Auto-generated method stub
         return null;
     }
@@ -125,7 +118,7 @@ public class AsyncTaskListPresenter extends DefualtListPresenter implements Call
      * @see com.example.andenginetask.Callback#onCallback(java.lang.Object)
      */
     @Override
-    public void onCallback(CommonT result) {
+    public void onCallback(T result) {
         // TODO Auto-generated method stub
 
     }
@@ -152,7 +145,7 @@ public class AsyncTaskListPresenter extends DefualtListPresenter implements Call
      * .IProgressListener)
      */
     @Override
-    public CommonT call(IProgressListener pProgressListener) throws Exception {
+    public T call(IProgressListener pProgressListener) throws Exception {
         return null;
     }
 

@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 
 import com.open.androidtvwidget.bridge.EffectNoDrawBridge;
 import com.open.androidtvwidget.view.MainUpView;
+import com.open.tencenttv.fragment.MediumDirectionViewPagerFragment;
 import com.open.tencenttv.fragment.MediumHorizontalViewPagerFragment;
+import com.open.tencenttv.utils.UrlUtils;
 
 /**
  * ****************************************************************************************************************************************************************************
@@ -45,7 +47,7 @@ public class MediumFragmentDirectionActivity extends CommonFragmentActivity {
         mainUpView1.setUpRectResource(R.drawable.white_light_10); // 设置移动边框的图片.
         mainUpView1.setDrawUpRectPadding(new Rect(25, 25, 23, 23)); // 边框图片设置间距
 
-        MediumHorizontalViewPagerFragment fragment = MediumHorizontalViewPagerFragment.newInstance(mainUpView1,mOldView,mRecyclerViewBridge);
+        MediumDirectionViewPagerFragment fragment = MediumDirectionViewPagerFragment.newInstance(UrlUtils.TENCENT_TV_URL,mainUpView1,mOldView,mRecyclerViewBridge);
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.lay_direction, fragment).commit();
     }

@@ -1,5 +1,14 @@
 package com.open.tencenttv.fragment;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,9 +27,8 @@ import com.open.tencenttv.BaseV4ListFragment;
 import com.open.tencenttv.R;
 import com.open.tencenttv.adapter.PinDaoAdapter;
 import com.open.tencenttv.bean.PinDaoBean;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.open.tencenttv.json.PinDaoBeanJson;
+import com.open.tencenttv.utils.UrlUtils;
 
 /**
  * ****************************************************************************************************************************************************************************
@@ -33,9 +41,9 @@ import java.util.List;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class PinDaoListFragment extends BaseV4ListFragment {
+public class PinDaoListFragment extends BaseV4ListFragment<PinDaoBeanJson> {
     private List<PinDaoBean> data = new ArrayList<PinDaoBean>();
-
+    private PinDaoAdapter mPinDaoAdapter;
     public static PinDaoListFragment newInstance(MainUpView mainUpView1,EffectNoDrawBridge mRecyclerViewBridge, View mOldView){
         PinDaoListFragment fragment = new PinDaoListFragment();
         fragment.mOldView = mOldView;
@@ -50,11 +58,7 @@ public class PinDaoListFragment extends BaseV4ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_pindao, container, false);
-
         // 设置ListFragment默认的ListView，即@id/android:list
-        initData();
-        this.setListAdapter(new PinDaoAdapter(getActivity(), data));
-
         return view;
     }
 
@@ -62,37 +66,10 @@ public class PinDaoListFragment extends BaseV4ListFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // 延时请求其它位置的item.
-        Handler handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                getListView().requestFocusFromTouch();
-                getListView(). setSelection(0);
-            }
-        };
-        handler.sendMessageDelayed(handler.obtainMessage(), 188);
-        getListView().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long id) {
-                System.out.println("listView item" + view.getId() + ";postion=" + (int) id + " ========onItemSelected ");
-//                for (Fragment fragment : (getActivity()).getSupportFragmentManager().getFragments()) {
-//                    if (fragment instanceof PinDaoFragment) {
-//                        ((PinDaoFragment) fragment).setPindaoName(data.get((int) l).getTypeName());
-//                    }
-//                }
-                setSelectedFragment((int)id);
-                if (view != null) {
-                    view.bringToFront();
-                    mRecyclerViewBridge.setFocusView(view, mOldView, 1.1f);
-                    mOldView = view;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+        mPinDaoAdapter = new   PinDaoAdapter(getActivity(), data);
+        this.setListAdapter(mPinDaoAdapter);
+        doAsync(this, this, this);
+        
     }
 
     public void onListItemClick(ListView parent, View view,
@@ -119,61 +96,112 @@ public class PinDaoListFragment extends BaseV4ListFragment {
      * @param position
      */
     private void setSelectedFragment(int position){
-        PinDaoFragment rightFragment = PinDaoFragment.newInstance("ListFragmentPinDaoActivity"+position,mainUpView1,mOldView,mRecyclerViewBridge);
+    	PinDaoTabHorizontalViewPagerFragment rightFragment = PinDaoTabHorizontalViewPagerFragment.newInstance(data.get(position).getHrefurl(),"ul.filter_tabs","li","a", data.get(position).getTypeName(),mainUpView1,mOldView,mRecyclerViewBridge);
         FragmentManager manager = getActivity().getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.frame_pindao, rightFragment).commit();
     }
 
 
-    public void initData() {
-        data.clear();
-        PinDaoBean bean = new PinDaoBean();
-        bean.setType(0);
-        bean.setTypeName("筛选");
-        data.add(bean);
 
-        bean = new PinDaoBean();
-        bean.setType(1);
-        bean.setTypeName("搜索");
-        data.add(bean);
-
-        bean = new PinDaoBean();
-        bean.setType(2);
-        bean.setTypeName("大剧精选");
-        data.add(bean);
+	/* (non-Javadoc)
+	 * @see com.open.tencenttv.BaseV4ListFragment#call()
+	 */
+	@Override
+	public PinDaoBeanJson call() throws Exception {
+		// TODO Auto-generated method stub
+		PinDaoBeanJson mCommonT = new PinDaoBeanJson();
+		List<PinDaoBean> list = parseSidenavi(UrlUtils.TENCENT_X_MOVIE_LIST);
+		mCommonT.setList(list);
+		return mCommonT;
+	}
 
 
-        bean = new PinDaoBean();
-        bean.setType(2);
-        bean.setTypeName("卫视同步");
-        data.add(bean);
 
+	/* (non-Javadoc)
+	 * @see com.open.tencenttv.BaseV4ListFragment#onCallback(com.open.tencenttv.bean.CommonT)
+	 */
+	@Override
+	public void onCallback(PinDaoBeanJson result) {
+		// TODO Auto-generated method stub
+		super.onCallback(result);
+		data.clear();
+		data.addAll(result.getList());
+		mPinDaoAdapter.notifyDataSetChanged();
+		// 延时请求其它位置的item.
+        Handler handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                getListView().requestFocusFromTouch();
+                getListView(). setSelection(0);
+            }
+        };
+        handler.sendMessageDelayed(handler.obtainMessage(), 5000);
+        getListView().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long id) {
+                Log.i(TAG,"listView item" + view.getId() + ";postion=" + (int) id + " ========onItemSelected ");
+//                for (Fragment fragment : (getActivity()).getSupportFragmentManager().getFragments()) {
+//                    if (fragment instanceof PinDaoFragment) {
+//                        ((PinDaoFragment) fragment).setPindaoName(data.get((int) l).getTypeName());
+//                    }
+//                }
+                setSelectedFragment((int)id);
+                if (view != null) {
+                    view.bringToFront();
+                    mRecyclerViewBridge.setFocusView(view, mOldView, 1.1f);
+                    mOldView = view;
+                }
+            }
 
-        bean = new PinDaoBean();
-        bean.setType(2);
-        bean.setTypeName("抗战风云");
-        data.add(bean);
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        });
+	}
 
-        bean = new PinDaoBean();
-        bean.setType(2);
-        bean.setTypeName("会员专享");
-        data.add(bean);
+	public ArrayList<PinDaoBean> parseSidenavi(String href) {
+		ArrayList<PinDaoBean> list = new ArrayList<PinDaoBean>();
+		try {
+			href = makeURL(href, new HashMap<String, Object>() {
+				{
+				}
+			});
+			Log.i(TAG, "url = " + href);
 
-        bean = new PinDaoBean();
-        bean.setType(2);
-        bean.setTypeName("热门话题");
-        data.add(bean);
+			Document doc = Jsoup.connect(href).userAgent(UrlUtils.userAgent).timeout(10000).get();
+			Element masthead = doc.select("ul.side_navi").first();
+			Elements liElements = masthead.select("li");
 
-        bean = new PinDaoBean();
-        bean.setType(2);
-        bean.setTypeName("剧星专场");
-        data.add(bean);
-
-        bean = new PinDaoBean();
-        bean.setType(2);
-        bean.setTypeName("乡里乡亲");
-        data.add(bean);
-    }
+			/**
+			 * <li class="item current"><a _boss="movie" href=
+			 * "http://v.qq.com/x/movielist/?cate=10001&#38;offset=0&#38;sort=4"
+			 * >电影</a></li>
+			 */
+			// 解析文件
+			for (int i = 0; i < liElements.size(); i++) {
+				PinDaoBean bean = new PinDaoBean();
+				try {
+					try {
+						Element aElement = liElements.get(i).select("a").first();
+						String typeName = aElement.text();
+						String hrefurl = aElement.attr("href");
+						Log.i(TAG,"i===" + i + ";typeName ===" + typeName + ";hrefurl===" + hrefurl);
+						bean.setTypeName(typeName);
+						bean.setHrefurl(hrefurl);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				list.add(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+    
 
 }

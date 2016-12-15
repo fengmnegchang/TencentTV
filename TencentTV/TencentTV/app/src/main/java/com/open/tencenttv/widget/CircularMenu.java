@@ -25,20 +25,20 @@ public class CircularMenu extends ViewGroup {
     private static final int CENTER_ITEM = Integer.MAX_VALUE;
 
     private int selectedItem = NONE_ITEM;
-    //圆心坐标
+    //鍦嗗績鍧愭爣
     private int centerX;
     private int centerY;
 
     private int itemCount;
 
-    //大圆半径
+    //澶у渾鍗婂緞
     private float radius;
 
     private float innerRadius;
-    //线条宽度
+    //绾挎潯瀹藉害
     private float lineWidth;
 
-    //内圆线宽度
+    //鍐呭渾绾垮搴�
     private float radiusLineWidth;
 
     private int backgroundColor;
@@ -47,7 +47,7 @@ public class CircularMenu extends ViewGroup {
     private int pressedColor;
     private int itemColor;
 
-    //起始角度，默认为0度
+    //璧峰瑙掑害锛岄粯璁や负0搴�
     private int startAngle = 0;
 
     private OnItemClickListener onItemClickListener;
@@ -70,7 +70,7 @@ public class CircularMenu extends ViewGroup {
         }
         itemCount = typedArray.getInteger(R.styleable.PanView_itemCount, 0);
         innerRadius = typedArray.getDimension(R.styleable.PanView_innerRadius, 0);
-        radius = typedArray.getDimension(R.styleable.PanView_radius, 0);
+        radius = typedArray.getDimension(R.styleable.PanView_panradius, 0);
         backgroundColor = typedArray.getColor(R.styleable.PanView_backgroundColor, 0);
         itemColor = typedArray.getColor(R.styleable.PanView_itemColor, 0);
         pressedColor = typedArray.getColor(R.styleable.PanView_pressedColor, 0);
@@ -150,7 +150,7 @@ public class CircularMenu extends ViewGroup {
             } else {
                 currentAngle += 2 * Math.PI - startAnl;
             }
-            //根据象限计算
+            //鏍规嵁璞￠檺璁＄畻
             selectedItem = (int) (currentAngle / avgAngle);
         } else {
             selectedItem = NONE_ITEM;
@@ -329,7 +329,7 @@ public class CircularMenu extends ViewGroup {
                 public void onClick(View view) {
                     if (null != onItemClickListener) {
                         if (null != view) {
-                            onItemClickListener.onItemClick((int)view.getTag());
+                            onItemClickListener.onItemClick((Integer)view.getTag());
                         }
                     }
                 }
@@ -341,10 +341,10 @@ public class CircularMenu extends ViewGroup {
                         if (null != view) {
                             if (b) {
                                 view.setSelected(true);
-                                onItemClickListener.onItemSelected(view,(int)view.getTag());
+                                onItemClickListener.onItemSelected(view,(Integer)view.getTag());
                             }else{
                                 view.setSelected(false);
-                                onItemClickListener.onItemPreSelected(view,(int)view.getTag());
+                                onItemClickListener.onItemPreSelected(view,(Integer)view.getTag());
                             }
                         }
                     }
@@ -369,8 +369,8 @@ public class CircularMenu extends ViewGroup {
 
         void onCenterClick();
 
-        void onItemPreSelected(View itemView,int position);
-        void onItemSelected( View itemView,int position);
+        void onItemPreSelected(View itemView, int position);
+        void onItemSelected(View itemView, int position);
     }
 
     private class CustomView extends View {

@@ -1,5 +1,14 @@
 package com.open.tencenttv.fragment;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -13,18 +22,9 @@ import com.open.androidtvwidget.view.MainUpView;
 import com.open.tencenttv.BaseV4Fragment;
 import com.open.tencenttv.R;
 import com.open.tencenttv.adapter.RankFragmentAdapter;
-import com.open.tencenttv.bean.CommonT;
 import com.open.tencenttv.bean.RankBean;
+import com.open.tencenttv.json.RankJson;
 import com.open.tencenttv.utils.UrlUtils;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * ****************************************************************************************************************************************************************************
@@ -37,14 +37,16 @@ import java.util.List;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class RankFragment extends BaseV4Fragment {
+public class RankFragment extends BaseV4Fragment<RankJson> {
     private String rankname;
     private List<RankBean> data = new ArrayList<RankBean>();
     private ListViewTV mListViewTV;
     private RankFragmentAdapter mAdapter;
-
-    public static RankFragment newInstance(String rankname, MainUpView mainUpView1, View mOldView, EffectNoDrawBridge mRecyclerViewBridge) {
+    String url;
+    
+    public static RankFragment newInstance(String url,String rankname, MainUpView mainUpView1, View mOldView, EffectNoDrawBridge mRecyclerViewBridge) {
         RankFragment fragment = new RankFragment();
+        fragment.url = url;
         fragment.rankname = rankname;
         fragment.mainUpView1 = mainUpView1;
         fragment.mOldView = mOldView;
@@ -69,18 +71,18 @@ public class RankFragment extends BaseV4Fragment {
     }
 
     @Override
-    public CommonT call() throws Exception {
-        CommonT mCommonT = new CommonT();
-        List<RankBean> list = parseRankList(UrlUtils.TENCENT_RANK_URL);
-        mCommonT.setPlaylist(list);
+    public RankJson call() throws Exception {
+    	RankJson mCommonT = new RankJson();
+        List<RankBean> list = parseRankList(url);
+        mCommonT.setList(list);
         return mCommonT;
     }
 
     @Override
-    public void onCallback(CommonT result) {
+    public void onCallback(RankJson result) {
         super.onCallback(result);
         data.clear();
-        data.addAll(result.getPlaylist());
+        data.addAll(result.getList());
         mAdapter.notifyDataSetChanged();
 //        // 延时请求其它位置的item.
 //        Handler handler = new Handler() {
@@ -100,7 +102,7 @@ public class RankFragment extends BaseV4Fragment {
                 {
                 }
             });
-            Log.i("url", "url = " + href);
+            Log.i(TAG, "url = " + href);
 
             Document doc = Jsoup.connect(href).userAgent(UrlUtils.userAgent).timeout(10000).get();
             Element masthead = doc.select("ul.mod_rankbox_con_list").first();
@@ -125,7 +127,7 @@ public class RankFragment extends BaseV4Fragment {
                     try {
                         Element spanindexElement = liElements.get(i).select("span.mod_rankbox_con_list_index").first();
                         String count = spanindexElement.text();
-                        System.out.print("i===" + i + ";count ===" + count);
+                        Log.i(TAG,"i===" + i + ";count ===" + count);
                         bean.setCount(count);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -135,12 +137,12 @@ public class RankFragment extends BaseV4Fragment {
                     try {
                         Element spantitleElement = liElements.get(i).select("span.mod_rankbox_con_item_title").first();
                         String title = spantitleElement.text();
-                        System.out.print(";title ===" + title);
+                        Log.i(TAG,";title ===" + title);
                         bean.setActorName(title);
 
                         Element aElement = spantitleElement.select("a").first();
                         String hrefurl = aElement.attr("href");
-                        System.out.print(";hrefurl ===" + hrefurl);
+                        Log.i(TAG,";hrefurl ===" + hrefurl);
                         bean.setRankurl(hrefurl);
 
                     } catch (Exception e) {
@@ -150,7 +152,7 @@ public class RankFragment extends BaseV4Fragment {
                     try {
                         Element spanactorElement = liElements.get(i).select("span.mod_rankbox_con_item_actor").first();
                         String actortype = spanactorElement.text();
-                        System.out.print(";actortype ===" + actortype);
+                        Log.i(TAG,";actortype ===" + actortype);
                         bean.setActorType(actortype);
 
                     } catch (Exception e) {
@@ -160,9 +162,9 @@ public class RankFragment extends BaseV4Fragment {
                     try {
                         Element spanclickElement = liElements.get(i).select("span.mod_rankbox_con_list_click").first();
                         String playtimes = spanclickElement.text();
-                        System.out.print(";playtimes ===" + playtimes);
+                        Log.i(TAG,";playtimes ===" + playtimes);
                         bean.setPlayTimes(playtimes);
-                        System.out.println("");
+                        Log.i(TAG,"");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

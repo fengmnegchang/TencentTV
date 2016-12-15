@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GridView TV版本:为了看清楚放大的效果，故意加了一个矩形 -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+     <com.open.tencenttv.widget.CircleImageView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:id="@+id/imageview"
+        android:scaleType="fitCenter"
+        android:src="@drawable/mainview_cloudlist"
+        app:circle="false"
+        app:radius="70dp"
+         />
+
+    <TextView
+        android:id="@+id/text_name"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:layout_below="@+id/imageview"
+        android:textColor="#FF0000"
+        android:textSize="16sp" />
+    
+    <TextView
+        android:id="@+id/text_relation"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:layout_below="@+id/text_name"
+        android:textColor="#FF0000"
+        android:textSize="12sp" />
+
+</RelativeLayout>

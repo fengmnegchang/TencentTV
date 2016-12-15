@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -64,7 +65,7 @@ public class LastHistoryActivity extends CommonFragmentActivity implements LastH
      */
     @Override
     public void onItemSelected(int id) {
-         System.out.println("onItemSelected == "+id);
+         Log.i(TAG,"onItemSelected == "+id);
     }
 
     @Override

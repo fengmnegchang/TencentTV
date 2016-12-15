@@ -467,7 +467,7 @@ public final class ImageLoaderConfiguration {
 		/**
 		 * Sets name generator for files cached in disk cache.<br />
 		 * Default value -
-		 * {@link com.nostra13.universalimageloader.core.DefaultConfigurationFactory#createFileNameGenerator()
+		 * {@link DefaultConfigurationFactory#createFileNameGenerator()
 		 * DefaultConfigurationFactory.createFileNameGenerator()}
 		 */
 		public Builder diskCacheFileNameGenerator(FileNameGenerator fileNameGenerator) {
@@ -514,7 +514,7 @@ public final class ImageLoaderConfiguration {
 		/**
 		 * Sets utility which will be responsible for downloading of image.<br />
 		 * Default value -
-		 * {@link com.nostra13.universalimageloader.core.DefaultConfigurationFactory#createImageDownloader(Context)
+		 * {@link DefaultConfigurationFactory#createImageDownloader(Context)
 		 * DefaultConfigurationFactory.createImageDownloader()}
 		 */
 		public Builder imageDownloader(ImageDownloader imageDownloader) {
@@ -525,7 +525,7 @@ public final class ImageLoaderConfiguration {
 		/**
 		 * Sets utility which will be responsible for decoding of image stream.<br />
 		 * Default value -
-		 * {@link com.nostra13.universalimageloader.core.DefaultConfigurationFactory#createImageDecoder(boolean)
+		 * {@link DefaultConfigurationFactory#createImageDecoder(boolean)
 		 * DefaultConfigurationFactory.createImageDecoder()}
 		 */
 		public Builder imageDecoder(ImageDecoder imageDecoder) {
@@ -546,7 +546,7 @@ public final class ImageLoaderConfiguration {
 
 		/**
 		 * Enables detail logging of {@link ImageLoader} work. To prevent detail logs don't call this method.
-		 * Consider {@link com.nostra13.universalimageloader.utils.L#disableLogging()} to disable
+		 * Consider {@link L#disableLogging()} to disable
 		 * ImageLoader logging completely (even error logs)
 		 */
 		public Builder writeDebugLogs() {

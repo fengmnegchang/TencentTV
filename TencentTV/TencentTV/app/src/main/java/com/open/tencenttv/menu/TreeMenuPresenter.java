@@ -71,7 +71,7 @@ public class TreeMenuPresenter extends OpenPresenter {
     public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         View rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_menu_item_layout, parent, false);
         //
-        OpenPresenter.ViewHolder result = new ContainerViewHolder(rootView);
+        ViewHolder result = new ContainerViewHolder(rootView);
         return result;
     }
 
@@ -126,7 +126,7 @@ public class TreeMenuPresenter extends OpenPresenter {
         return (GeneralAdapter) mRecyclerViewTV.getAdapter();
     }
 
-    static class ContainerViewHolder extends OpenPresenter.ViewHolder {
+    static class ContainerViewHolder extends ViewHolder {
         public ContainerViewHolder(View view) {
             super(view);
         }

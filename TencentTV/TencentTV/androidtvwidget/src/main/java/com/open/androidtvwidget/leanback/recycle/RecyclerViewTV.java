@@ -49,7 +49,7 @@ public class RecyclerViewTV extends RecyclerView implements PrvInterface {
     private ItemListener mItemListener;
     private int offset = -1;
 
-    private RecyclerViewTV.OnChildViewHolderSelectedListener mChildViewHolderSelectedListener;
+    private OnChildViewHolderSelectedListener mChildViewHolderSelectedListener;
 
     private void init(Context context) {
         setDescendantFocusability(FOCUS_AFTER_DESCENDANTS);
@@ -146,7 +146,7 @@ public class RecyclerViewTV extends RecyclerView implements PrvInterface {
         // 一行的选中.
         if (mChildViewHolderSelectedListener != null) {
             int pos = getPositionByView(child);
-            RecyclerView.ViewHolder vh = getChildViewHolder(child);
+            ViewHolder vh = getChildViewHolder(child);
             mChildViewHolderSelectedListener.onChildViewHolderSelected(this, vh, pos);
         }
         //
@@ -383,7 +383,7 @@ public class RecyclerViewTV extends RecyclerView implements PrvInterface {
     }
 
     public interface OnChildViewHolderSelectedListener {
-        public void onChildViewHolderSelected(RecyclerView parent, RecyclerView.ViewHolder vh,
+        public void onChildViewHolderSelected(RecyclerView parent, ViewHolder vh,
                                               int position);
     }
 
@@ -496,7 +496,7 @@ public class RecyclerViewTV extends RecyclerView implements PrvInterface {
      * 最后的位置.
      */
     public int findLastVisibleItemPosition() {
-        RecyclerView.LayoutManager layoutManager = getLayoutManager();
+        LayoutManager layoutManager = getLayoutManager();
         if (layoutManager != null) {
             if (layoutManager instanceof LinearLayoutManager) {
                 return ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();

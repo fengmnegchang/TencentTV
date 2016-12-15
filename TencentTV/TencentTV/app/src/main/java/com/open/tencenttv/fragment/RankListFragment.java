@@ -1,5 +1,14 @@
 package com.open.tencenttv.fragment;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -15,18 +24,9 @@ import com.open.androidtvwidget.view.MainUpView;
 import com.open.tencenttv.BaseV4ListFragment;
 import com.open.tencenttv.R;
 import com.open.tencenttv.adapter.RankAdapter;
-import com.open.tencenttv.bean.CommonT;
 import com.open.tencenttv.bean.RankBean;
+import com.open.tencenttv.json.RankJson;
 import com.open.tencenttv.utils.UrlUtils;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * ****************************************************************************************************************************************************************************
@@ -39,7 +39,7 @@ import java.util.List;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class RankListFragment extends BaseV4ListFragment {
+public class RankListFragment extends BaseV4ListFragment<RankJson> {
     private List<RankBean> data = new ArrayList<RankBean>();
     private RankAdapter mRankAdapter;
 
@@ -70,7 +70,7 @@ public class RankListFragment extends BaseV4ListFragment {
         getListView().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long id) {
-                System.out.println("listView item" + view.getId() + ";postion=" + (int) id + " ========onItemSelected ");
+                Log.i(TAG,"listView item" + view.getId() + ";postion=" + (int) id + " ========onItemSelected ");
 //                for (Fragment fragment : (getActivity()).getSupportFragmentManager().getFragments()) {
 //                    if (fragment instanceof PinDaoFragment) {
 //                        ((PinDaoFragment) fragment).setPindaoName(data.get((int) l).getTypeName());
@@ -92,18 +92,18 @@ public class RankListFragment extends BaseV4ListFragment {
     }
 
     @Override
-    public CommonT call() throws Exception {
-        CommonT mCommonT = new CommonT();
+    public RankJson call() throws Exception {
+    	RankJson mCommonT = new RankJson();
         List<RankBean> list = parseRankList(UrlUtils.TENCENT_RANK_URL);
-        mCommonT.setRanklist(list);
+        mCommonT.setList(list);
         return mCommonT;
     }
 
     @Override
-    public void onCallback(CommonT result) {
+    public void onCallback(RankJson result) {
         super.onCallback(result);
         data.clear();
-        data.addAll(result.getRanklist());
+        data.addAll(result.getList());
         mRankAdapter.notifyDataSetChanged();
 //        // 延时请求其它位置的item.
 //        Handler handler = new Handler() {
@@ -123,7 +123,7 @@ public class RankListFragment extends BaseV4ListFragment {
                 {
                 }
             });
-            Log.i("url", "url = " + href);
+            Log.i(TAG, "url = " + href);
 
             Document doc = Jsoup.connect(href).userAgent(UrlUtils.userAgent).timeout(10000).get();
             Element masthead = doc.select("div.rank_side").first();
@@ -148,12 +148,15 @@ public class RankListFragment extends BaseV4ListFragment {
             for (int i = 0; i < liElements.size(); i++) {
                 RankBean bean = new RankBean();
                 try {
+                	if(i==0){
+                		bean.setType(1);
+                	}
                     //<a href="http://v.qq.com/travel/" class="link_nav" target="_blank" _stat="new_vs_header:pop_旅游">旅游</a>
                     Element aElement = liElements.get(i).select("a").first();
                     String rankName = aElement.text();
                     String rankUrl = aElement.attr("href");
                     String title = aElement.attr("title");
-                    System.out.println("i==="+i+";rankName ==="+rankName+";rankUrl=="+rankUrl+";title=="+title);
+                    Log.i(TAG,"i==="+i+";rankName ==="+rankName+";rankUrl=="+rankUrl+";title=="+title);
                     bean.setTitle(title);
                     bean.setRankName(rankName);
                     bean.setRankurl(rankUrl);
@@ -194,7 +197,7 @@ public class RankListFragment extends BaseV4ListFragment {
      * @param position
      */
     private void setSelectedFragment(int position){
-        RankTabHorizontalViewPagerFragment rightFragment = RankTabHorizontalViewPagerFragment.newInstance(mainUpView1,mOldView,mRecyclerViewBridge);
+    	RankTabHeadHorizontalViewPagerFragment rightFragment = RankTabHeadHorizontalViewPagerFragment.newInstance(data.get(position).getRankurl(),mainUpView1,mOldView,mRecyclerViewBridge);
         FragmentManager manager = getActivity().getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.frame_rank, rightFragment).commit();
     }

@@ -31,7 +31,7 @@ import com.open.androidtvwidget.view.MainUpView;
  * @description:
  ***************************************************************************************************************************************************************************** 
  */
-public class CommonFragmentActivity extends BaseFragmentActivity  {
+public class CommonFragmentActivity<T> extends BaseFragmentActivity<T>  {
 	public static final String TAG = CommonFragmentActivity.class.getSimpleName();
 	public MainUpView mainUpView1;
 	public LayoutInflater mInflater;

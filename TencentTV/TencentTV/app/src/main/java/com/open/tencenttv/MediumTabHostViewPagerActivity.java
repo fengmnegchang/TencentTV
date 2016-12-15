@@ -1,5 +1,14 @@
 package com.open.tencenttv;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import android.animation.Animator;
 import android.content.res.Resources;
 import android.graphics.RectF;
@@ -19,23 +28,12 @@ import com.open.androidtvwidget.view.MainUpView;
 import com.open.androidtvwidget.view.OpenTabHost;
 import com.open.androidtvwidget.view.OpenTabHost.OnTabSelectListener;
 import com.open.androidtvwidget.view.TextViewWithTTF;
-import com.open.tencenttv.adapter.MediumPagerAdapter;
 import com.open.tencenttv.adapter.OpenTabPagerAdapter;
-import com.open.tencenttv.adapter.OpenTabTitleAdapter;
 import com.open.tencenttv.adapter.RankPagerAdapter;
-import com.open.tencenttv.bean.CommonT;
 import com.open.tencenttv.bean.SliderNavBean;
 import com.open.tencenttv.fragment.RankV4Fragment;
+import com.open.tencenttv.json.SliderNavJson;
 import com.open.tencenttv.utils.UrlUtils;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * ViewPager demo：
@@ -43,7 +41,7 @@ import java.util.List;
  * 移动边框的问题也需要注意.
  * @author hailongqiu
  */
-public class MediumTabHostViewPagerActivity extends CommonFragmentActivity implements OnTabSelectListener {
+public class MediumTabHostViewPagerActivity extends CommonFragmentActivity<SliderNavJson> implements OnTabSelectListener {
     ArrayList<SliderNavBean> list = new ArrayList<SliderNavBean>();
 //    private List<View> viewList  = new ArrayList<View>();// 将要分页显示的View装入数组中
     ViewPager viewpager;
@@ -85,8 +83,8 @@ public class MediumTabHostViewPagerActivity extends CommonFragmentActivity imple
     }
 
     @Override
-    public CommonT call() throws Exception {
-        CommonT mCommonT = new CommonT();
+    public SliderNavJson call() throws Exception {
+    	SliderNavJson mCommonT = new SliderNavJson();
         ArrayList<SliderNavBean> list = new ArrayList<SliderNavBean>();//导航大图
         try {
             // 解析网络标签
@@ -94,19 +92,19 @@ public class MediumTabHostViewPagerActivity extends CommonFragmentActivity imple
         } catch (Exception e) {
             e.printStackTrace();
         }
-        mCommonT.setSliderNavlist(list);
+        mCommonT.setList(list);
         return mCommonT;
     }
 
     @Override
-    public void onCallback(CommonT result) {
+    public void onCallback(SliderNavJson result) {
         super.onCallback(result);
         // 初始化viewpager.
 //        LayoutInflater inflater = getLayoutInflater();
         list.clear();
-        list.addAll(result.getSliderNavlist());
+        list.addAll(result.getList());
         titleList.clear();
-        for(SliderNavBean sliderNavBean:result.getSliderNavlist()){
+        for(SliderNavBean sliderNavBean:result.getList()){
 //            View view = inflater.inflate(R.layout.item_medium_pager, null);
 //            ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
 //            TextView textView = (TextView) view.findViewById(R.id.textview);
@@ -136,7 +134,7 @@ public class MediumTabHostViewPagerActivity extends CommonFragmentActivity imple
                 {
                 }
             });
-            Log.i("url", "url = " + href);
+            Log.i(TAG, "url = " + href);
 
             Document doc = Jsoup.connect(href).userAgent(UrlUtils.userAgent).timeout(10000).get();
             Element masthead = doc.select("div.slider_nav").first();
@@ -153,7 +151,7 @@ public class MediumTabHostViewPagerActivity extends CommonFragmentActivity imple
                         String hrefurl = aElement.attr("href");
                         String title = aElement.text();
                         String imageurl = aElement.attr("data-bgimage");
-                        System.out.println("i==="+i+"hrefurl=="+hrefurl+";title==="+title+";imageurl=="+imageurl);
+                        Log.i(TAG,"i==="+i+"hrefurl=="+hrefurl+";title==="+title+";imageurl=="+imageurl);
                         sliderNavBean.setTitle(title);
                         sliderNavBean.setHrefUrl(hrefurl);
                         sliderNavBean.setImageUrl(imageurl);

@@ -1,16 +1,15 @@
 package com.open.tencenttv.adapter;
 
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.open.tencenttv.R;
 import com.open.tencenttv.bean.RankBean;
-
-import java.util.List;
 
 /**
  * ****************************************************************************************************************************************************************************
@@ -22,29 +21,20 @@ import java.util.List;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class RankFragmentAdapter extends BaseAdapter {
-    private List<RankBean> mDatas;
-    private final LayoutInflater mInflater;
+public class RankFragmentAdapter extends CommonAdapter<RankBean> {
+    public RankFragmentAdapter(Context mContext, List<RankBean> list) {
+		super(mContext, list);
+		// TODO Auto-generated constructor stub
+      mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	}
 
-    public RankFragmentAdapter(Context context, List<RankBean> data) {
-        mDatas = data;
-        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
+	private final LayoutInflater mInflater;
 
-    @Override
-    public int getCount() {
-        return mDatas.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return mDatas.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
+//    public RankFragmentAdapter(Context context, List<RankBean> data) {
+//        mDatas = data;
+//        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//    }
+ 
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {

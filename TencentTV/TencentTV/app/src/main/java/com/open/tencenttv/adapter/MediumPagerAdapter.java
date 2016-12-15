@@ -2,7 +2,7 @@ package com.open.tencenttv.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.verticalview.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,37 +31,20 @@ import java.util.List;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class MediumPagerAdapter extends PagerAdapter {
-    private List<SliderNavBean> list;// view数组
-    Context context;
+public class MediumPagerAdapter extends CommonPagerAdapter<SliderNavBean> {
 
-    public MediumPagerAdapter(Context context, List<SliderNavBean> list) {
-        this.list = list;
-        this.context = context;
-    }
-
+    public MediumPagerAdapter(Context mContext, List<SliderNavBean> list) {
+		super(mContext, list);
+	}
+    
     @Override
-    public int getCount() {
-        return list.size();
-    }
-
-    @Override
-    public boolean isViewFromObject(View arg0, Object arg1) {
-        return arg0 == arg1;
-    }
-
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-
-    }
-
-    public Object instantiateItem(ViewGroup container, int position) {
-        LayoutInflater inflater = LayoutInflater.from(context);
+	public Object instantiateItem(ViewGroup container, int position) {
+        LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.item_medium_pager, null);
         ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
         TextView textView = (TextView) view.findViewById(R.id.textview);
 
-        SliderNavBean sliderNavBean = list.get(position);
+        SliderNavBean sliderNavBean = getItem(position);
         textView.setText(sliderNavBean.getTitle());
         if (sliderNavBean.getImageUrl() != null && sliderNavBean.getImageUrl().length() > 0) {
 //            mImageLoader.DisplayImage(sliderNavBean.getImageUrl(), imageView);
@@ -69,31 +52,10 @@ public class MediumPagerAdapter extends PagerAdapter {
                     .showImageForEmptyUri(R.drawable.grid_view_item_test)
                     .showImageOnFail(R.drawable.grid_view_item_test).cacheInMemory().cacheOnDisc()
                     .build();
-            ImageLoader.getInstance().displayImage(sliderNavBean.getImageUrl(), imageView,options,animateFirstListener);
+            ImageLoader.getInstance().displayImage(sliderNavBean.getImageUrl(), imageView,options,getImageLoadingListener());
         }
         container.addView(view);
         return view;
     }
-    private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
-
-    protected ImageLoadingListener getImageLoadingListener() {
-        return animateFirstListener;
-    }
-
-    private static class AnimateFirstDisplayListener extends SimpleImageLoadingListener {
-
-        public static final List<String> displayedImages = Collections.synchronizedList(new LinkedList<String>());
-
-        @Override
-        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-            if (loadedImage != null) {
-                ImageView imageView = (ImageView) view;
-                boolean firstDisplay = !displayedImages.contains(imageUri);
-                if (firstDisplay) {
-                    FadeInBitmapDisplayer.animate(imageView, 500);
-                    displayedImages.add(imageUri);
-                }
-            }
-        }
-    }
+     
 }

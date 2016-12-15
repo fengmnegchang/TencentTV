@@ -1,5 +1,14 @@
 package com.open.tencenttv.fragment;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import android.animation.Animator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,18 +27,9 @@ import com.open.androidtvwidget.view.TextViewWithTTF;
 import com.open.tencenttv.BaseV4Fragment;
 import com.open.tencenttv.R;
 import com.open.tencenttv.adapter.MediumPagerAdapter;
-import com.open.tencenttv.bean.CommonT;
 import com.open.tencenttv.bean.SliderNavBean;
+import com.open.tencenttv.json.SliderNavJson;
 import com.open.tencenttv.utils.UrlUtils;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * ****************************************************************************************************************************************************************************
@@ -41,7 +41,7 @@ import java.util.List;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class MediumHorizontalViewPagerFragment extends BaseV4Fragment {
+public class MediumHorizontalViewPagerFragment extends BaseV4Fragment<SliderNavJson> {
     ViewPager viewpager;
     // 移动边框.
     EffectNoDrawBridge mEffectNoDrawBridge;
@@ -146,8 +146,8 @@ public class MediumHorizontalViewPagerFragment extends BaseV4Fragment {
     }
 
     @Override
-    public CommonT call() throws Exception {
-        CommonT mCommonT = new CommonT();
+    public SliderNavJson call() throws Exception {
+    	SliderNavJson mCommonT = new SliderNavJson();
         ArrayList<SliderNavBean> list = new ArrayList<SliderNavBean>();//导航大图
         try {
             // 解析网络标签
@@ -155,12 +155,12 @@ public class MediumHorizontalViewPagerFragment extends BaseV4Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        mCommonT.setSliderNavlist(list);
+        mCommonT.setList(list);
         return mCommonT;
     }
 
     @Override
-    public void onCallback(CommonT result) {
+    public void onCallback(SliderNavJson result) {
         super.onCallback(result);
         // 初始化viewpager.
 //        LayoutInflater inflater = getLayoutInflater();
@@ -175,7 +175,7 @@ public class MediumHorizontalViewPagerFragment extends BaseV4Fragment {
 //            viewList.add(view);
 //        }
         sliderNavList.clear();
-        sliderNavList.addAll(result.getSliderNavlist());
+        sliderNavList.addAll(result.getList());
         mMediumPagerAdapter = new MediumPagerAdapter(getActivity(),sliderNavList);
         viewpager.setAdapter(mMediumPagerAdapter);
     }
@@ -187,7 +187,7 @@ public class MediumHorizontalViewPagerFragment extends BaseV4Fragment {
                 {
                 }
             });
-            Log.i("url", "url = " + href);
+            Log.i(TAG, "url = " + href);
 
             Document doc = Jsoup.connect(href).userAgent(UrlUtils.userAgent).timeout(10000).get();
             Element masthead = doc.select("div.slider_nav").first();
@@ -204,7 +204,7 @@ public class MediumHorizontalViewPagerFragment extends BaseV4Fragment {
                         String hrefurl = aElement.attr("href");
                         String title = aElement.text();
                         String imageurl = aElement.attr("data-bgimage");
-                        System.out.println("i===" + i + "hrefurl==" + hrefurl + ";title===" + title + ";imageurl==" + imageurl);
+                        Log.i(TAG,"i===" + i + "hrefurl==" + hrefurl + ";title===" + title + ";imageurl==" + imageurl);
                         sliderNavBean.setTitle(title);
                         sliderNavBean.setHrefUrl(hrefurl);
                         sliderNavBean.setImageUrl(imageurl);

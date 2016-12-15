@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    <TextView
+        android:id="@+id/text_word_class"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center|left"
+        android:padding="3dp"
+        android:text="咱们相爱吧 电视剧"
+        android:layout_marginLeft="30dp"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/img_dc"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="30dp"
+        android:src="@drawable/mainview_huodong"
+        android:layout_below="@+id/text_word_class"
+        />
+
+    <TextView
+        android:id="@+id/text_ex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/img_dc"
+        android:layout_below="@+id/text_word_class"
+        android:gravity="center|left"
+        android:padding="3dp"
+        android:layout_marginLeft="10dp"
+        android:text="更新至54集"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+    
+    <TextView
+        android:id="@+id/text_pa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/img_dc"
+        android:layout_below="@+id/text_ex"
+        android:layout_marginLeft="10dp"
+        android:gravity="center|left"
+        android:padding="3dp"
+        android:text="张静初 张歆艺 秦岚"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+    
+    <TextView
+        android:id="@+id/text_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/img_dc"
+        android:layout_below="@+id/text_pa"
+        android:layout_marginLeft="10dp"
+        android:gravity="center|left"
+        android:padding="3dp"
+        android:text="立即播放"
+        android:background="#FF00FF"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+</RelativeLayout>

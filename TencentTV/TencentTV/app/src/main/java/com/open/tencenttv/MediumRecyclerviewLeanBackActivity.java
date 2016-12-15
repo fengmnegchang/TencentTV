@@ -1,5 +1,14 @@
 package com.open.tencenttv;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import android.content.Context;
 import android.graphics.RectF;
 import android.os.Bundle;
@@ -23,21 +32,13 @@ import com.open.androidtvwidget.leanback.mode.OpenPresenter;
 import com.open.androidtvwidget.leanback.recycle.RecyclerViewTV;
 import com.open.androidtvwidget.utils.OPENLOG;
 import com.open.androidtvwidget.view.MainUpView;
-import com.open.tencenttv.bean.CommonT;
-import com.open.tencenttv.fragment.MediumHorizontalViewPagerFragment;
+import com.open.tencenttv.bean.NavPopPinDaoBean;
+import com.open.tencenttv.fragment.MediumDirectionViewPagerFragment;
+import com.open.tencenttv.json.ListRowJson;
 import com.open.tencenttv.mode.MediumListPresenter;
 import com.open.tencenttv.mode.Movie;
 import com.open.tencenttv.mode.TestMoviceListPresenter;
 import com.open.tencenttv.utils.UrlUtils;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * ****************************************************************************************************************************************************************************
@@ -49,13 +50,14 @@ import java.util.List;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class MediumRecyclerviewLeanBackActivity extends CommonFragmentActivity implements RecyclerViewTV.OnItemListener {
+public class MediumRecyclerviewLeanBackActivity extends CommonFragmentActivity<ListRowJson> implements RecyclerViewTV.OnItemListener {
     private Context mContext;
     private RecyclerViewTV mRecyclerView;
     private RecyclerViewBridge mRecyclerViewBridge;
     private GeneralAdapter.ViewHolder mSelectedViewHolder;
     List<ListRow> mListRows = new ArrayList<ListRow>();
     ListRowPresenter mListRowPresenter;
+    private NavPopPinDaoBean parentNav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,12 @@ public class MediumRecyclerviewLeanBackActivity extends CommonFragmentActivity i
     @Override
     protected void findView() {
         super.findView();
+        parentNav = (NavPopPinDaoBean) getIntent().getSerializableExtra("NAV_POP_PIN_DAO_KEY");
+        if(parentNav==null){
+        	parentNav = new NavPopPinDaoBean();
+        	parentNav.setPindaoUrl(UrlUtils.TENCENT_TV_URL);
+        	parentNav.setPindaoName("电视剧");
+        }
         mContext = MediumRecyclerviewLeanBackActivity.this;
 
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
@@ -92,7 +100,7 @@ public class MediumRecyclerviewLeanBackActivity extends CommonFragmentActivity i
                 getDimension(R.dimen.w_45) * density, getDimension(R.dimen.h_40) * density);
         mRecyclerViewBridge.setDrawUpRectPadding(receF);
 
-        MediumHorizontalViewPagerFragment fragment = MediumHorizontalViewPagerFragment.newInstance(mainUpView1,mOldView,mRecyclerViewBridge);
+        MediumDirectionViewPagerFragment fragment = MediumDirectionViewPagerFragment.newInstance(parentNav.getPindaoUrl(),mainUpView1,mOldView,mRecyclerViewBridge);
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.lay_view_pager, fragment).commit();
     }
@@ -149,24 +157,24 @@ public class MediumRecyclerviewLeanBackActivity extends CommonFragmentActivity i
     };
 
     @Override
-    public CommonT call() throws Exception {
-        CommonT mCommonT = new CommonT();
+    public ListRowJson call() throws Exception {
+    	ListRowJson mCommonT = new ListRowJson();
         ArrayList<ListRow> list = new ArrayList<ListRow>();
         try {
             // 解析网络标签
-            list = parseListRow(UrlUtils.TENCENT_TV_URL);
+            list = parseListRow(parentNav.getPindaoUrl());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        mCommonT.setMediumlist(list);
+        mCommonT.setList(list);
         return mCommonT;
     }
 
     @Override
-    public void onCallback(CommonT result) {
+    public void onCallback(ListRowJson result) {
         super.onCallback(result);
         mListRows.clear();
-        mListRows.addAll(result.getMediumlist());
+        mListRows.addAll(result.getList());
         mRecyclerView.getAdapter().notifyDataSetChanged();
         // 行选中的事件.
 //        mRecyclerView.setOnChildViewHolderSelectedListener(mRowSelectedListener);
@@ -199,7 +207,7 @@ public class MediumRecyclerviewLeanBackActivity extends CommonFragmentActivity i
                 {
                 }
             });
-            Log.i("url", "url = " + href);
+            Log.i(TAG, "url = " + href);
 
             Document doc = Jsoup.connect(href).userAgent(UrlUtils.userAgent).timeout(10000).get();
             Element masthead = doc.select("div.container_inner").first();
@@ -217,7 +225,7 @@ public class MediumRecyclerviewLeanBackActivity extends CommonFragmentActivity i
                         Element rowElement = wrapperElements.get(i).select("div.mod_title").first();
                         if (rowElement != null) {
                             rowtext = rowElement.select("h2").first().text();
-                            System.out.println("rowtext ===" + rowtext);
+                            Log.i(TAG,"rowtext ===" + rowtext);
                             listrow = new ListRow(rowtext);
                             listrow.setOpenPresenter(new MediumListPresenter()); // 设置列的item样式.
                         } else {
@@ -251,7 +259,7 @@ public class MediumRecyclerviewLeanBackActivity extends CommonFragmentActivity i
                                     Element aElement = list_itemElements.get(y).select("a").first();
                                     String hrefurl = aElement.attr("href");
                                     String title = aElement.attr("title");
-                                    System.out.print("hrefurl ===" + hrefurl + ";title==" + title);
+                                    Log.i(TAG,"hrefurl ===" + hrefurl + ";title==" + title);
                                     movie.setmTitle(title);
                                     movie.setHrefurl(hrefurl);
                                 } catch (Exception e) {
@@ -266,7 +274,7 @@ public class MediumRecyclerviewLeanBackActivity extends CommonFragmentActivity i
                                     if(lz_srcurl==null || lz_srcurl.length()==0){
                                         lz_srcurl = imgElement.attr("src");
                                     }
-                                    System.out.print("lz_srcurl ===" + lz_srcurl);
+                                    Log.i(TAG,"lz_srcurl ===" + lz_srcurl);
                                     movie.setLz_srcurl(lz_srcurl);
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -276,7 +284,7 @@ public class MediumRecyclerviewLeanBackActivity extends CommonFragmentActivity i
                                 try {
                                     Element spanElement = list_itemElements.get(y).select("span.figure_mask").first();
                                     String figure_mask = spanElement.text();
-                                    System.out.print("figure_mask ===" + figure_mask);
+                                    Log.i(TAG,"figure_mask ===" + figure_mask);
                                     movie.setFigure_mask(figure_mask);
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -286,12 +294,12 @@ public class MediumRecyclerviewLeanBackActivity extends CommonFragmentActivity i
                                 try {
                                     Element pElement = list_itemElements.get(y).select("p.figure_desc").first();
                                     String figure_desc = pElement.text();
-                                    System.out.print("figure_desc ===" + figure_desc);
+                                    Log.i(TAG,"figure_desc ===" + figure_desc);
                                     movie.setFigure_desc(figure_desc);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                System.out.print("\n");
+                                Log.i(TAG,"\n");
                                 movies.add(movie);
                             }
                             listrow.addAll(movies); // 添加列的数据.

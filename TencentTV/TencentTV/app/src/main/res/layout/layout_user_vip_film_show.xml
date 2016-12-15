@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="130dp"
+    android:layout_height="wrap_content" >
+
+    <ImageView
+        android:id="@+id/image_src"
+        android:layout_width="130dp"
+        android:layout_height="200dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/mainview_cloudlist" />
+
+    <TextView
+        android:id="@+id/text_mark_sd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center|left"
+        android:text="蓝光"
+        android:textColor="@color/black"
+        android:layout_alignBottom="@+id/image_src"
+        android:layout_alignRight="@+id/image_src"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="10dp"
+        android:textSize="14sp" />
+    
+    <TextView
+        android:id="@+id/text_mark_custom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center|left"
+        android:text="腾讯出品"
+        android:textColor="@color/black"
+        android:layout_alignTop="@+id/image_src"
+        android:layout_alignRight="@+id/image_src"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/text_figure_tit"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/image_src"
+        android:layout_marginTop="8dp"
+        android:gravity="center|left"
+        android:text="如果蜗牛有爱情   9.2"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/text_info_txt"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_figure_tit"
+        android:layout_marginTop="8dp"
+        android:gravity="center|left"
+        android:text="王凯王子文玩命缉凶"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+</RelativeLayout>

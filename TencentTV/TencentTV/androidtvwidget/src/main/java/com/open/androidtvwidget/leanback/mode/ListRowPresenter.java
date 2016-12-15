@@ -129,7 +129,7 @@ public class ListRowPresenter extends OpenPresenter {
 
     }
 
-    public static class ListRowViewHolder extends OpenPresenter.ViewHolder {
+    public static class ListRowViewHolder extends ViewHolder {
 
         ViewHolder mHeadViewHolder;
         ViewHolder mListViewHolder;

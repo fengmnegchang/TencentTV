@@ -10,6 +10,7 @@ import com.open.androidtvwidget.leanback.mode.OpenPresenter;
 import com.open.tencenttv.R;
 import com.open.tencenttv.bean.NavPopPinDaoBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +24,7 @@ import java.util.List;
  * @description: ****************************************************************************************************************************************************************************
  */
 public class RecyclerViewPresenter extends OpenPresenter {
-    private List<String> labels;
+    private List<String> labels ;
     private List<NavPopPinDaoBean> list;
     private GeneralAdapter mAdapter;
 
@@ -32,6 +33,7 @@ public class RecyclerViewPresenter extends OpenPresenter {
     }
 
     public RecyclerViewPresenter(int count) {
+    	labels = new ArrayList<String>();
         for(int i=0;i<count;i++){
             labels.add("item"+i);
         }
@@ -55,6 +57,9 @@ public class RecyclerViewPresenter extends OpenPresenter {
 
     @Override
     public int getItemCount() {
+    	if(list==null){
+    		return labels.size();
+    	}
         return list.size();
     }
 
@@ -65,6 +70,9 @@ public class RecyclerViewPresenter extends OpenPresenter {
 
     @Override
     public Object getItem(int position) {
+    	if(list==null){
+    		return labels.get(position);
+    	}
         return list.get(position);
     }
 
@@ -78,8 +86,14 @@ public class RecyclerViewPresenter extends OpenPresenter {
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         GridViewHolder gridViewHolder = (GridViewHolder) viewHolder;
         TextView textView = (TextView) gridViewHolder.tv;
-        NavPopPinDaoBean bean = (NavPopPinDaoBean) getItem(position);
-        textView.setText(bean.getPindaoName());
+        
+        if(list==null){
+        	 textView.setText(labels.get(position));
+        }else{
+        	NavPopPinDaoBean bean = (NavPopPinDaoBean) getItem(position);
+        	 textView.setText(bean.getPindaoName());
+        }
+       
     }
 
 }

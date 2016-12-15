@@ -3,7 +3,6 @@ package com.open.tencenttv.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.List;
 
@@ -17,35 +16,12 @@ import java.util.List;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class RankPagerAdapter extends FragmentPagerAdapter {
-    private List<Fragment> listRankFragment;
-    List<String> titleList;
+public class RankPagerAdapter extends CommonFragmentPagerAdapter {
 
-    public RankPagerAdapter(FragmentManager fm, List<Fragment> listRankFragment, List<String> titleList ) {
-        super(fm);
-        this.listRankFragment = listRankFragment;
-        this.titleList = titleList;
-    }
-
-    @Override
-    public int getCount() {
-        return listRankFragment.size();
-    }
-
-
-    @Override
-    public Fragment getItem(int position) {
-        return listRankFragment.get(position);
-    }
-
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return titleList.get(position);
-    }
-
-    @Override
-    public int getItemPosition(Object object) {
-        // TODO Auto-generated method stub
-        return POSITION_NONE;
-    }
+	public RankPagerAdapter(FragmentManager fm, List<Fragment> listFragment,
+			List<String> titleList) {
+		super(fm, listFragment, titleList);
+	}
+   
+ 
 }

@@ -23,6 +23,10 @@ public class RankBean implements Serializable {
     private String actorName;
     private String actorType;
     private String playTimes;
+    
+    public RankBean(){
+    	
+    }
 
     public int getType() {
         return type;

@@ -1,17 +1,16 @@
 package com.open.tencenttv.adapter;
 
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.open.tencenttv.R;
 import com.open.tencenttv.bean.PersonalCenterBean;
-
-import java.util.List;
 
 /**
  * ****************************************************************************************************************************************************************************
@@ -23,32 +22,15 @@ import java.util.List;
  * @modifyAuthor:
  * @description: ****************************************************************************************************************************************************************************
  */
-public class PersonalCenterAdapter extends BaseAdapter {
-    private List<PersonalCenterBean> data;
-    private Context mContext;
-    public PersonalCenterAdapter(Context mContext,List<PersonalCenterBean> data){
-        this.mContext = mContext;
-        this.data = data;
-    }
+public class PersonalCenterAdapter extends CommonAdapter<PersonalCenterBean> {
 
-    @Override
-    public int getCount() {
-        return data.size();
-    }
+    public PersonalCenterAdapter(Context mContext, List<PersonalCenterBean> list) {
+		super(mContext, list);
+	}
 
-    @Override
-    public PersonalCenterBean getItem(int position) {
-        return data.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
+	@Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        PersonalCenterBean bean = getItem(position);
+        PersonalCenterBean bean = (PersonalCenterBean) getItem(position);
         if (bean != null) {
             if (bean.getType() == 0) {
                 View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_personal_center_type0, null);

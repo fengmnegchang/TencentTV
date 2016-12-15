@@ -7,6 +7,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -149,14 +150,14 @@ public class SearchKeyBoardActivity extends CommonFragmentActivity {
             @Override
             public void onItemPreSelected(View itemView,int position) {
                 mRecyclerViewBridge.setUnFocusView(mOldView);
-                System.out.println("item ========onItemPreSelected "+position);
+                Log.i(TAG,"item ========onItemPreSelected "+position);
             }
 
             @Override
             public void onItemSelected(View itemView,int position) {
                 mRecyclerViewBridge.setFocusView(itemView, 1.2f);
                 mOldView = itemView;
-                System.out.println("item  ========onItemSelected "+position);
+                Log.i(TAG,"item  ========onItemSelected "+position);
             }
 
             @Override
@@ -216,7 +217,7 @@ public class SearchKeyBoardActivity extends CommonFragmentActivity {
 
         FragmentManager manager = getSupportFragmentManager();
         PinDaoListFragment rightFragment =  PinDaoListFragment.newInstance(mainUpView1,mRecyclerViewBridge,mOldView);
-        PinDaoFragment leftFragment = PinDaoFragment.newInstance("ListFragmentPinDaoActivity",mainUpView1,mOldView,mRecyclerViewBridge);
+        PinDaoFragment leftFragment = PinDaoFragment.newInstance("","ListFragmentPinDaoActivity",mainUpView1,mOldView,mRecyclerViewBridge);
 
         manager.beginTransaction().replace(R.id.frame_listview, rightFragment).commit();
         manager.beginTransaction().replace(R.id.frame_pindao, leftFragment).commit();

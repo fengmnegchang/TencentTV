@@ -26,7 +26,7 @@ import android.widget.ListAdapter;
  * method for generating the header data set.
  * 
  * The is a second interface
- * {@link com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter}.
+ * {@link StickyGridHeadersBaseAdapter}.
  * 
  * @author Tonic Artos
  */

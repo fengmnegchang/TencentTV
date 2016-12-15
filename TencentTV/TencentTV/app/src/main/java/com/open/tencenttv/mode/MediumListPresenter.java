@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.open.tencenttv.R;
+import com.open.tencenttv.TencentTVWebViewActivity;
 
 /**
  * Leanback 横向item demo.
@@ -43,7 +45,7 @@ public class MediumListPresenter extends AsyncTaskListPresenter {
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
-        Movie movie = ((Movie) getItem(position));
+        final Movie movie = ((Movie) getItem(position));
         OpenCardView openCardView = (OpenCardView) viewHolder.view;
         openCardView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -88,6 +90,15 @@ public class MediumListPresenter extends AsyncTaskListPresenter {
         } else {
             openCardView.setAlpha(1.0f);
         }
+        openCardView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				 if(movie.getHrefurl()!=null){
+					 TencentTVWebViewActivity.startTencentTVWebViewActivity(context, movie.getHrefurl());
+				 }
+				
+			}
+		});
     }
 
 //    @Override
